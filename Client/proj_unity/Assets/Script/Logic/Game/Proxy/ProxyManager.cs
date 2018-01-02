@@ -10,10 +10,26 @@ public class ProxyManager{
 		private set;
 	}
 
+	public LoginProxy Login {
+		get;
+		private set;
+	}
+
+	public RoomProxy Room {
+		get;
+		private set;
+	}
+
 	public void Init()
 	{
 		Player = new PlayerProxy ();
 		Player.Init ();
+
+		Login = new LoginProxy ();
+		Login.Init ();
+	
+		Room = new RoomProxy ();
+		Room.Init ();
 	}
 
 	void DestroyProxy(DataProxy proxy)
@@ -26,5 +42,7 @@ public class ProxyManager{
 	public void Destroy()
 	{
 		DestroyProxy (Player);
+		DestroyProxy (Login);
+		DestroyProxy (Room);
 	}
 }

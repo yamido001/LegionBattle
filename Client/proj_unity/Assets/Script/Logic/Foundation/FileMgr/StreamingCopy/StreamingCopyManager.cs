@@ -29,7 +29,6 @@ namespace NewFileSystem
 			#endif
 			if (!isPlatformNeed)
 				return false;
-
 			string lastVersionCode = PlayerPrefs.GetString (CopyVersionCodeKey);
 			if (string.IsNullOrEmpty (lastVersionCode)) {
 				return true;

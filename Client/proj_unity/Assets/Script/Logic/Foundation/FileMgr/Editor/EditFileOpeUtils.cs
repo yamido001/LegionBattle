@@ -26,16 +26,17 @@ public class EditFileOpeUtils{
 		Directory.CreateDirectory (path);
 	}
 
-	public static void CopyDirectory(DirectoryInfo sourceDirInfo, string targetPath, HashSet<string> filterExtensionSet)
+	public static void CopyDirectory(DirectoryInfo sourceDirInfo, string targetPath, HashSet<string> filterExtensionSet, bool isRoot = true)
 	{
-		targetPath = Path.Combine (targetPath, sourceDirInfo.Name);
+		if(!isRoot)
+			targetPath = Path.Combine (targetPath, sourceDirInfo.Name);
 		if (!Directory.Exists (targetPath)) {
 			Directory.CreateDirectory (targetPath);
 		}
 		CopyFiles (sourceDirInfo, targetPath, filterExtensionSet);
 		DirectoryInfo[] directInfos = sourceDirInfo.GetDirectories ();
 		for (int i = 0; i < directInfos.Length; ++i) {
-			CopyDirectory (directInfos [i], targetPath, filterExtensionSet);
+			CopyDirectory (directInfos [i], targetPath, filterExtensionSet, false);
 		}
 	}
 

@@ -26,9 +26,7 @@ public class DownloadState : StateBase {
 			Lancher.Instance.SetTips("加载中...");
 			GameMain.Instance.FileDepInit(delegate() {
 				Lancher.Instance.SetTips("加载中....");
-				GameMain.Instance.UIMgr.OpenView(UIViewId.MainView, null, delegate() {
-					Lancher.Instance.RemoveLancher();
-				});
+				GameMain.Instance.StateMgr.EnterState(GameStateId.Login, null);
 			});
 		});
 		GameMain.Instance.FileMgr.BeginDownload (null);

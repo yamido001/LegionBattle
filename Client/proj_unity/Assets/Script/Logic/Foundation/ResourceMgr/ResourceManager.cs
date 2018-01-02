@@ -16,16 +16,20 @@ public class ResourceManager{
 	public static string ResourceListName = "ResourceList.txt";
 
 	IResourceImp mResourceImp;
-	Dictionary<System.Type, Dictionary<string, string>> mResourceConfigDic = new Dictionary<System.Type, Dictionary<string, string>>();
-	private bool mHasInitFinish = false;
-	private bool mIsWaitingReloadResource = false;
+	Dictionary<string, Dictionary<string, string>> mResourceConfigDic = new Dictionary<string, Dictionary<string, string>>();
+	bool mHasInitFinish = false;
+	bool mIsWaitingReloadResource = false;
 
 	public void Init()
 	{
 		mResourceImp = new ResourceLoadImp ();
 		mResourceImp.Init (delegate() {
+			if (Lancher.Instance != null)
+				Lancher.Instance.SetTips ("ResourceManager mResourceImp.Init");
 			LoadResourceList(delegate() {
 				mHasInitFinish = true;
+				if (Lancher.Instance != null)
+					Lancher.Instance.SetTips ("ResourceManager load resourcelist finish");
 				GameMain.Instance.EventMgr.PostObjectEvent(EventId.ResourceManagerInitFinish, null);
 			});
 		});
@@ -145,13 +149,25 @@ public class ResourceManager{
 
 	private string GetResourcePath(string resourceName, System.Type resourceType)
 	{
-		if (!mResourceConfigDic.ContainsKey (resourceType)) {
+		string resTypeStr = resourceType.ToString ();
+		if (!mResourceConfigDic.ContainsKey (resTypeStr)) {
 			return string.Empty;
 		}
-		Dictionary<string, string> resourceNameToPathDic = mResourceConfigDic [resourceType];
+		Dictionary<string, string> resourceNameToPathDic = mResourceConfigDic [resTypeStr];
 		string resourcePath = string.Empty;
 		resourceNameToPathDic.TryGetValue (resourceName, out resourcePath);
 		return resourcePath;
+	}
+
+	Dictionary<System.Type, string> mResTypeToStringDic = new Dictionary<System.Type, string>();
+	private string ResourceTypeToString(System.Type resourceType)
+	{
+		string ret = string.Empty;
+		if (!mResTypeToStringDic.TryGetValue (resourceType, out ret)) {
+			ret = resourceType.ToString ();
+			mResTypeToStringDic [resourceType] = ret;
+		}
+		return ret;
 	}
 
 	private bool CheckCanLoad()
@@ -172,8 +188,15 @@ public class ResourceManager{
 		mResourceImp.LoadResourceAsync ("ResourceList", typeof(TextAsset), delegate(Object obj) {
 			TextAsset resourceAsset = obj as TextAsset;
 			string fileContent = resourceAsset.text;
-			mResourceConfigDic = Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<System.Type, Dictionary<string, string>>>(fileContent);
-			hdlOnFinish.Invoke();
+			try{
+				mResourceConfigDic = Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, string>>>(fileContent);
+				hdlOnFinish.Invoke();
+			}
+			catch(System.Exception ex){
+				if (Lancher.Instance != null)
+					Lancher.Instance.SetTips ("LoadResourceList error " + ex.Message + "\n" );
+			}
+
 		}, delegate(string errorCode) {
 			Logger.LogError("Resource manager load resource list error:" + errorCode);
 		});

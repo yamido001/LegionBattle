@@ -14,6 +14,7 @@ public class StateManager : StateMechineBase{
 		RegisterState ((int)GameStateId.StartUp, typeof(StartUpState));
 		RegisterState ((int)GameStateId.Download, typeof(DownloadState));
 		RegisterState ((int)GameStateId.Playing, typeof(PlayingState));
+		RegisterState ((int)GameStateId.Login, typeof(LoginState));
 	}
 
 	public void EnterState(GameStateId stateId, object param)

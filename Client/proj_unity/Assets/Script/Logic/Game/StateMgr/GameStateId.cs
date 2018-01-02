@@ -5,5 +5,6 @@ using UnityEngine;
 public enum GameStateId{
 	StartUp,
 	Download,
+	Login,
 	Playing,
 }

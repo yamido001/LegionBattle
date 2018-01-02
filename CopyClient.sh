@@ -1,0 +1,1 @@
+cp Server/bin/Debug/LegionBattleServerClientCommon.dll Client/proj_unity/Assets/Plugins/LegionBattleServerClientCommon.dll

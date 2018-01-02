@@ -8,25 +8,25 @@ namespace GameBattle
 {
 	public class BattleManager : Singleton<BattleManager> {
 
-		public void StartBattle(List<FighterConfigData> fighterDatas)
+		public void StartBattle(List<UnitConfigData> fighterDatas)
 		{
 			SceneCameraManager.Instance.MoveToPos (new Vector3(62f, 40f, 1.6f));
 			SceneCameraManager.Instance.ForceTo(new Vector3(59.45f, 0f, 30f));
 
-			BattleFighterManager.Instance.StartBattle (fighterDatas);
-			BattlePlayerManager.Instance.Start (fighterDatas);
+			BattleUnitManager.Instance.StartBattle (fighterDatas);
+			OldBattlePlayerManager.Instance.Start (fighterDatas);
 		}
 
 		public void Update()
 		{
-			BattleFighterManager.Instance.Update ();
-			BattlePlayerManager.Instance.Update ();
+			BattleUnitManager.Instance.Update ();
+			OldBattlePlayerManager.Instance.Update ();
 		}
 
 		public void DestroyBattle()
 		{
-			BattleFighterManager.Instance.DestroyBattle ();
-			BattlePlayerManager.Instance.Destroy ();
+			BattleUnitManager.Instance.DestroyBattle ();
+			OldBattlePlayerManager.Instance.Destroy ();
 		}
 	}
 

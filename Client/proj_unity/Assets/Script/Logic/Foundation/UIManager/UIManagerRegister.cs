@@ -8,5 +8,7 @@ public partial class UIManager{
 	{
 		RegisterView (UIViewId.MainView, "MainView", typeof(MainView));
 		RegisterView (UIViewId.Loading, "LoadingView", typeof(LoadingView));
+		RegisterView (UIViewId.Login, "LoginView", typeof(LoginView));
+		RegisterView (UIViewId.RoomView, "RoomView", typeof(RoomView));
 	}
 }

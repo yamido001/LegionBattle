@@ -1,18 +1,11 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Script/Logic/Game/Battle/LogicLayer/FighterSkillComponent.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Script\Logic\Game\Server\PhotonConnection.cs">
     <Files>
-      <File FileName="Assets/Script/Logic/Game/Battle/ViewLayer/BattlePlayerManager.cs" Line="34" Column="27" />
-      <File FileName="Assets/Script/Logic/Game/Battle/ViewLayer/BattleUnit.cs" Line="62" Column="9" />
-      <File FileName="Assets/Script/Logic/Game/Battle/ViewLayer/UnitActor.cs" Line="15" Column="33" />
-      <File FileName="Assets/Script/Logic/Game/Battle/InstructionManager.cs" Line="43" Column="40" />
-      <File FileName="Assets/Script/Logic/Game/Battle/LogicLayer/Fighter.cs" Line="90" Column="5" />
-      <File FileName="Assets/Script/Logic/Game/Battle/BattlePosition.cs" Line="40" Column="21" />
-      <File FileName="Assets/Script/Logic/Game/Battle/LogicLayer/FighterAIComponent.cs" Line="94" Column="14" />
-      <File FileName="Assets/Script/Logic/Game/Battle/BattleManager.cs" Line="9" Column="28" />
-      <File FileName="Assets/Script/Logic/Game/Battle/LogicLayer/BattleFighterManager.cs" Line="16" Column="21" />
-      <File FileName="Assets/Script/Logic/Game/Battle/LogicLayer/FighterConfigData.cs" Line="17" Column="23" />
-      <File FileName="Assets/Script/Logic/Game/Battle/LogicLayer/FighterSkillComponent.cs" Line="70" Column="28" />
+      <File FileName="Assets\Script\Logic\Game\Battle\IntVector2.cs" Line="18" Column="4" />
+      <File FileName="Assets\Script\Logic\Game\Proxy\RoomProxy.cs" Line="126" Column="42" />
+      <File FileName="Assets\Script\Logic\Game\Server\SocketManager.cs" Line="53" Column="26" />
+      <File FileName="Assets\Script\Logic\Game\Server\PhotonConnection.cs" Line="89" Column="3" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
@@ -20,6 +13,9 @@
       <Breakpoint file="/Users/yangmingdong/Workspace/Unity/LegionBattle/proj_unity/Assets/Script/Logic/Game/Battle/FighterSkill.cs" line="7" column="2" />
       <Breakpoint file="/Users/yangmingdong/Workspace/Unity/LegionBattle/proj_unity/Assets/Script/Logic/Foundation/FileMgr/Download/FileDownloadManager.cs" line="109" column="2" />
       <Breakpoint file="/Users/yangmingdong/Workspace/Unity/LegionBattle/proj_unity/Assets/Script/Logic/Game/Battle/BattlePosition.cs" line="40" column="22" />
+      <Breakpoint file="E:\WorkSpace\LegionBattle\Client\proj_unity\Assets\Script\Logic\Foundation\UIManager\UIManager.cs" line="109" column="15" />
+      <Breakpoint file="E:\WorkSpace\LegionBattle\Client\proj_unity\Assets\Script\Logic\Game\Proxy\LoginProxy.cs" line="52" column="19" />
+      <Breakpoint file="E:\WorkSpace\LegionBattle\Client\proj_unity\Assets\Script\Logic\Game\Proxy\LoginProxy.cs" line="23" column="39" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />

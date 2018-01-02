@@ -1,44 +1,44 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using ProtoStruct;
+using LegionBattle.ServerClientCommon;
 
 public class PlayerProxy : DataProxy {
-	Dictionary<int, PlayerSceneInfo> mScenePlayerDic = new Dictionary<int, PlayerSceneInfo>();
-	PlayerSceneInfo mMainPlayerInfo;
 
-	public PlayerSceneInfo MainPlayer {
+	public int PlayerId {
 		get;
 		private set;
 	}
 
-	Dictionary<uint, string> mCachedModel = new Dictionary<uint, string>();
-		
+	public string PlayerName {
+		get;
+		private set;
+	}
+
 	protected override void OnInit ()
 	{
-		MainPlayer = new PlayerSceneInfo ();
-		MainPlayer.name = "杨明东";
-		MainPlayer.model = 1;
-		MainPlayer.posX = 100000;
-		MainPlayer.posY = 100000;
-		MainPlayer.attributes = new int[(int)AttributeType.Count];
-		MainPlayer.attributes[(int)AttributeType.Life] = 100;
-		MainPlayer.attributes[(int)AttributeType.MoveSpeed] = 500;
+		GameMain.Instance.SocketMgr.RegistResponseListener (RpId.PlayerLogin, OnPlayerLogin);
+
+		PlayerId = CommonDefine.InvalidPlayerId;
+		PlayerName = string.Empty;
 	}
 
 	protected override void OnDestroy ()
 	{
-		
+		GameMain.Instance.SocketMgr.RemoveResponseListener (RpId.PlayerLogin, OnPlayerLogin);
 	}
 
-	public string GetModelStrByUint(uint modelIndex)
+	#region 服务器返回消息
+	void OnPlayerLogin(object parameters)
 	{
-		string ret = null;
-		if (mCachedModel.TryGetValue (modelIndex, out ret)) {
-			return ret;
+		RpPlayerLogin playerLogin = parameters as RpPlayerLogin;
+		if(null == playerLogin)
+		{
+			return;
 		}
-		ret = "PlayerModel" + modelIndex;
-		mCachedModel [modelIndex] = ret;
-		return ret;
+		PlayerId = playerLogin.PlayerId;
+		PlayerName = playerLogin.PlayerName;
+		GameMain.Instance.EventMgr.PostObjectEvent (EventId.PlayerLogin, null);
 	}
+	#endregion
 }

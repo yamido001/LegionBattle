@@ -55,6 +55,7 @@ public class FileManager{
 	{
 		Transform copyTf = GameMain.Instance.CreateChildTransform ("StreamingCopy");
 		mStreamingCopyMgr = copyTf.gameObject.AddComponent<StreamingCopyManager> ();
+
 		mStreamingCopyMgr.BeginCopy (delegate() {
 			GameObject.Destroy(mStreamingCopyMgr.gameObject);
 			mStreamingCopyMgr = null;

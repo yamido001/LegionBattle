@@ -30,6 +30,7 @@ public class ResBuilder{
 		DirectoryInfo dirInfo = new DirectoryInfo (Application.dataPath);
 		string dataSourcePath = Path.Combine (dirInfo.Parent.Parent.FullName, "ResServerSrc");
 		string dataTargetPath = Path.Combine (dirInfo.Parent.Parent.FullName, "ResServer");
+		dataTargetPath = Path.Combine (dataTargetPath, "Editor");
 		ExportFileSystem (true, dataTargetPath, dataSourcePath);
 	}
 
@@ -41,7 +42,9 @@ public class ResBuilder{
 		string sourceFilePath = Path.Combine (dirInfo.Parent.Parent.FullName, "ResServer");
 		string targetFilePath = string.Empty;
 		#if UNITY_STANDALONE_WIN
-		targetFilePath = "192.168.1.2:8080";
+		DirectoryInfo directoryInfo = new DirectoryInfo(Application.dataPath);
+		targetFilePath = Path.Combine(directoryInfo.Parent.Parent.Parent.FullName, "Tools");
+		targetFilePath = Path.Combine(targetFilePath, "LegionBattle");
 		#elif UNITY_STANDALONE_OSX
 		targetFilePath = "/Library/WebServer/Documents/LegionBattle";
 		#endif

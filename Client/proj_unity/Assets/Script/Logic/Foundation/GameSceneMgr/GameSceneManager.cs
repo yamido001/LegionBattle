@@ -28,12 +28,14 @@ public class GameSceneManager{
 		GameMain.Instance.EventMgr.PostObjectEvent (EventId.GameSceneMgrInitFinish, null);
 		GameMain.Instance.EventMgr.RegisterObjectEvent (EventId.UnitySceneLoadingInfo, this, OnUnitySceneLoadProgress);
 		GameMain.Instance.EventMgr.RegisterObjectEvent (EventId.UnitySceneLoaded, this, OnUnitySceneLoaded);
+		GameMain.Instance.EventMgr.RegisterObjectEvent (EventId.GameBegin, this, OnGameBegin);
 	}
 
 	public void Destroy()
 	{
 		GameMain.Instance.EventMgr.RemoveObjectEvent (EventId.UnitySceneLoadingInfo, this);
 		GameMain.Instance.EventMgr.RemoveObjectEvent (EventId.UnitySceneLoaded, this);
+		GameMain.Instance.EventMgr.RemoveObjectEvent (EventId.GameBegin, this);
 		BattleManager.Instance.DestroyBattle ();
 	}
 
@@ -71,16 +73,21 @@ public class GameSceneManager{
 	{
 		mHasUnitySceneLoaded = true;
 		SceneCameraManager.Instance.OnEnterScene ();
-		EnterBattle ();
+		GameMain.Instance.ProxyMgr.Room.LoadFinish ();
+	}
+
+	void OnGameBegin(object obj)
+	{
 		GameMain.Instance.UIMgr.CleseView (UIViewId.Loading);
+		EnterBattle ();
 	}
 
 	void EnterBattle()
 	{
-		List<FighterConfigData> fighters = new List<FighterConfigData>();
+		List<UnitConfigData> fighters = new List<UnitConfigData>();
 		List<BattleTest> testGdsList = BattleTest.GetAllList ();
 		for (int i = 0; i < testGdsList.Count; ++i) {
-			FighterConfigData fighterData = new FighterConfigData ();
+			UnitConfigData fighterData = new UnitConfigData ();
 			BattleTest gdsInfo = testGdsList [i];
 			fighterData.id = gdsInfo.id;
 			fighterData.borthPos.x = gdsInfo.borthPos.x;

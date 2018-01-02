@@ -1,0 +1,1 @@
+cp Server/bin/Debug/* D:/Program\ Files/Photon/Server_SDK_v4/Photon-OnPremise-Server-SDK_v4-0-29-11263/deploy/LegionBattle/bin/

@@ -42,6 +42,7 @@ public class UIViewBase{
 	/// </summary>
 	public void Close()
 	{
+		RemoveAllEventListener ();
 		OnClose ();
 		GameObject.Destroy (PrefabGO);
 	}

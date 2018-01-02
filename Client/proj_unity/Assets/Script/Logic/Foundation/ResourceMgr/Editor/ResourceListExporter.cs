@@ -20,7 +20,7 @@ public class ResourceListExporter{
 	public static bool ExportResourceList()
 	{
 		string folderPaht = Path.Combine (Application.dataPath, "Resources");
-		Dictionary<System.Type, Dictionary<string, string>> resourceListInfos = new Dictionary<System.Type, Dictionary<string, string>> ();
+		Dictionary<string, Dictionary<string, string>> resourceListInfos = new Dictionary<string, Dictionary<string, string>> ();
 		bool collectResult = CollectFolderInfo (folderPaht, resourceListInfos);
 		if (!collectResult)
 			return false;
@@ -31,7 +31,7 @@ public class ResourceListExporter{
 		return true;
 	}
 
-	private static bool CollectFolderInfo(string folderPath, Dictionary<System.Type, Dictionary<string, string>> fileInfos)
+	private static bool CollectFolderInfo(string folderPath, Dictionary<string, Dictionary<string, string>> fileInfos)
 	{
 		DirectoryInfo direcInfo = new DirectoryInfo (folderPath);
 		FileInfo[] files = direcInfo.GetFiles ();
@@ -48,11 +48,11 @@ public class ResourceListExporter{
 				return false;
 			} 
 			else {
-				System.Type fileType = obj.GetType ();
+				string fileTypeStr = obj.GetType ().ToString();
 				Dictionary<string, string> fileNameToPathDic = null;
-				if (!fileInfos.TryGetValue(fileType, out fileNameToPathDic)) {
+				if (!fileInfos.TryGetValue(fileTypeStr, out fileNameToPathDic)) {
 					fileNameToPathDic = new Dictionary<string, string> ();
-					fileInfos [fileType] = fileNameToPathDic;
+					fileInfos [fileTypeStr] = fileNameToPathDic;
 				}
 				if (fileNameToPathDic.ContainsKey (obj.name)) {
 					Debug.LogError ("Find same file name, Paht1:\n" + fileNameToPathDic [obj.name] + "\npath2:\n" + fileRelativePath);

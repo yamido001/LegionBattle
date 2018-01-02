@@ -8,7 +8,7 @@ public abstract class DataProxy{
 	public void Init()
 	{
 		if (mHasInit) {
-			Debug.LogError (this.GetType() + "初始化多次");
+			Logger.LogError (this.GetType() + "初始化多次");
 			return;
 		}
 		OnInit ();

@@ -87,6 +87,11 @@ public class GameMain : MonoBehaviour {
 		private set;
 	}
 
+	public SocketManager SocketMgr {
+		get;
+		private set;
+	}
+
 	private HashSet<EventId> mNotFileDepInitWaitEventSet = new HashSet<EventId>(){
 		EventId.ResourceManagerInitFinish,
 	};
@@ -116,8 +121,10 @@ public class GameMain : MonoBehaviour {
 		EventMgr.Init ();
 
 		var enumerator = mNotFileDepInitWaitEventSet.GetEnumerator ();
+		string eventIdList = string.Empty;
 		while (enumerator.MoveNext ()) {
 			EventId eventId = enumerator.Current;
+			eventIdList += eventId.ToString () + "\t";
 			EventMgr.RegisterObjectEvent (eventId, this, delegate(object eventParam) {
 				EventMgr.RemoveObjectEvent(eventId, this);
 				mNotFileDepInitWaitEventSet.Remove(eventId);
@@ -148,6 +155,8 @@ public class GameMain : MonoBehaviour {
 
 		TimeMgr = new TimeManager ();
 		TimeMgr.Init ();
+
+		SocketMgr = new SocketManager ();
 	}
 
 	public void FileDepInit(System.Action hdlOnFinish)
@@ -211,6 +220,7 @@ public class GameMain : MonoBehaviour {
 		}
 		mLastUpdateTime = TimeMgr.CurTimeMs;
 
+		SocketMgr.Update ();
 		StateMgr.Update ();
 		ResMgr.Update ();
 		HttpMgr.Update ();
@@ -252,5 +262,10 @@ public class GameMain : MonoBehaviour {
 		Instance = null;
 		GameObject.Destroy (gameObject);
 		SceneMgr.EnterScene ("Lancher", null);
+	}
+
+	void OnDestroy()
+	{
+		SocketMgr.OnDestroy ();
 	}
 }
