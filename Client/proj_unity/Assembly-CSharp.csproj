@@ -19,7 +19,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>Temp\bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE;UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_5_OR_NEWER;UNITY_5_6_OR_NEWER;UNITY_5_6_1;UNITY_5_6;UNITY_5;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_DUCK_TYPING;ENABLE_GENERICS;ENABLE_PVR_GI;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_RUNTIME_NAVMESH_BUILDING;ENABLE_SPRITERENDERER_FLIPPING;ENABLE_SPRITES;ENABLE_TERRAIN;ENABLE_RAKNET;ENABLE_UNET;ENABLE_LZMA;ENABLE_UNITYEVENTS;ENABLE_WEBCAM;ENABLE_WWW;ENABLE_CLOUD_SERVICES_COLLAB;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_HUB;ENABLE_CLOUD_PROJECT_ID;ENABLE_CLOUD_SERVICES_UNET;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_CLOUD_LICENSE;ENABLE_EDITOR_METRICS;ENABLE_EDITOR_METRICS_CACHING;ENABLE_NATIVE_ARRAY;INCLUDE_DYNAMIC_GI;INCLUDE_GI;PLATFORM_SUPPORTS_MONO;RENDER_SOFTWARE_CURSOR;INCLUDE_PUBNUB;ENABLE_PLAYMODE_TESTS_RUNNER;ENABLE_SCRIPTING_NEW_CSHARP_COMPILER;ENABLE_VIDEO;UNITY_STANDALONE_WIN;UNITY_STANDALONE;ENABLE_SUBSTANCE;ENABLE_RUNTIME_GI;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_CRUNCH_TEXTURE_COMPRESSION;ENABLE_UNITYWEBREQUEST;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_CRASH_REPORTING;ENABLE_EVENT_QUEUE;ENABLE_CLUSTERINPUT;ENABLE_VR;ENABLE_WEBSOCKET_HOST;ENABLE_MONO;NET_2_0_SUBSET;ENABLE_PROFILER;UNITY_ASSERTIONS;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_WIN;ENABLE_NATIVE_ARRAY_CHECKS;UNITY_TEAM_LICENSE;LOCAL_RES_SERVER;DEBUG_LOG</DefineConstants>
+    <DefineConstants>DEBUG;TRACE;UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_5_OR_NEWER;UNITY_5_6_OR_NEWER;UNITY_5_6_1;UNITY_5_6;UNITY_5;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_DUCK_TYPING;ENABLE_GENERICS;ENABLE_PVR_GI;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_RUNTIME_NAVMESH_BUILDING;ENABLE_SPRITERENDERER_FLIPPING;ENABLE_SPRITES;ENABLE_TERRAIN;ENABLE_RAKNET;ENABLE_UNET;ENABLE_LZMA;ENABLE_UNITYEVENTS;ENABLE_WEBCAM;ENABLE_WWW;ENABLE_CLOUD_SERVICES_COLLAB;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_HUB;ENABLE_CLOUD_PROJECT_ID;ENABLE_CLOUD_SERVICES_UNET;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_CLOUD_LICENSE;ENABLE_EDITOR_METRICS;ENABLE_EDITOR_METRICS_CACHING;ENABLE_NATIVE_ARRAY;INCLUDE_DYNAMIC_GI;INCLUDE_GI;PLATFORM_SUPPORTS_MONO;RENDER_SOFTWARE_CURSOR;INCLUDE_PUBNUB;ENABLE_PLAYMODE_TESTS_RUNNER;ENABLE_SCRIPTING_NEW_CSHARP_COMPILER;ENABLE_VIDEO;UNITY_STANDALONE_WIN;UNITY_STANDALONE;ENABLE_SUBSTANCE;ENABLE_RUNTIME_GI;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_CRUNCH_TEXTURE_COMPRESSION;ENABLE_UNITYWEBREQUEST;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_CRASH_REPORTING;ENABLE_EVENT_QUEUE;ENABLE_CLUSTERINPUT;ENABLE_VR;ENABLE_WEBSOCKET_HOST;ENABLE_MONO;NET_2_0_SUBSET;ENABLE_PROFILER;UNITY_ASSERTIONS;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_WIN;ENABLE_NATIVE_ARRAY_CHECKS;UNITY_TEAM_LICENSE;LOCAL_RES_SERVER;DEBUG_LOG;CROSS_PLATFORM_INPUT</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <NoWarn>0169</NoWarn>
@@ -81,9 +81,13 @@
      <Compile Include="Assets\Script\Logic\Foundation\ResourceMgr\IResourceImp.cs" />
      <Compile Include="Assets\Script\Logic\Foundation\ResourceMgr\ResourceLoadImp.cs" />
      <Compile Include="Assets\Script\Logic\Foundation\ResourceMgr\ResourceManager.cs" />
+     <Compile Include="Assets\Script\Logic\Foundation\StateMechine\PreCreateStateBase.cs" />
+     <Compile Include="Assets\Script\Logic\Foundation\StateMechine\PreCreateStateMechine.cs" />
      <Compile Include="Assets\Script\Logic\Foundation\StateMechine\StateBase.cs" />
      <Compile Include="Assets\Script\Logic\Foundation\StateMechine\StateMechineBase.cs" />
      <Compile Include="Assets\Script\Logic\Foundation\Time\TimeManager.cs" />
+     <Compile Include="Assets\Script\Logic\Foundation\Time\Timer.cs" />
+     <Compile Include="Assets\Script\Logic\Foundation\Time\TimerManager.cs" />
      <Compile Include="Assets\Script\Logic\Foundation\UIManager\UIManager.cs" />
      <Compile Include="Assets\Script\Logic\Foundation\UIManager\UIManagerRegister.cs" />
      <Compile Include="Assets\Script\Logic\Foundation\UIManager\UIView.cs" />
@@ -95,17 +99,25 @@
      <Compile Include="Assets\Script\Logic\Foundation\Utils\Singleton.cs" />
      <Compile Include="Assets\Script\Logic\Foundation\Utils\Tupple.cs" />
      <Compile Include="Assets\Script\Logic\Foundation\Utils\Utils.cs" />
+     <Compile Include="Assets\Script\Logic\Game\Battle\BattleConfig.cs" />
      <Compile Include="Assets\Script\Logic\Game\Battle\BattleManager.cs" />
      <Compile Include="Assets\Script\Logic\Game\Battle\BattleUtils.cs" />
-     <Compile Include="Assets\Script\Logic\Game\Battle\Instruction\OldBaseInstruction.cs" />
+     <Compile Include="Assets\Script\Logic\Game\Battle\LogicLayer\AI\UnitAIComponent.cs" />
+     <Compile Include="Assets\Script\Logic\Game\Battle\LogicLayer\AI\UnitAIIdle.cs" />
+     <Compile Include="Assets\Script\Logic\Game\Battle\LogicLayer\AI\UnitAIInstructionAttack.cs" />
+     <Compile Include="Assets\Script\Logic\Game\Battle\LogicLayer\AI\UnitAIInstructionMove.cs" />
+     <Compile Include="Assets\Script\Logic\Game\Battle\LogicLayer\AI\UnitAIStateType.cs" />
      <Compile Include="Assets\Script\Logic\Game\Battle\LogicLayer\BattleTimeLine.cs" />
      <Compile Include="Assets\Script\Logic\Game\Battle\LogicLayer\BattleUnitManager.cs" />
-     <Compile Include="Assets\Script\Logic\Game\Battle\LogicLayer\UnitAIComponent.cs" />
+     <Compile Include="Assets\Script\Logic\Game\Battle\LogicLayer\Instruction\BattleInstructionManager.cs" />
+     <Compile Include="Assets\Script\Logic\Game\Battle\LogicLayer\Instruction\OneFrameInstructions.cs" />
      <Compile Include="Assets\Script\Logic\Game\Battle\LogicLayer\UnitBase.cs" />
      <Compile Include="Assets\Script\Logic\Game\Battle\LogicLayer\UnitConfigData.cs" />
      <Compile Include="Assets\Script\Logic\Game\Battle\Old\FighterAIComponent.cs" />
      <Compile Include="Assets\Script\Logic\Game\Battle\Old\FighterSkillComponent.cs" />
+     <Compile Include="Assets\Script\Logic\Game\Battle\Old\OldBaseInstruction.cs" />
      <Compile Include="Assets\Script\Logic\Game\Battle\OldInstructionManager.cs" />
+     <Compile Include="Assets\Script\Logic\Game\Battle\Operate\OperatorManager.cs" />
      <Compile Include="Assets\Script\Logic\Game\Battle\ViewLayer\OldBattlePlayerManager.cs" />
      <Compile Include="Assets\Script\Logic\Game\Battle\ViewLayer\OldBattleUnit.cs" />
      <Compile Include="Assets\Script\Logic\Game\Battle\ViewLayer\OldUnitActor.cs" />
@@ -117,6 +129,7 @@
      <Compile Include="Assets\Script\Logic\Game\GDS\Generate\SkillConfig.cs" />
      <Compile Include="Assets\Script\Logic\Game\PlatformMgr\PlatformManager.cs" />
      <Compile Include="Assets\Script\Logic\Game\Protocal\Common.cs" />
+     <Compile Include="Assets\Script\Logic\Game\Proxy\BattleProxy.cs" />
      <Compile Include="Assets\Script\Logic\Game\Proxy\DataProxy.cs" />
      <Compile Include="Assets\Script\Logic\Game\Proxy\LoginProxy.cs" />
      <Compile Include="Assets\Script\Logic\Game\Proxy\PlayerProxy.cs" />
@@ -134,10 +147,14 @@
      <Compile Include="Assets\Script\Logic\Game\UI\LoadingView.cs" />
      <Compile Include="Assets\Script\Logic\Game\UI\LoginView.cs" />
      <Compile Include="Assets\Script\Logic\Game\UI\MainView.cs" />
+     <Compile Include="Assets\Script\Logic\Game\UI\MoveJostickView.cs" />
      <Compile Include="Assets\Script\Logic\Game\UI\RoomView.cs" />
      <Compile Include="Assets\Script\Logic\Game\UI\RoomViewAccountListItem.cs" />
      <Compile Include="Assets\Script\Logic\GameMain.cs" />
+     <Compile Include="Assets\Script\TestGC.cs" />
+     <Compile Include="Assets\Test.cs" />
      <Compile Include="Assets\TestConnection.cs" />
+     <None Include="Assets\Plugins\SimpleTouchController\README.txt" />
      <None Include="Assets\Script\Logic\Foundation\FileMgr\ReadMe.txt" />
      <None Include="Assets\StreamingAssets\FileSystem\FileList.txt" />
      <None Include="Assets\Plugins\JsonDotNet\ReadMe.txt" />

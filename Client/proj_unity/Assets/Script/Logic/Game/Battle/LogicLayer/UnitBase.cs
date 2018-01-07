@@ -53,6 +53,12 @@ namespace GameBattle{
 
 				//mSkill = new FighterSkillComponent (this, Data.skillList);
 				mAI = new UnitAIComponent (this);
+				mAI.Init ();
+			}
+
+			public void SetBattleInstruction(BattleInstructionBase instruction)
+			{
+				mAI.SetBattleInstruction (instruction);
 			}
 
 			public int GetAttribute(FighterAttributeType attrType)
@@ -71,7 +77,7 @@ namespace GameBattle{
 				if (IsDead) {
 					return;
 				}
-				mAI.Update ();
+				mAI.Execute ();
 				//mSkill.Update ();
 			}
 
@@ -80,21 +86,18 @@ namespace GameBattle{
 				//mSkill.UseSkill (skillId, targetId);
 			}
 
-			public void MoveTo(IntVector2 targetPos)
+			public void MoveAngle(short moveAngle)
 			{
-				IntVector2 oldPos = Position;
-				
-				int dis = (Position - targetPos).magnitude;
 				int speed = GetAttribute(FighterAttributeType.Speed);
-				if (dis < speed) {
-					//移动到目标点
-					Position = targetPos;
-				}
-				else
-				{
-					Position = IntVector2.Lerp (Position, targetPos, speed, dis);
-				}
+				IntVector2 stopPos = IntVector2.MoveAngle (Position, moveAngle, speed);
+
+				Position = stopPos;
 				//InstructionManager.Instance.CreateMoveInstruction (ID, oldPos, Position);
+			}
+
+			public void EnterIdle()
+			{
+				
 			}
 
 			public void Destroy()

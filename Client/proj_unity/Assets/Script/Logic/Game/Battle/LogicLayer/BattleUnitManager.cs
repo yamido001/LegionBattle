@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using LegionBattle.ServerClientCommon;
 
 namespace GameBattle
 {
@@ -37,6 +38,14 @@ namespace GameBattle
 				}
 			}
 
+			public void SetBattleInstruction(BattleInstructionBase instruction)
+			{
+				UnitBase battleUnit = GetUnitByUnitId (instruction.SceneUnitId);
+				if (null != battleUnit) {
+					battleUnit.SetBattleInstruction (instruction);
+				}
+			}
+
 			public void Update()
 			{
 				ulong curMillisecond = GameMain.Instance.TimeMgr.CurTimeMs;
@@ -68,24 +77,26 @@ namespace GameBattle
 				}
 			}
 
-			UnitBase FindById(int id)
+			UnitBase GetUnitByUnitId(int id)
 			{
-				return mFighterDic [id];
+				UnitBase unit = null;
+				mFighterDic.TryGetValue (id, out unit);
+				return unit;
 			}
 
 			public List<UnitBase> GetEnemyFighterList(int id)
 			{
-				UnitBase requestFighter = FindById (id);
+				UnitBase requestFighter = GetUnitByUnitId (id);
 				return requestFighter.Data.IsAttack ? mDefenderFighterList : mAttackFighterList;
 			}
 
 			public void FighterTryUseSkill(int fighterId, int skillId, int targetFighterId)
 			{
-				UnitBase skillUser = FindById (fighterId);
+				UnitBase skillUser = GetUnitByUnitId (fighterId);
 				if (skillUser == null || skillUser.IsDead) {
 					return;
 				}
-				UnitBase targetFighter = FindById (targetFighterId);
+				UnitBase targetFighter = GetUnitByUnitId (targetFighterId);
 				if (null == targetFighter || targetFighter.IsDead) {
 					return;
 				}

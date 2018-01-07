@@ -7,4 +7,5 @@ public enum UIViewId{
 	Loading,
 	Login,
 	RoomView,
+	MoveJostick,
 }

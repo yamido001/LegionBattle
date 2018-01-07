@@ -10,5 +10,6 @@ public partial class UIManager{
 		RegisterView (UIViewId.Loading, "LoadingView", typeof(LoadingView));
 		RegisterView (UIViewId.Login, "LoginView", typeof(LoginView));
 		RegisterView (UIViewId.RoomView, "RoomView", typeof(RoomView));
+		RegisterView (UIViewId.MoveJostick, "MoveJostickView", typeof(MoveJostickView));
 	}
 }

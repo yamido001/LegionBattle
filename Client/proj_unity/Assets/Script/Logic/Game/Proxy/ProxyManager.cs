@@ -20,6 +20,11 @@ public class ProxyManager{
 		private set;
 	}
 
+	public BattleProxy Battle {
+		get;
+		private set;
+	}
+
 	public void Init()
 	{
 		Player = new PlayerProxy ();
@@ -30,6 +35,9 @@ public class ProxyManager{
 	
 		Room = new RoomProxy ();
 		Room.Init ();
+
+		Battle = new BattleProxy ();
+		Battle.Init ();
 	}
 
 	void DestroyProxy(DataProxy proxy)
@@ -44,5 +52,6 @@ public class ProxyManager{
 		DestroyProxy (Player);
 		DestroyProxy (Login);
 		DestroyProxy (Room);
+		DestroyProxy (Battle);
 	}
 }

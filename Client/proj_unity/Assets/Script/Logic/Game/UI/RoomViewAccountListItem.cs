@@ -20,10 +20,10 @@ public class RoomViewAccountListItem{
 		mIsReady = mRootTf.Find ("textReady").GetComponent<Text> ();
 	}
 
-	public void SetAccountData(RpAccountData accountData)
+	public void SetPlayerData(RpPlayerData accountData)
 	{
-		mAccountId.text = accountData.AccountId.ToString ();
-		mAccountName.text = accountData.AccountName;
+		mAccountId.text = accountData.PlayerId.ToString ();
+		mAccountName.text = accountData.PlayerName;
 		mIsReady.gameObject.SetActive (accountData.IsReady);
 	}
 

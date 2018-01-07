@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using GDSKit;
 using GameBattle;
+using GameBattle.LogicLayer;
 
 /// <summary>
 /// 游戏逻辑场景，包含战斗、Unity场景等
@@ -52,9 +53,9 @@ public class GameSceneManager{
 		GameMain.Instance.SceneMgr.EnterScene (mCurSceneInfo.unitySceneId, null);
 	}
 
-	public void Update(float dt)
+	public void Update(ulong deltaMs)
 	{
-		BattleManager.Instance.Update ();
+		BattleTimeLine.Instance.Update ();
 	}
 
 	public void LateUpdate()
@@ -78,18 +79,16 @@ public class GameSceneManager{
 
 	void OnGameBegin(object obj)
 	{
-		GameMain.Instance.UIMgr.CleseView (UIViewId.Loading);
-		EnterBattle ();
-	}
+		GameMain.Instance.UIMgr.OpenView (UIViewId.MoveJostick, null, delegate() {
+			GameMain.Instance.UIMgr.CleseView (UIViewId.Loading);	
+		});
 
-	void EnterBattle()
-	{
-		List<UnitConfigData> fighters = new List<UnitConfigData>();
-		List<BattleTest> testGdsList = BattleTest.GetAllList ();
-		for (int i = 0; i < testGdsList.Count; ++i) {
+		int[] battleSceneUnits = obj as int[];
+		List<UnitConfigData> fighters = new List<UnitConfigData>(battleSceneUnits.Length);
+		for (int i = 0; i < battleSceneUnits.Length; ++i) {
 			UnitConfigData fighterData = new UnitConfigData ();
-			BattleTest gdsInfo = testGdsList [i];
-			fighterData.id = gdsInfo.id;
+			BattleTest gdsInfo = BattleTest.GetInstance (battleSceneUnits[i]);
+			fighterData.id = battleSceneUnits[i];
 			fighterData.borthPos.x = gdsInfo.borthPos.x;
 			fighterData.borthPos.y = gdsInfo.borthPos.y;
 			fighterData.camp = gdsInfo.camp;
@@ -100,7 +99,7 @@ public class GameSceneManager{
 			fighterData.skillList = gdsInfo.skillList.ToArray();
 			fighters.Add (fighterData);
 		}
-		BattleManager.Instance.StartBattle (fighters);
+		BattleTimeLine.Instance.StartBattle(fighters);
 	}
 	#endregion
 

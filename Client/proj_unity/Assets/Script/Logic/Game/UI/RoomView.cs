@@ -149,7 +149,7 @@ public class RoomView : UIViewBase {
 		}
 		for (int i = 0; i < GameMain.Instance.ProxyMgr.Room.RoomAccountList.Count; ++i) {
 			mAccountList [i].SetShowStatus (true);
-			mAccountList [i].SetAccountData (GameMain.Instance.ProxyMgr.Room.RoomAccountList [i]);
+			mAccountList [i].SetPlayerData (GameMain.Instance.ProxyMgr.Room.RoomAccountList [i]);
 		}
 	}
 

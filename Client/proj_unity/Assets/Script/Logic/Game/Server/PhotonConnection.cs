@@ -44,9 +44,10 @@ public class PhotonConnection : IPhotonPeerListener {
 		RegistReponseType (RpId.LeaveRoom, RpLeaveRoom.Deserialization);
 		RegistReponseType (RpId.RoomAccountInfo, RpRoomMemberInfo.Deserialization);
 		RegistReponseType (RpId.AllMemberReady, RpEmpty.Deserialization);
-		RegistReponseType (RpId.EnterScene, RpEmpty.Deserialization);
 		RegistReponseType (RpId.PlayerLogin, RpPlayerLogin.Deserialization);
-		PhotonPeer.RegisterType (typeof(RpAccountData), (byte)ProtocolSerializeType.AccountData, RpAccountData.Serialize, RpAccountData.Deserialize);
+		RegistReponseType (RpId.EnterScene, RpEnterScene.Deserialization);
+		RegistReponseType (RpId.BattleInstruction, RpBattleInstructionList.Deserialization);
+		PhotonPeer.RegisterType (typeof(RpPlayerData), (byte)ProtocolSerializeType.AccountData, RpPlayerData.Serialize, RpPlayerData.Deserialize);
 	}
 
 	public ConnectionState ConnectState {

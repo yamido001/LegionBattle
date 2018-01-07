@@ -6,7 +6,7 @@ namespace GameBattle{
 
 	namespace LogicLayer
 	{
-		public class FighterAIComponent {
+		/*public class FighterAIComponent {
 
 			enum AIState
 			{
@@ -131,7 +131,7 @@ namespace GameBattle{
 			void DoMove()
 			{
 				mState = AIState.MoveTarget;
-				mSelf.MoveTo (mMoveTarget.Position);
+				mSelf.MoveAngle (mMoveTarget.Position);
 			}
 
 			void SetMoveTarget(UnitBase target)
@@ -171,7 +171,7 @@ namespace GameBattle{
 				return ret;
 			}
 			#endregion
-		}	
+		}	*/
 	}
 }
 

@@ -43,7 +43,7 @@ public class RoomProxy : DataProxy {
 		}
 	}
 
-	public List<RpAccountData> RoomAccountList
+	public List<RpPlayerData> RoomAccountList
 	{
 		get;
 		private set;
@@ -98,7 +98,8 @@ public class RoomProxy : DataProxy {
 
 	void OnGameBegin(ResponseBase response)
 	{
-		GameMain.Instance.EventMgr.PostObjectEvent (EventId.GameBegin, null);
+		RpEnterScene enterScene = response as RpEnterScene;
+		GameMain.Instance.EventMgr.PostObjectEvent (EventId.GameBegin, enterScene.SceneUnit);
 	}
 	#endregion
 

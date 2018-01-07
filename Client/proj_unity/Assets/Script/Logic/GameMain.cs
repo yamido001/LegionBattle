@@ -101,7 +101,6 @@ public class GameMain : MonoBehaviour {
 	};
 
 	ulong mLastUpdateTime;
-	bool mHasUpdated = false;
 
 	void Awake(){
 		DontDestroyOnLoad (gameObject);
@@ -110,6 +109,7 @@ public class GameMain : MonoBehaviour {
 		StateMgr = new StateManager ();
 		StateMgr.Init ();
 		StateMgr.EnterState (GameStateId.StartUp, null);
+		mLastUpdateTime = TimeMgr.CurTimeMs;
 	}
 
 	/// <summary>
@@ -214,10 +214,7 @@ public class GameMain : MonoBehaviour {
 
 	void Update () {
 
-		float dtTime = 0f;
-		if (mHasUpdated) {
-			dtTime = TimeMgr.SinceTimeSecond (mLastUpdateTime);
-		}
+		ulong dtTime = TimeMgr.SinceTimeMs (mLastUpdateTime);
 		mLastUpdateTime = TimeMgr.CurTimeMs;
 
 		SocketMgr.Update ();
@@ -226,6 +223,7 @@ public class GameMain : MonoBehaviour {
 		HttpMgr.Update ();
 		if(null != GameSceneMgr)
 			GameSceneMgr.Update(dtTime);
+		TimerManager.Instance.Update (dtTime);
 	}
 
 	void LateUpdate()
