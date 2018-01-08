@@ -67,4 +67,13 @@ public class Utils{
 		childTf.SetParent (parTf);
 		childTf.Reset ();
 	}
+
+	public static string CombiePath(params string[] nodeStr)
+	{
+		string ret = nodeStr [0];
+		for (int i = 1; i < nodeStr.Length; ++i) {
+			ret = System.IO.Path.Combine (ret, nodeStr [i]);
+		}
+		return ret;
+	}
 }

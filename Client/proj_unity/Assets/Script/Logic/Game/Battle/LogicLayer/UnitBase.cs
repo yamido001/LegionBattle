@@ -88,16 +88,20 @@ namespace GameBattle{
 
 			public void MoveAngle(short moveAngle)
 			{
+				//Logger.LogInfo ("进入到移动状态");
 				int speed = GetAttribute(FighterAttributeType.Speed);
 				IntVector2 stopPos = IntVector2.MoveAngle (Position, moveAngle, speed);
 
+				IntVector2 fromPos = Position;
 				Position = stopPos;
-				//InstructionManager.Instance.CreateMoveInstruction (ID, oldPos, Position);
+				BattleUnitManager.Instance.OnUnitMove (ID, fromPos, Position);
+				BattleLogManager.Instance.Log ("DoInBattle", BattleTimeLine.Instance.CurFrameCount + " " + ID + " Move " + moveAngle);
 			}
 
 			public void EnterIdle()
 			{
-				
+				Logger.LogInfo ("进入到停止状态");
+				BattleUnitManager.Instance.OnUnitEnterIdle (ID);
 			}
 
 			public void Destroy()

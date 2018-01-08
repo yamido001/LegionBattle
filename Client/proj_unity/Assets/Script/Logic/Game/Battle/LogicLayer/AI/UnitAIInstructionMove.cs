@@ -19,6 +19,7 @@ namespace GameBattle.LogicLayer
 		{
 			BattleMove moveInstruction = param as BattleMove;
 			mMoveAngle = moveInstruction.MoveAngle;
+			Logger.LogInfo ("设置移动指令  " + mMoveAngle);
 		}
 
 		public override void Execute ()

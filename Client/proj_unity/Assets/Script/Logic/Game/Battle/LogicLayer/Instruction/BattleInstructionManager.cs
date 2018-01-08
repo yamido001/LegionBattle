@@ -25,7 +25,8 @@ namespace GameBattle.LogicLayer
 
 		public void AddInstruction(RpBattleInstructionList rpMessage)
 		{
-			Logger.LogWarning ("添加指令: " + rpMessage.FrameCount);
+			BattleLogManager.Instance.Log ("ReceIns", GetInstructionLogInfo(rpMessage));
+			//Logger.LogWarning ("添加指令: " + rpMessage.FrameCount);
 			if (null != mCurNotAllReceiveInstructions) {
 				if (rpMessage.FrameCount != mCurNotAllReceiveInstructions.frameCount) {
 					Logger.LogError ("等待接受战斗指令，但是确收到了下一帧的数据，为什么呢?新的帧号是:" + rpMessage.FrameCount);
@@ -64,6 +65,28 @@ namespace GameBattle.LogicLayer
 				return null;
 			}
 			return mInstructionQueue.Dequeue ();
+		}
+
+		string GetInstructionLogInfo(RpBattleInstructionList rpMessage)
+		{
+			System.Text.StringBuilder logSb = new System.Text.StringBuilder ();
+			logSb.Append ("收到数据 " + rpMessage.FrameCount + "\t\t");
+			for (int i = 0; i < rpMessage.BattleInstructionList.Count; ++i) {
+				var item = rpMessage.BattleInstructionList [i];
+				logSb.Append (item.SceneUnitId.ToString() + "\t");
+				logSb.Append (item.InstructionType.ToString () + "\t");
+				switch (item.InstructionType) {
+				case BattleInstructionType.Move:
+					BattleMove moveInstruct = item as BattleMove;
+					logSb.Append (moveInstruct.MoveAngle);
+					break;
+				case BattleInstructionType.StopMove:
+					break;
+				default:
+					break;
+				}
+			}
+			return logSb.ToString ();
 		}
 	}
 }

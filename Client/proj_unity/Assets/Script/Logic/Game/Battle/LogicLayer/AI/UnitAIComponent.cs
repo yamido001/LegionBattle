@@ -42,6 +42,9 @@ namespace GameBattle{
 				case BattleInstructionType.Move:
 					Enter ((int)UnitAIStateType.InstructionMove, instruction);
 					break;
+				case BattleInstructionType.StopMove:
+					Enter ((int)UnitAIStateType.Idle, instruction);
+					break;
 				case BattleInstructionType.Skill:
 					break;
 				default:

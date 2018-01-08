@@ -1,36 +1,51 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using GameBattle;
-
+using GameBattle.LogicLayer;
+using GameBattle.BattleView;
 using LegionBattle.ServerClientCommon;
 
-namespace GameBattle.LogicLayer
+namespace GameBattle
 {
 	public class BattleTimeLine : Singleton<BattleTimeLine>{
-
-		int mCurFrameCount = 0;
+		
+		public int CurFrameCount
+		{
+			get;
+			private set;
+		}
 
 		#region 生命周期
 		public void StartBattle(List<UnitConfigData> fighterDatas)
 		{
 			IsInBattle = true;
-			mCurFrameCount = 0;
+			CurFrameCount = 0;
+			BattleUnitManager.Instance.AddUnitMoveListener (delegate(int unitId, IntVector2 fromPos, IntVector2 toPos) {
+				BattleActorManager.Instance.OnUnitMove(unitId, fromPos, toPos);
+			});
+			BattleUnitManager.Instance.AddUnitEnterIdleListener (delegate(int unitId) {
+				BattleActorManager.Instance.OnUnitEnterIdle(unitId);
+			});
 			BattleUnitManager.Instance.StartBattle (fighterDatas);
+			BattleActorManager.Instance.StartBattle (fighterDatas);
+			BattleLogManager.Instance.Start ();
 		}
 
 		public void Update()
 		{
+			if (!IsInBattle)
+				return;
 			int lastFrameCount = BattleInstructionManager.Instance.LatestInstructionFrameCount;
 			int curCount = 0;
-			while (mCurFrameCount < lastFrameCount && curCount++ < ConstConfig.BattleOneFramemMaxUpdateTimes) {
+			while (CurFrameCount < lastFrameCount && curCount++ < ConstConfig.BattleOneFramemMaxUpdateTimes) {
 				PlayOneFrame ();
 			}
-			BattleUnitManager.Instance.Update ();
 		}
 
 		public void Destroy()
 		{
 			BattleUnitManager.Instance.DestroyBattle ();
+			BattleActorManager.Instance.DestroyBattle ();
 			IsInBattle = false;
 		}
 		#endregion
@@ -42,17 +57,20 @@ namespace GameBattle.LogicLayer
 
 		void PlayOneFrame()
 		{
-			mCurFrameCount++;
+			CurFrameCount++;
 			OneFrameInstructions instructions = BattleInstructionManager.Instance.GetFrameInstructions ();
 			if (null == instructions)
 				return;
-			Logger.LogWarning ("取得指令: " + instructions.frameCount);
-			Utils.Assert (instructions.frameCount == mCurFrameCount, "战斗需要第" + mCurFrameCount + "但是确拿到了第" + instructions.frameCount + "帧的指令");
+			//Logger.LogWarning ("取得指令: " + instructions.frameCount);
+			Utils.Assert (instructions.frameCount == CurFrameCount, "战斗需要第" + CurFrameCount + "但是确拿到了第" + instructions.frameCount + "帧的指令");
 			BattleUnitManager unitManager = BattleUnitManager.Instance;
 			for (int i = 0; i < instructions.instructionList.Count; ++i) {
 				BattleInstructionBase instruction = instructions.instructionList [i];
 				unitManager.SetBattleInstruction (instruction);
 			}
+
+			BattleUnitManager.Instance.Update ();
+			BattleActorManager.Instance.Update ();
 		}
 	}
 }

@@ -40,7 +40,7 @@ public abstract class PreCreateStateMechine{
 	public void Destroy()
 	{
 		if (null != mCurState) {
-			mCurState.Execute ();
+			mCurState.Exit ();
 		}
 		var stateDicEnumerator = mStateTypeDic.GetEnumerator ();
 		while (stateDicEnumerator.MoveNext ()) {

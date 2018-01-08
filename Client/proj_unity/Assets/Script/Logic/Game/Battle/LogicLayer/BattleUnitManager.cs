@@ -17,9 +17,7 @@ namespace GameBattle
 			List<UnitBase> mAttackFighterList = new List<UnitBase>();
 			List<UnitBase> mDefenderFighterList = new List<UnitBase>();
 
-			ulong mLastMillisecond = 0;
-			static ulong OneFrameMillisecond = 33;
-
+			#region 生命周期函数
 			public void StartBattle(List<UnitConfigData> fighterDatas)
 			{
 				SceneCameraManager.Instance.MoveToPos (new Vector3(62f, 40f, 1.6f));
@@ -48,24 +46,6 @@ namespace GameBattle
 
 			public void Update()
 			{
-				ulong curMillisecond = GameMain.Instance.TimeMgr.CurTimeMs;
-				if (mLastMillisecond + OneFrameMillisecond > curMillisecond) {
-					return;
-				}
-				mLastMillisecond += OneFrameMillisecond;
-				UpdateFrame ();
-			}
-
-			public void DestroyBattle()
-			{
-				for (int i = 0; i < mFighters.Count; ++i) {
-					mFighters [i].Destroy ();
-				}
-				mFighters = null;
-			}
-
-			void UpdateFrame()
-			{
 				for (int i = 0; i < mFighters.Count; ++i) {
 					mFighters [i].Update ();
 				}
@@ -76,6 +56,41 @@ namespace GameBattle
 					mFighters.RemoveAt (i);
 				}
 			}
+
+			public void DestroyBattle()
+			{
+				for (int i = 0; i < mFighters.Count; ++i) {
+					mFighters [i].Destroy ();
+				}
+				mFighters = null;
+			}
+			#endregion
+
+			#region 回调通知
+			System.Action<int, IntVector2, IntVector2> mOnMoveListener;
+			public void AddUnitMoveListener(System.Action<int, IntVector2, IntVector2> listener)
+			{
+				mOnMoveListener = listener;
+			}
+
+			public void OnUnitMove(int unitId, IntVector2 fromPos, IntVector2 toPos)
+			{
+				if (null != mOnMoveListener)
+					mOnMoveListener.Invoke (unitId, fromPos, toPos);
+			}
+
+			System.Action<int> mOnEnterIdleListener;
+			public void AddUnitEnterIdleListener(System.Action<int> listener)
+			{
+				mOnEnterIdleListener = listener;
+			}
+
+			public void OnUnitEnterIdle(int unitId)
+			{
+				if (null != mOnEnterIdleListener)
+					mOnEnterIdleListener.Invoke (unitId);
+			}
+			#endregion
 
 			UnitBase GetUnitByUnitId(int id)
 			{

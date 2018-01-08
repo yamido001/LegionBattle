@@ -3,3 +3,6 @@
 /Client/proj_unity/Library/
 /Client/proj_unity/Temp/
 /TempBuild
+/Client/proj_unity/Log
+*.csproj
+*.sln

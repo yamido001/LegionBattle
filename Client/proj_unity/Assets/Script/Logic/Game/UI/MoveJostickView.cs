@@ -30,7 +30,7 @@ public class MoveJostickView : UIViewBase {
 		eventTrigger.triggers.Add (onDragEntry);
 
 		EventTrigger.Entry endDragEntry = new EventTrigger.Entry ();
-		endDragEntry.eventID = EventTriggerType.BeginDrag;
+		endDragEntry.eventID = EventTriggerType.EndDrag;
 		endDragEntry.callback.AddListener (EndDrag);
 		eventTrigger.triggers.Add (endDragEntry);
 
@@ -45,6 +45,7 @@ public class MoveJostickView : UIViewBase {
 			{
 				GameBattle.LogicLayer.OperatorManager.Instance.StopMove();
 			}
+			mIsDirty = false;
 		});
 	}
 

@@ -19,6 +19,7 @@ public class BattleProxy : DataProxy {
 	#region 向服务器发送数据
 	public void SendMoveOperate(short angle)
 	{
+		Logger.LogInfo ("发送移动角度 " + angle);
 		RqBattleInstruction rqInstruction = new RqBattleInstruction ();
 		rqInstruction.instruction = new BattleMove (angle);
 		GameMain.Instance.SocketMgr.SendMessage (RqId.BattleInstruction, rqInstruction);
@@ -26,6 +27,7 @@ public class BattleProxy : DataProxy {
 
 	public void StopMoveOperate()
 	{
+		Logger.LogInfo ("发送停止移动");
 		RqBattleInstruction rqInstruction = new RqBattleInstruction ();
 		rqInstruction.instruction = new BattleStopMove ();
 		GameMain.Instance.SocketMgr.SendMessage (RqId.BattleInstruction, rqInstruction);
@@ -35,7 +37,6 @@ public class BattleProxy : DataProxy {
 	#region 返回数据
 	void OnRpBattleInstruction(object param)
 	{
-		Logger.LogInfo ("OnRpBattleInstruction ");
 		GameBattle.LogicLayer.BattleInstructionManager.Instance.AddInstruction (param as RpBattleInstructionList);
 	}
 	#endregion

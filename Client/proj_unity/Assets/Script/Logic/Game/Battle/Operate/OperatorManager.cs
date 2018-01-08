@@ -25,14 +25,14 @@ namespace GameBattle.LogicLayer
 			angle = crossDir.z < 0f ? -angle : angle; 
 
 			if (Math.Abs (mAngle - (short)angle) > BattleConfig.joyStickFilterMaxAngle) {
-				mAngle = (short)angle;
+				mAngle = (short)(((short)angle + 360) % 360);
 				GameMain.Instance.ProxyMgr.Battle.SendMoveOperate (mAngle);
 			}
 		}
 
 		public void StopMove()
 		{
-			GameMain.Instance.ProxyMgr.Battle.SendMoveOperate (mAngle);
+			GameMain.Instance.ProxyMgr.Battle.StopMoveOperate ();
 		}
 
 		public void OnBattleEnd()
