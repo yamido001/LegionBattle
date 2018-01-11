@@ -116,7 +116,9 @@ namespace GameBattle
 					return;
 				}
 				GDSKit.SkillConfig skillConfig = GDSKit.SkillConfig.GetInstance (skillId);
-				int damage = skillUser.GetAttribute(FighterAttributeType.Attack) * skillConfig.attackPercentage / 100;
+				//TODO
+				//int damage = skillUser.GetAttribute(FighterAttributeType.Attack) * skillConfig.attackPercentage / 100;
+				int damage = 50;
 				int preLife = targetFighter.GetAttribute (FighterAttributeType.Life);
 				preLife -= damage;
 

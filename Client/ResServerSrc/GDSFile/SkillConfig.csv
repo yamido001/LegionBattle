@@ -1,5 +1,6 @@
-ï»¿id,time,cd,attackPercentage
-int,int,int,int
-ID,æŠ€èƒ½æ—¶é—´(å¸§),æŠ€èƒ½cd(å¸§),ä¼¤å®³ç™¾åˆ†æ¯”
-1,60,0,100
-2,90,120,200
+id,consumeTime,cd,targetInfo{type|param1|param2|param3},effectId
+short,short,short,SkillTargetInfo{short|short|short|short},short
+ID,¼¼ÄÜÏûºÄÊ±¼ä(Ö¡)	¼¼ÄÜcd(Ö¡)	¼¼ÄÜÄ¿±êÀàĞÍ,1:ÎŞÄ¿±ê£»2£ºUnitµ¥Î»;3:·¶Î§	¼¼ÄÜĞ§¹ûID
+1,60,0,{2#0#0#0},1
+2,90,120,{3#0#0#0},2
+3,90,120,{1#0#0#0},3

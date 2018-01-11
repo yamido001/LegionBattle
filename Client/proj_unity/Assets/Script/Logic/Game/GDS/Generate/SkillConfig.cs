@@ -4,13 +4,38 @@ namespace GDSKit
 {
 	public class SkillConfig{
 		#region 成员自定义类型
+		public class SkillTargetInfo
+		{
+			#region 成员变量
+			public short type;
+			public short param1;
+			public short param2;
+			public short param3;
+			#endregion
+			public static SkillTargetInfo Parse(string content, ref int curIndex)
+			{
+				SkillTargetInfo ret = new SkillTargetInfo ();
+				GDSParseUtils.AssertChar (content, GDSParseUtils.SelfDefineBeginChar, ref curIndex);
+				ret.type = GDSParseUtils.ParseShort (content, ref curIndex);
+				GDSParseUtils.AssertChar (content, GDSParseUtils.SelfDefineVariableSeparatorChar, ref curIndex);
+				ret.param1 = GDSParseUtils.ParseShort (content, ref curIndex);
+				GDSParseUtils.AssertChar (content, GDSParseUtils.SelfDefineVariableSeparatorChar, ref curIndex);
+				ret.param2 = GDSParseUtils.ParseShort (content, ref curIndex);
+				GDSParseUtils.AssertChar (content, GDSParseUtils.SelfDefineVariableSeparatorChar, ref curIndex);
+				ret.param3 = GDSParseUtils.ParseShort (content, ref curIndex);
+				GDSParseUtils.AssertChar (content, GDSParseUtils.SelfDefineEndChar, ref curIndex);
+				return ret;
+			}
+		}
+
 		#endregion
 
 		#region 成员变量
-		public int id;
-		public int time;
-		public int cd;
-		public int attackPercentage;
+		public short id;
+		public short consumeTime;
+		public short cd;
+		public SkillTargetInfo targetInfo;
+		public short effectId;
 		#endregion
 
 
@@ -32,13 +57,15 @@ namespace GDSKit
 			}
 			GDSParseUtils.ParseLine (delegate() {
 				SkillConfig data = new SkillConfig ();
-				data.id = GDSParseUtils.ParseInt (content, ref curIndex);
+				data.id = GDSParseUtils.ParseShort (content, ref curIndex);
 				GDSParseUtils.MoveNextVariable (content, ref curIndex);
-				data.time = GDSParseUtils.ParseInt (content, ref curIndex);
+				data.consumeTime = GDSParseUtils.ParseShort (content, ref curIndex);
 				GDSParseUtils.MoveNextVariable (content, ref curIndex);
-				data.cd = GDSParseUtils.ParseInt (content, ref curIndex);
+				data.cd = GDSParseUtils.ParseShort (content, ref curIndex);
 				GDSParseUtils.MoveNextVariable (content, ref curIndex);
-				data.attackPercentage = GDSParseUtils.ParseInt (content, ref curIndex);
+				data.targetInfo = SkillTargetInfo.Parse (content, ref curIndex);
+				GDSParseUtils.MoveNextVariable (content, ref curIndex);
+				data.effectId = GDSParseUtils.ParseShort (content, ref curIndex);
 				gdsDic.Add (data.id, data);
 			}, content, ref curIndex);
 			OutPut ();

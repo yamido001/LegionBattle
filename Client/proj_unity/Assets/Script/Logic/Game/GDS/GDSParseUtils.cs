@@ -63,6 +63,12 @@ public class GDSParseUtils{
 		return ParseStrData(content, ref curIndex);
 	}
 
+	public static short ParseShort(string content, ref int curIndex)
+	{
+		string data = ParseStrData (content, ref curIndex);
+		return short.Parse(data);
+	}
+
 	public static string ParseStrData(string content, ref int curIndex)
 	{
 		int beginIndex = curIndex;

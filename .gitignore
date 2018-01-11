@@ -2,7 +2,9 @@
 /Tools/*
 /Client/proj_unity/Library/
 /Client/proj_unity/Temp/
+/Client/proj_unity/obj/
 /TempBuild
 /Client/proj_unity/Log
 *.csproj
 *.sln
+*.userprefs

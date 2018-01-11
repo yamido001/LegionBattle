@@ -129,6 +129,7 @@ namespace GDSTools
 		}
 
 		const char NextLine = '\n';
+		const char NextLine2 = '\r';
 		const char NextData = ',';
 
 
@@ -321,7 +322,10 @@ namespace GDSTools
 				switch (curChar) {
 				case NextLine:
 					if (curDataBeginIndex >= 0) {
-						data = fileContent.Substring (curDataBeginIndex, curIndex - curDataBeginIndex);
+						int subStringLength = curIndex - curDataBeginIndex;
+						if (curIndex > 0 && fileContent [curIndex - 1] == NextLine2)
+							subStringLength -= 1;
+						data = fileContent.Substring (curDataBeginIndex, subStringLength);
 						curDataBeginIndex = -1;
 					} else {
 						data = string.Empty;

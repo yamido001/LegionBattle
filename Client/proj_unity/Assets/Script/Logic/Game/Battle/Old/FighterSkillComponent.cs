@@ -66,7 +66,7 @@ namespace GameBattle
 			public void OnUseSkill(int skillId, int targetFighterId)
 			{
 				GDSKit.SkillConfig skillConfig = GDSKit.SkillConfig.GetInstance (skillId);
-				mBusyTime = skillConfig.time;
+				mBusyTime = skillConfig.consumeTime;
 				UpdateSkillCd (skillId, skillConfig.cd);
 			}
 
