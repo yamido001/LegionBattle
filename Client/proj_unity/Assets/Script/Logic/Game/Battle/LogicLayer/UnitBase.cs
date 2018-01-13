@@ -94,14 +94,14 @@ namespace GameBattle{
 
 				IntVector2 fromPos = Position;
 				Position = stopPos;
-				BattleUnitManager.Instance.OnUnitMove (ID, fromPos, Position);
+				BattleFiled.Instance.OnUnitMove (ID, fromPos, Position);
 				BattleLogManager.Instance.Log ("DoInBattle", BattleTimeLine.Instance.CurFrameCount + " " + ID + " Move " + moveAngle);
 			}
 
 			public void EnterIdle()
 			{
 				Logger.LogInfo ("进入到停止状态");
-				BattleUnitManager.Instance.OnUnitEnterIdle (ID);
+				BattleFiled.Instance.OnUnitEnterIdle (ID);
 			}
 
 			public void Destroy()

@@ -60,7 +60,7 @@ namespace GameBattle
 					return;
 				if (IsSkillIdCd (skillId))
 					return;
-				BattleUnitManager.Instance.FighterTryUseSkill (mFighter.ID, skillId, targetFighterId);
+				BattleFiled.Instance.FighterTryUseSkill (mFighter.ID, skillId, targetFighterId);
 			}
 
 			public void OnUseSkill(int skillId, int targetFighterId)

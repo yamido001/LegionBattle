@@ -66,33 +66,7 @@ namespace GameBattle
 			}
 			#endregion
 
-			#region 回调通知
-			System.Action<int, IntVector2, IntVector2> mOnMoveListener;
-			public void AddUnitMoveListener(System.Action<int, IntVector2, IntVector2> listener)
-			{
-				mOnMoveListener = listener;
-			}
-
-			public void OnUnitMove(int unitId, IntVector2 fromPos, IntVector2 toPos)
-			{
-				if (null != mOnMoveListener)
-					mOnMoveListener.Invoke (unitId, fromPos, toPos);
-			}
-
-			System.Action<int> mOnEnterIdleListener;
-			public void AddUnitEnterIdleListener(System.Action<int> listener)
-			{
-				mOnEnterIdleListener = listener;
-			}
-
-			public void OnUnitEnterIdle(int unitId)
-			{
-				if (null != mOnEnterIdleListener)
-					mOnEnterIdleListener.Invoke (unitId);
-			}
-			#endregion
-
-			UnitBase GetUnitByUnitId(int id)
+			public UnitBase GetUnitByUnitId(int id)
 			{
 				UnitBase unit = null;
 				mFighterDic.TryGetValue (id, out unit);
@@ -105,34 +79,17 @@ namespace GameBattle
 				return requestFighter.Data.IsAttack ? mDefenderFighterList : mAttackFighterList;
 			}
 
-			public void FighterTryUseSkill(int fighterId, int skillId, int targetFighterId)
+			public void OnUnitDead(int unitId)
 			{
-				UnitBase skillUser = GetUnitByUnitId (fighterId);
-				if (skillUser == null || skillUser.IsDead) {
+				UnitBase targetFighter = GetUnitByUnitId (unitId);
+				if (null == targetFighter) {
 					return;
 				}
-				UnitBase targetFighter = GetUnitByUnitId (targetFighterId);
-				if (null == targetFighter || targetFighter.IsDead) {
-					return;
-				}
-				GDSKit.SkillConfig skillConfig = GDSKit.SkillConfig.GetInstance (skillId);
-				//TODO
-				//int damage = skillUser.GetAttribute(FighterAttributeType.Attack) * skillConfig.attackPercentage / 100;
-				int damage = 50;
-				int preLife = targetFighter.GetAttribute (FighterAttributeType.Life);
-				preLife -= damage;
-
-				if (preLife <= 0) {
-					if (targetFighter.Data.IsAttack)
-						mAttackFighterList.Remove (targetFighter);
-					else
-						mDefenderFighterList.Remove (targetFighter);
-					targetFighter.OnDead ();
-				} else {
-					targetFighter.SetAttribute (FighterAttributeType.Life, preLife);
-				}
-
-				skillUser.OnUseSkill (skillId, targetFighterId);
+				if (targetFighter.Data.IsAttack)
+					mAttackFighterList.Remove (targetFighter);
+				else
+					mDefenderFighterList.Remove (targetFighter);
+				targetFighter.OnDead ();
 			}
 		}
 	}

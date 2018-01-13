@@ -20,10 +20,10 @@ namespace GameBattle
 		{
 			IsInBattle = true;
 			CurFrameCount = 0;
-			BattleUnitManager.Instance.AddUnitMoveListener (delegate(int unitId, IntVector2 fromPos, IntVector2 toPos) {
+			BattleFiled.Instance.AddUnitMoveListener (delegate(int unitId, IntVector2 fromPos, IntVector2 toPos) {
 				BattleActorManager.Instance.OnUnitMove(unitId, fromPos, toPos);
 			});
-			BattleUnitManager.Instance.AddUnitEnterIdleListener (delegate(int unitId) {
+			BattleFiled.Instance.AddUnitEnterIdleListener (delegate(int unitId) {
 				BattleActorManager.Instance.OnUnitEnterIdle(unitId);
 			});
 			BattleUnitManager.Instance.StartBattle (fighterDatas);
