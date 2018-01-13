@@ -1,7 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using GameBattle.LogicLayer.Move;
 using LegionBattle.ServerClientCommon;
+using GameBattle.LogicLayer.Skill;
 
 namespace GameBattle{
 
@@ -13,7 +12,18 @@ namespace GameBattle{
 		public class UnitBase{
 
 			UnitAIComponent mAI;
-			//FighterSkillComponent mSkill;
+
+            public UnitSkillComponent skillComp
+            {
+                get;
+                private set;
+            }
+
+            public UnitMoveComponent moveComp
+            {
+                get;
+                private set;
+            }
 
 			public UnitConfigData Data {
 				get;
@@ -33,7 +43,7 @@ namespace GameBattle{
 
 			public IntVector2 Position {
 				get;
-				private set;
+				set;
 			}
 
 			int[] mAttributes = new int[(int)FighterAttributeType.Count];
@@ -51,15 +61,25 @@ namespace GameBattle{
 				ID = Data.id;
 				IsDead = false;
 
-				//mSkill = new FighterSkillComponent (this, Data.skillList);
 				mAI = new UnitAIComponent (this);
 				mAI.Init ();
+
+                skillComp = new UnitSkillComponent(this);
+                skillComp.Init((data.skillList));
+
+                moveComp = new UnitMoveComponent(this);
 			}
 
 			public void SetBattleInstruction(BattleInstructionBase instruction)
 			{
 				mAI.SetBattleInstruction (instruction);
 			}
+
+            public void EnterIdle()
+            {
+                Logger.LogInfo("进入到停止状态");
+                BattleFiled.Instance.OnUnitEnterIdle(ID);
+            }
 
 			public int GetAttribute(FighterAttributeType attrType)
 			{
@@ -69,7 +89,6 @@ namespace GameBattle{
 			public void SetAttribute(FighterAttributeType attrType, int value)
 			{
 				mAttributes [(int)attrType] = value;
-				//InstructionManager.Instance.CreateAttrChgInstruction (ID, attrType, value);
 			}
 
 			public void Update()
@@ -78,36 +97,14 @@ namespace GameBattle{
 					return;
 				}
 				mAI.Execute ();
-				//mSkill.Update ();
-			}
-
-			public void Attack(int skillId, int targetId)
-			{
-				//mSkill.UseSkill (skillId, targetId);
-			}
-
-			public void MoveAngle(short moveAngle)
-			{
-				//Logger.LogInfo ("进入到移动状态");
-				int speed = GetAttribute(FighterAttributeType.Speed);
-				IntVector2 stopPos = IntVector2.MoveAngle (Position, moveAngle, speed);
-
-				IntVector2 fromPos = Position;
-				Position = stopPos;
-				BattleFiled.Instance.OnUnitMove (ID, fromPos, Position);
-				BattleLogManager.Instance.Log ("DoInBattle", BattleTimeLine.Instance.CurFrameCount + " " + ID + " Move " + moveAngle);
-			}
-
-			public void EnterIdle()
-			{
-				Logger.LogInfo ("进入到停止状态");
-				BattleFiled.Instance.OnUnitEnterIdle (ID);
-			}
+                skillComp.Update();
+            }
 
 			public void Destroy()
 			{
 				mAI.Destroy();
 				mAI = null;
+                skillComp.Destroy();
 			}
 
 			protected bool IsSameCamp(UnitConfigData fighterData)
@@ -120,14 +117,6 @@ namespace GameBattle{
 				if (IsDead)
 					return;
 				IsDead = true;
-				//InstructionManager.Instance.CreateAttrChgInstruction (ID, FighterAttributeType.Life, 0);
-			}
-
-			public void OnUseSkill(int skillId, int targetId)
-			{
-				//mSkill.OnUseSkill (skillId, targetId);
-
-				//InstructionManager.Instance.CreateSkillUseInstruction (ID, skillId, targetId);
 			}
 		}
 	}

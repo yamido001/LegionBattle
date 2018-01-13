@@ -5,4 +5,5 @@ using UnityEngine;
 public class BattleConfig{
 
 	public const int joyStickFilterMaxAngle = 5;
+    public const short invalidSkillId = short.MaxValue;
 }

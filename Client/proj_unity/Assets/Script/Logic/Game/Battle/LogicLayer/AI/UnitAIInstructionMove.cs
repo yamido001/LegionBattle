@@ -24,7 +24,7 @@ namespace GameBattle.LogicLayer
 
 		public override void Execute ()
 		{
-			mUnitBase.MoveAngle (mMoveAngle);
+			mUnitBase.moveComp.MoveAngle (mMoveAngle);
 		}
 	}
 }

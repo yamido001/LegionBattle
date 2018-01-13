@@ -36,6 +36,7 @@ namespace GDSKit
 		public short cd;
 		public SkillTargetInfo targetInfo;
 		public short effectId;
+        public int skillDistance;
 		#endregion
 
 

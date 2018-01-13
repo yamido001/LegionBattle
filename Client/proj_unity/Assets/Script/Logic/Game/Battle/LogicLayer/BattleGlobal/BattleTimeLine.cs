@@ -26,6 +26,7 @@ namespace GameBattle
 			BattleFiled.Instance.AddUnitEnterIdleListener (delegate(int unitId) {
 				BattleActorManager.Instance.OnUnitEnterIdle(unitId);
 			});
+            BattleFiledLattile.Instance.InitLattile(1000);
 			BattleUnitManager.Instance.StartBattle (fighterDatas);
 			BattleActorManager.Instance.StartBattle (fighterDatas);
 			BattleLogManager.Instance.Start ();

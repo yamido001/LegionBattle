@@ -16,5 +16,26 @@ namespace GameBattle
 		{
 			return new Vector3 (logicPos.x / 1000f, 0f, logicPos.y / 1000f);
 		}
+
+        public static int MinValue(int x, int y, int z, int w)
+        {
+            x = x < y ? x : y;
+            x = x < z ? x : z;
+            x = x < w ? x : w;
+            return x;
+        }
+
+        public static int MaxValue(int x, int y, int z, int w)
+        {
+            x = x > y ? x : y;
+            x = x > z ? x : z;
+            x = x > w ? x : w;
+            return x;
+        }
+
+        public static int PointToLineSqrDistance(IntVector2 lineStart, IntVector2 lineEnd, IntVector2 pointPos)
+        {
+            
+        }
 	}
 }

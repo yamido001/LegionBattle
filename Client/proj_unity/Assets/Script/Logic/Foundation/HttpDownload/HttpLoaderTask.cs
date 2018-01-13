@@ -67,7 +67,7 @@ public class HttpLoaderTask : MonoBehaviour {
 		yield return mRequest.Send ();
 
 		IsFinish = true;
-		if (mRequest.isError) {
+		if (mRequest.isNetworkError) {
 			Error = mRequest.error;
 		} 
 		else {

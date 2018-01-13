@@ -4,13 +4,15 @@ using UnityEngine;
 
 namespace GameBattle.LogicLayer{
 	public enum SkillType{
+        Null = 0,
 		NoTargetSkill,
 		UnitTargetSkill,
 		AreaTargetSkill,
 	}
 
-	public enum SkillAreaType
-	{
+    public enum SkillAreaType
+    {
+        Null = 0,
 		Line,
 		Circle,
 	}
