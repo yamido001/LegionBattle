@@ -3,32 +3,56 @@ using System.Collections.Generic;
 using UnityEngine;
 using GameBattle.LogicLayer;
 using System;
+using LegionBattle.ServerClientCommon;
 
 namespace GameBattle.LogicLayer
 {
 	public class OperatorManager : Singleton<OperatorManager> {
 
-		short mAngle;
+		short mMoveAngle;
 
 		public void OnBattleStart()
 		{
-			mAngle = short.MaxValue;
+			mMoveAngle = short.MaxValue;
 		}
 
 		public void MoveJoystick(Vector2 opeValue)
 		{
 			if (!BattleTimeLine.Instance.IsInBattle)
 				return;
-			
-			Vector3 crossDir = Vector3.Cross (Vector2.right, opeValue);
-			float angle = Vector2.Angle (Vector2.right, opeValue);
-			angle = crossDir.z < 0f ? -angle : angle; 
 
-			if (Math.Abs (mAngle - (short)angle) > BattleConfig.joyStickFilterMaxAngle) {
-				mAngle = (short)(((short)angle + 360) % 360);
-				GameMain.Instance.ProxyMgr.Battle.SendMoveOperate (mAngle);
+            short angle = Vector2ToAngle(opeValue);
+			if (Math.Abs (mMoveAngle - angle) > BattleConfig.joyStickFilterMaxAngle) {
+				mMoveAngle = angle;
+				GameMain.Instance.ProxyMgr.Battle.SendMoveOperate (mMoveAngle);
 			}
 		}
+
+        public void UseAreaSkill(short skillId, Vector2 opeValue)
+        {
+            short skillAngle = Vector2ToAngle(opeValue);
+            IntegerFloat disPercent = IntegerFloat.FloatToIntegerFloat(opeValue.magnitude / 2f);
+            GameMain.Instance.ProxyMgr.Battle.SendAreaUseSkillOperate(skillId, skillAngle, (short)disPercent.x, (short)disPercent.y);
+        }
+
+        public void UseNoTargetSkill(short skillId)
+        {
+            GameMain.Instance.ProxyMgr.Battle.SendNoTargetSkillUseOperate(skillId);
+        }
+
+        public void UseUnitTargetSkill(short skillId, int targetUnitId)
+        {
+            GameMain.Instance.ProxyMgr.Battle.SendUnitTargetSkillUseOperate(skillId, targetUnitId);
+        }
+
+        short Vector2ToAngle(Vector2 opeValue)
+        {
+            Vector3 crossDir = Vector3.Cross(Vector2.right, opeValue);
+            int angle = (int)Vector2.Angle(Vector2.right, opeValue);
+            angle = crossDir.z < 0f ? -angle : angle;
+            angle = (angle + 360) % 360;
+            return (short)angle;
+        }
 
 		public void StopMove()
 		{

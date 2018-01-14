@@ -21,9 +21,9 @@ public class RoomView : UIViewBase {
 	GridLayoutGroup mAccountGrid;
 	List<RoomViewAccountListItem> mAccountList = new List<RoomViewAccountListItem>();
 
-	public override void OnOpend ()
+	public override void OnOpend (object openParam)
 	{
-		base.OnOpend ();
+		base.OnOpend (openParam);
 		RegisterEvent ();
 
 		mTitle = PrefabTf.Find ("textTitle").GetComponent<Text>();

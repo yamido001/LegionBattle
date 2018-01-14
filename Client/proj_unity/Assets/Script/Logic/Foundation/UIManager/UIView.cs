@@ -27,14 +27,14 @@ public class UIViewBase{
 	/// <param name="viewId">View identifier.</param>
 	/// <param name="prefab">Prefab.</param>
 	/// <param name="parentTf">Parent tf.</param>
-	public void Open(UIViewId viewId, GameObject prefab, Transform parentTf)
+	public void Open(UIViewId viewId, GameObject prefab, Transform parentTf, object param)
 	{
 		ViewId = viewId;
 		PrefabGO = GameObject.Instantiate(prefab);
 		PrefabTf = PrefabGO.transform;
 		PrefabTf.SetParent(parentTf);
 		PrefabTf.Reset ();
-		OnOpend ();
+		OnOpend (param);
 	}
 
 	/// <summary>
@@ -71,7 +71,7 @@ public class UIViewBase{
 	}
 
 	#region 需要子类继承的函数
-	public virtual void OnOpend()
+	public virtual void OnOpend(object param)
 	{
 		
 	}

@@ -6,16 +6,15 @@ using UnityEngine.UI;
 public class LoadingView : UIViewBase {
 
 	Text mTip;
-	Button mBtnPlayGame;
 
-	public override void OnOpend ()
+	public override void OnOpend (object openParam)
 	{
-		base.OnOpend ();
+		base.OnOpend (openParam);
 
 		mTip = PrefabTf.Find ("textTip").GetComponent<Text>();
 		mTip.text = string.Empty;
-		AddObjectEventListener(EventId.LoadingViewTips, delegate(object param) {
-			Tupple<float, string> curProcess = param as Tupple<float, string>;
+		AddObjectEventListener(EventId.LoadingViewTips, delegate(object eventParam) {
+			Tupple<float, string> curProcess = eventParam as Tupple<float, string>;
 			mTip.text = curProcess.item2 + "(" + curProcess.item1.ToString() + "%)";
 		});
 	}

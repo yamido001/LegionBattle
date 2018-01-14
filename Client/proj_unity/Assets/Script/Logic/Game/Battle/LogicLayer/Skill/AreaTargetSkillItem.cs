@@ -24,7 +24,7 @@ namespace GameBattle.LogicLayer.Skill
                     areaUnitList = BattleFiledLattile.Instance.GetUnitListInLine(mUnit.Position, skillAngle, mSkillConfig.targetInfo.param1, mSkillConfig.targetInfo.param2);
                     break;
                 case SkillAreaType.Circle:
-                    IntVector2 cricleCenterPos = IntVector2.MoveAngle(mUnit.Position, skillAngle, skillParam1 * mSkillConfig.distance / 1000);
+                    IntVector2 cricleCenterPos = IntVector2.MoveAngle(mUnit.Position, skillAngle, skillParam1 * mSkillConfig.distance / skillParam2);
                     areaUnitList = BattleFiledLattile.Instance.GetUnitListInCircle(cricleCenterPos, mSkillConfig.targetInfo.param1);
                     break;
                 default:

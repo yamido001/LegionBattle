@@ -9,6 +9,8 @@ public class JostickController{
 	ScrollRect mScroolRect;
 	RectTransform joystickArea;
 	System.Action mHdlOnChange;
+    System.Action mHdlOnBegin;
+    System.Action mHdlOnEnd;
 
 	public bool touchPresent
 	{
@@ -21,9 +23,11 @@ public class JostickController{
 		private set;
 	}
 
-	public void Init(Transform scroolTf, System.Action hdlOnChange)
+	public void Init(Transform scroolTf, System.Action hdlOnChange, System.Action hdlOnBegin, System.Action hdlOnEnd)
 	{
 		mHdlOnChange = hdlOnChange;
+        mHdlOnBegin = hdlOnBegin;
+        mHdlOnEnd = hdlOnEnd;
 		mScroolRect = scroolTf.GetComponent<ScrollRect> ();
 		joystickArea = scroolTf.Find ("Viewport/Content").GetComponent<RectTransform> ();
 		EventTrigger eventTrigger = mScroolRect.GetComponent<EventTrigger> ();
@@ -52,20 +56,23 @@ public class JostickController{
 		{
 			// convert the value between 1 0 to -1 +1
 			movementVector = new Vector2(((1 - value.x) - 0.5f) * 2f, ((1 - value.y) - 0.5f) * 2f);
-			mHdlOnChange.Invoke ();
+            if(null != mHdlOnChange)
+			    mHdlOnChange.Invoke ();
 		}
 	}
 
 	void BeginDrag(BaseEventData eventData)
 	{
 		touchPresent = true;
-		mHdlOnChange.Invoke ();
+        if(null != mHdlOnBegin)
+		    mHdlOnBegin.Invoke ();
 	}
 
 	void EndDrag(BaseEventData eventData)
 	{
 		touchPresent = false;
-		movementVector = joystickArea.anchoredPosition = Vector2.zero;
-		mHdlOnChange.Invoke ();
+        if (null != mHdlOnEnd)
+            mHdlOnEnd.Invoke();
+        movementVector = joystickArea.anchoredPosition = Vector2.zero;
 	}
 }

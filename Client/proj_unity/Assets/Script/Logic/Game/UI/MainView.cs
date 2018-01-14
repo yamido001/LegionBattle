@@ -8,9 +8,9 @@ public class MainView : UIViewBase {
 	Text mTitle;
 	Button mBtnPlayGame;
 
-	public override void OnOpend ()
+	public override void OnOpend (object openParam)
 	{
-		base.OnOpend ();
+		base.OnOpend (openParam);
 		mTitle = PrefabTf.Find ("textTitle").GetComponent<Text>();
 		mBtnPlayGame = PrefabTf.Find ("btnNewGame").GetComponent<Button> ();
 		EventTriggerListener.Get (mBtnPlayGame.gameObject).onClick = OnPlayClicked;

@@ -66,7 +66,7 @@ public partial class UIManager{
 
 		mOpeningViewDic.Add (viewId, param);
 		GameMain.Instance.ResMgr.LoadResourceAsync (this, configInfo.prefabName, typeof(GameObject), delegate(Object prefab) {
-			mOpeningViewDic.Remove(viewId);
+			
 			if(mWaitCloseingSet.Contains(viewId))
 			{
 				GameMain.Instance.ResMgr.UnloadResource(configInfo.prefabName, typeof(GameObject));
@@ -75,12 +75,13 @@ public partial class UIManager{
 			else
 			{
 				UIViewBase viewBase = System.Activator.CreateInstance(mViewConfig[viewId].viewType) as UIViewBase;
-				viewBase.Open(viewId, prefab as GameObject, mViewRoot);
+				viewBase.Open(viewId, prefab as GameObject, mViewRoot, mOpeningViewDic[viewId]);
 				mOpendViewDic.Add(viewId, viewBase);
 				if(null != hdlOnSuccess)
 					hdlOnSuccess.Invoke();
 			}
-		}, delegate(string errorCode) {
+            mOpeningViewDic.Remove(viewId);
+        }, delegate(string errorCode) {
 			Logger.LogError("UIManager load " + configInfo.prefabName + " error, code:" + errorCode);
 		});
 	}

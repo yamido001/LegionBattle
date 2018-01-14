@@ -17,7 +17,7 @@ namespace GameBattle.BattleView{
 			private set;
 		}
 
-		public BattleActorBase(int id, int life)
+		public BattleActorBase(int id, int life, IntVector2 initPos)
 		{
 			Id = id;
             mRootTf = new GameObject().transform;
@@ -33,6 +33,7 @@ namespace GameBattle.BattleView{
             }, null);
             mBillBoard = new ActorBillBoard();
             mBillBoard.Init(mRootTf, life);
+            RefreshPos(initPos, initPos);
         }
 
 		public void Update()
@@ -43,17 +44,23 @@ namespace GameBattle.BattleView{
 					PlayAnimation ("idle");
 				}
 			}
+            mBillBoard.Update();
 		}
 
 		public void OnMove(IntVector2 fromPos, IntVector2 toPos)
 		{
-            Vector3 pos = BattleUtils.LogicPosToScenePos(toPos);
-            mRootTf.transform.LookAt(pos);
-            mRootTf.transform.position = pos;
+            RefreshPos(fromPos, toPos);
             if (null != mObj) {
 				PlayAnimation ("run");
 			}
 		}
+
+        void RefreshPos(IntVector2 fromPos, IntVector2 toPos)
+        {
+            Vector3 pos = BattleUtils.LogicPosToScenePos(toPos);
+            mRootTf.transform.LookAt(pos);
+            mRootTf.transform.position = pos;
+        }
 
 		public void OnEnterIdle()
 		{

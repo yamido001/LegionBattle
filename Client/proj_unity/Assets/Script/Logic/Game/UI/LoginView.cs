@@ -14,9 +14,9 @@ public class LoginView : UIViewBase {
 	Button mBtnLogin;
 	Button mBtnRegist;
 
-	public override void OnOpend ()
+	public override void OnOpend (object openParam)
 	{
-		base.OnOpend ();
+		base.OnOpend (openParam);
 		RegisterEvent ();
 
 		mTitle = PrefabTf.Find ("textTitle").GetComponent<Text>();

@@ -13,7 +13,7 @@ namespace GameBattle.LogicLayer
         short mSkillAngle;
         short mSkillParam1;
         short mSkillParam2;
-
+        bool mUsed = false;
 
 		public UnitAIInstructionAttack(UnitBase unitBase, UnitAIComponent unitAIComp)
 		{
@@ -49,7 +49,10 @@ namespace GameBattle.LogicLayer
 
         public override void Execute()
         {
+            if (mUsed)
+                return;
             mUnitBase.skillComp.UseSkill(mSkillId, mSkillTargetUnitId, mSkillAngle, mSkillParam1, mSkillParam2);
+            mUsed = true;
         }
 	}
 }

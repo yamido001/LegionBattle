@@ -8,4 +8,5 @@ public enum UIViewId{
 	Login,
 	RoomView,
 	MoveJostick,
+    Skill,
 }

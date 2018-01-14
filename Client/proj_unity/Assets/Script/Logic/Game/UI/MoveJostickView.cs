@@ -11,13 +11,17 @@ public class MoveJostickView : UIViewBase {
 	int mTimerId;
 	bool mIsDirty = false;
 
-	public override void OnOpend ()
+	public override void OnOpend (object openParam)
 	{
-		base.OnOpend ();
+		base.OnOpend (openParam);
 		mJostickController = new JostickController ();
 		mJostickController.Init (PrefabTf.Find ("SimpleTouchJoystick"), delegate() {
 			mIsDirty = true;
-		});
+		}, delegate() {
+            mIsDirty = true;
+        }, delegate() {
+            mIsDirty = true;
+        });
 
 		mTimerId = TimerManager.Instance.RepeatCall (ulong.MaxValue, delegate() {
 			if(!mIsDirty)

@@ -21,7 +21,7 @@ namespace GameBattle.BattleView
             ActorRootTf.name = "BattleActorRoot";
 
             for (int i = 0; i < fighterDatas.Count; ++i) {
-				BattleActorBase actor = new BattleActorBase (fighterDatas[i].id, fighterDatas[i].life);
+				BattleActorBase actor = new BattleActorBase (fighterDatas[i].id, fighterDatas[i].life, fighterDatas[i].borthPos);
 				mBattleActorDic [actor.Id] = actor;
 			}
 		}

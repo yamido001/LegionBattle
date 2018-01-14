@@ -82,24 +82,55 @@ public class GameSceneManager{
 			GameMain.Instance.UIMgr.CleseView (UIViewId.Loading);	
 		});
 
-		int[] battleSceneUnits = obj as int[];
+        List<int> selfSkillList = null;
+        int selfCamp = 0;
+
+        int[] battleSceneUnits = obj as int[];
 		List<UnitConfigData> fighters = new List<UnitConfigData>(battleSceneUnits.Length);
 		for (int i = 0; i < battleSceneUnits.Length; ++i) {
-			UnitConfigData fighterData = new UnitConfigData ();
+			
 			BattleTest gdsInfo = BattleTest.GetInstance (battleSceneUnits[i]);
-			fighterData.id = battleSceneUnits[i];
-			fighterData.borthPos.x = gdsInfo.borthPos.x;
-			fighterData.borthPos.y = gdsInfo.borthPos.y;
-			fighterData.camp = gdsInfo.camp;
-			fighterData.life = gdsInfo.life;
-			fighterData.speed = gdsInfo.speed;
-			fighterData.attack = gdsInfo.attack;
-			fighterData.attackRange = gdsInfo.attackRange;
-			fighterData.skillList = gdsInfo.skillList.ToArray();
-			fighters.Add (fighterData);
+            UnitConfigData unitBattleConfig = GdsToBattleUnitConfig(gdsInfo);
+            unitBattleConfig.id = battleSceneUnits[i];
+            if (unitBattleConfig.id == GameMain.Instance.ProxyMgr.Player.PlayerId)
+            {
+                selfSkillList = gdsInfo.skillList;
+                selfCamp = unitBattleConfig.camp;
+            }
+			fighters.Add (unitBattleConfig);
 		}
+
+        //添加测试的单位
+        List<BattleTest> allBattleTest = BattleTest.GetAllList();
+        for(int i = 0; i < allBattleTest.Count; ++i)
+        {
+            BattleTest gdsInfo = allBattleTest[i];
+            if (gdsInfo.camp == selfCamp)
+                continue;
+            UnitConfigData unitBattleConfig = GdsToBattleUnitConfig(gdsInfo);
+            unitBattleConfig.id = gdsInfo.id;
+            fighters.Add(unitBattleConfig);
+        }
+        //
+
 		BattleTimeLine.Instance.StartBattle(fighters);
+
+        GameMain.Instance.UIMgr.OpenView(UIViewId.Skill, selfSkillList);
 	}
+
+    UnitConfigData GdsToBattleUnitConfig(BattleTest gdsInfo)
+    {
+        UnitConfigData unitBattleConfig = new UnitConfigData();
+        unitBattleConfig.borthPos.x = gdsInfo.borthPos.x;
+        unitBattleConfig.borthPos.y = gdsInfo.borthPos.y;
+        unitBattleConfig.camp = gdsInfo.camp;
+        unitBattleConfig.life = gdsInfo.life;
+        unitBattleConfig.speed = gdsInfo.speed;
+        unitBattleConfig.attack = gdsInfo.attack;
+        unitBattleConfig.attackRange = gdsInfo.attackRange;
+        unitBattleConfig.skillList = gdsInfo.skillList.ToArray();
+        return unitBattleConfig;
+    }
 	#endregion
 
 	void UpdateLoadingView(float progress, string tipesKey)

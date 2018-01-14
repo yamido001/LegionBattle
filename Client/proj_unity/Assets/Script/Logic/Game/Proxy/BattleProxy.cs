@@ -32,6 +32,27 @@ public class BattleProxy : DataProxy {
 		rqInstruction.instruction = new BattleStopMove ();
 		GameMain.Instance.SocketMgr.SendMessage (RqId.BattleInstruction, rqInstruction);
 	}
+
+    public void SendAreaUseSkillOperate(short skillId, short angle, short param1, short param2)
+    {
+        RqBattleInstruction rqInstruction = new RqBattleInstruction();
+        rqInstruction.instruction = new BattleAreaTargetSkill(skillId, angle, param1, param2);
+        GameMain.Instance.SocketMgr.SendMessage(RqId.BattleInstruction, rqInstruction);
+    }
+
+    public void SendNoTargetSkillUseOperate(short skillId)
+    {
+        RqBattleInstruction rqInstruction = new RqBattleInstruction();
+        rqInstruction.instruction = new BattleNoTargetSkill(skillId);
+        GameMain.Instance.SocketMgr.SendMessage(RqId.BattleInstruction, rqInstruction);
+    }
+
+    public void SendUnitTargetSkillUseOperate(short skillId, int unitId)
+    {
+        RqBattleInstruction rqInstruction = new RqBattleInstruction();
+        rqInstruction.instruction = new BattleUnitTargetSkill(unitId, skillId);
+        GameMain.Instance.SocketMgr.SendMessage(RqId.BattleInstruction, rqInstruction);
+    }
 	#endregion
 
 	#region 返回数据

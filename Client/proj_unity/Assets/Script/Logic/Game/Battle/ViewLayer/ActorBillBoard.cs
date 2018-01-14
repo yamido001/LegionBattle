@@ -8,7 +8,7 @@ namespace GameBattle.BattleView
     public class ActorBillBoard
     {
         SpriteRenderer mSprRender;
-        GameObject mObj;
+        Transform mTf;
         float mMaxLifeScale;
         int mMaxLife;
         int mCurLife;
@@ -18,18 +18,19 @@ namespace GameBattle.BattleView
             mMaxLife = maxLife;
             GameMain.Instance.ResMgr.LoadResourceAsync(this, "BattleBillBoard", typeof(GameObject), delegate (UnityEngine.Object obj)
                 {
-                    mObj = GameObject.Instantiate<GameObject>(obj as GameObject);
-                    mObj.SetActive(true);
-                    mObj.transform.SetParent(rootTf);
-                    mObj.transform.Reset();
-                    mObj.transform.localPosition = new Vector3(0f, 3f, 0f);
-                    mSprRender = mObj.transform.Find("spr_bg/spr_mid").GetComponent<SpriteRenderer>();
-                    SpriteRenderer sprBg = mObj.transform.Find("spr_bg").GetComponent<SpriteRenderer>();
+                    mTf = GameObject.Instantiate<GameObject>(obj as GameObject).transform;
+                    mTf.gameObject.SetActive(true);
+                    mTf.SetParent(rootTf);
+                    mTf.Reset();
+                    mTf.localPosition = new Vector3(0f, 3f, 0f);
+                    mSprRender = mTf.Find("spr_bg/spr_mid").GetComponent<SpriteRenderer>();
+                    SpriteRenderer sprBg = mTf.Find("spr_bg").GetComponent<SpriteRenderer>();
                     mMaxLifeScale = sprBg.sprite.texture.width / mSprRender.sprite.texture.width;
                     RefreshBill();
                 }, delegate(string error)
                 {
                 });
+            UpdateLife(maxLife);
         }
 
         public void UpdateLife(int life)
@@ -38,13 +39,22 @@ namespace GameBattle.BattleView
             RefreshBill();
         }
         
+        public void Update()
+        {
+            if(null != mTf)
+            {
+                mTf.forward = -Camera.main.transform.forward;
+            }
+                
+        }
+
         public void Destroy()
         {
             GameMain.Instance.ResMgr.UnloadResource("BattleBillBoard", typeof(GameObject));
-            if(null != mObj)
+            if(null != mTf)
             {
-                GameObject.Destroy(mObj);
-                mObj = null;
+                GameObject.Destroy(mTf.gameObject);
+                mTf = null;
             }
         }
 
