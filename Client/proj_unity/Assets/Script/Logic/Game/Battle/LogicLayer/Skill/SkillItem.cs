@@ -80,7 +80,7 @@ namespace GameBattle.LogicLayer.Skill
         protected bool CheckSkillDistance(int targetUnitId)
         {
             UnitBase targetUnitBase = BattleUnitManager.Instance.GetUnitByUnitId(targetUnitId);
-            if((targetUnitBase.Position - mUnit.Position).SqrMagnitude > mSkillConfig.skillDistance * mSkillConfig.skillDistance)
+            if((targetUnitBase.Position - mUnit.Position).SqrMagnitude > mSkillConfig.distance * mSkillConfig.distance)
             {
                 return false;
             }

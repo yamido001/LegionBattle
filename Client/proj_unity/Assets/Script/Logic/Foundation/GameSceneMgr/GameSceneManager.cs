@@ -37,7 +37,6 @@ public class GameSceneManager{
 		GameMain.Instance.EventMgr.RemoveObjectEvent (EventId.UnitySceneLoadingInfo, this);
 		GameMain.Instance.EventMgr.RemoveObjectEvent (EventId.UnitySceneLoaded, this);
 		GameMain.Instance.EventMgr.RemoveObjectEvent (EventId.GameBegin, this);
-		BattleManager.Instance.DestroyBattle ();
 	}
 
 	public void EnterScene(int sceneId)

@@ -9,21 +9,31 @@ namespace GameBattle.BattleView{
 		GameObject mObj;
 		Animator mAnimator;
 		string mCurAnimation;
+        ActorBillBoard mBillBoard;
+        Transform mRootTf;
 
 		public int Id {
 			get;
 			private set;
 		}
 
-		public BattleActorBase(int id)
+		public BattleActorBase(int id, int life)
 		{
 			Id = id;
-			GameMain.Instance.ResMgr.LoadResourceAsync (this, "jiqiangbing", typeof(GameObject), delegate(Object obj) {
+            mRootTf = new GameObject().transform;
+            mRootTf.name = id.ToString();
+            mRootTf.SetParent(BattleActorManager.Instance.ActorRootTf);
+            mRootTf.Reset();
+            GameMain.Instance.ResMgr.LoadResourceAsync (this, "jiqiangbing", typeof(GameObject), delegate(Object obj) {
 				mObj = GameObject.Instantiate<GameObject>(obj as GameObject);
 				mObj.name = id.ToString();
 				mAnimator = mObj.GetComponent<Animator>();
-			}, null);
-		}
+                mObj.transform.SetParent(mRootTf);
+                mObj.transform.Reset();
+            }, null);
+            mBillBoard = new ActorBillBoard();
+            mBillBoard.Init(mRootTf, life);
+        }
 
 		public void Update()
 		{
@@ -37,10 +47,10 @@ namespace GameBattle.BattleView{
 
 		public void OnMove(IntVector2 fromPos, IntVector2 toPos)
 		{
-			if (null != mObj) {
-				Vector3 pos = BattleUtils.LogicPosToScenePos (toPos);
-				mObj.transform.LookAt (pos);
-				mObj.transform.position = pos;
+            Vector3 pos = BattleUtils.LogicPosToScenePos(toPos);
+            mRootTf.transform.LookAt(pos);
+            mRootTf.transform.position = pos;
+            if (null != mObj) {
 				PlayAnimation ("run");
 			}
 		}
@@ -49,6 +59,11 @@ namespace GameBattle.BattleView{
 		{
 			PlayAnimation ("idle");
 		}
+
+        public void OnDamage(int damage, int curLife)
+        {
+            mBillBoard.UpdateLife(damage);
+        }
 
 		public void PlayAnimation(string animation)
 		{
@@ -67,6 +82,7 @@ namespace GameBattle.BattleView{
 				mObj = null;
 				mAnimator = null;
 			}
-		}
+            mBillBoard.Destroy();
+        }
 	}
 }

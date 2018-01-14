@@ -1,5 +1,0 @@
-﻿id,time,cd,attackPercentage
-int,int,int,int
-ID,技能时间(帧),技能cd(帧),伤害百分比
-1,60,0,100
-2,90,120,200

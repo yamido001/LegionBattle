@@ -67,7 +67,8 @@ namespace GameBattle{
                 skillComp = new UnitSkillComponent(this);
                 skillComp.Init((data.skillList));
 
-                moveComp = new UnitMoveComponent(this);
+                moveComp = new UnitMoveComponent();
+                moveComp.Init(this);
 			}
 
 			public void SetBattleInstruction(BattleInstructionBase instruction)

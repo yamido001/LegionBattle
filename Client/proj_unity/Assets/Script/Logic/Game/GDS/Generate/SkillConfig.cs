@@ -34,9 +34,9 @@ namespace GDSKit
 		public short id;
 		public short consumeTime;
 		public short cd;
+		public int distance;
 		public SkillTargetInfo targetInfo;
 		public short effectId;
-        public int skillDistance;
 		#endregion
 
 
@@ -63,6 +63,8 @@ namespace GDSKit
 				data.consumeTime = GDSParseUtils.ParseShort (content, ref curIndex);
 				GDSParseUtils.MoveNextVariable (content, ref curIndex);
 				data.cd = GDSParseUtils.ParseShort (content, ref curIndex);
+				GDSParseUtils.MoveNextVariable (content, ref curIndex);
+				data.distance = GDSParseUtils.ParseInt (content, ref curIndex);
 				GDSParseUtils.MoveNextVariable (content, ref curIndex);
 				data.targetInfo = SkillTargetInfo.Parse (content, ref curIndex);
 				GDSParseUtils.MoveNextVariable (content, ref curIndex);

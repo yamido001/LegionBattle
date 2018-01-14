@@ -15,7 +15,7 @@ namespace GDSTools
 			DirectoryInfo unityAssetDirectory = new DirectoryInfo (unityAssetsPath);
 			string sourceFileFolderPath = Path.Combine (unityAssetDirectory.Parent.Parent.FullName, "ResServerSrc/GDSFile");
 			string targetFileFolderPath = Path.Combine (unityAssetsPath, "Script/Logic/Game/GDS/Generate");
-			HashSet<string> filterFileExtensionSet = new HashSet<string>{ ".DS_Store"};
+			HashSet<string> filterFileExtensionSet = new HashSet<string>{ ".DS_Store", ".bak" };
 
 
 			if (!Directory.Exists (targetFileFolderPath)) {

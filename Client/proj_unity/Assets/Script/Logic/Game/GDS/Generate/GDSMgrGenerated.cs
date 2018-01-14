@@ -7,6 +7,7 @@ namespace GDSKit
 			BattleTest.Parse (GetFileContent ("BattleTest"));
 			GameScene.Parse (GetFileContent ("GameScene"));
 			SkillConfig.Parse (GetFileContent ("SkillConfig"));
+			SkillEffect.Parse (GetFileContent ("SkillEffect"));
 		}
 
 		protected void ClearAll()
@@ -14,6 +15,7 @@ namespace GDSKit
 			BattleTest.Clear ();
 			GameScene.Clear ();
 			SkillConfig.Clear ();
+			SkillEffect.Clear ();
 		}
 	}
 }

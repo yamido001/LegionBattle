@@ -1,7 +1,7 @@
 ﻿namespace GameBattle.LogicLayer.Effect
 {
-    public enum SkillEffectType
+    public enum SkillEffectType : byte
     {
-        Damage,
+        Damage = 1,
     }
 }

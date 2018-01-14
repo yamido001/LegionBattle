@@ -39,9 +39,36 @@ namespace GameBattle.LogicLayer
             {
                 preLattleUnitList.Remove(unit);
             }
-            List<UnitBase> newLattleUnitList = GetLattleUnitList(unit.Position.x, unit.Position.y);
+            List<UnitBase> newLattleUnitList = GetLattleUnitList(unit.Position.x, unit.Position.y, true);
             newLattleUnitList.Add(unit);
         }
+
+        
+
+        int PosToLattlceIndex(int pos)
+        {
+            return pos / mLattileSize;
+        }
+
+        bool IsValidIndex(int xIndex, int yIndex)
+        {
+            return xIndex >= 0 && xIndex < mRowCount && yIndex >= 0 && yIndex < mColumnCount;
+        }
+
+        List<UnitBase> GetLattleUnitList(int x, int y, bool create = false)
+        {
+            x = PosToLattlceIndex(x);
+            y = PosToLattlceIndex(y);
+            if (!IsValidIndex(x, y))
+                return null;
+            if(null == mLattileUnitList[x, y] && create)
+            {
+                mLattileUnitList[x, y] = new List<UnitBase>();
+            }
+            return mLattileUnitList[x, y];
+        }
+
+        #region 目标搜索
 
         /// <summary>
         /// 获取园中的所有单位，注意,如果不传入fill，返回的List是静态的，并不安全
@@ -54,7 +81,7 @@ namespace GameBattle.LogicLayer
         public List<UnitBase> GetUnitListInCircle(IntVector2 centerPos, short circleRadius, List<UnitBase> filler = null)
         {
             List<UnitBase> ret = null;
-            if(null == filler)
+            if (null == filler)
             {
                 ret = mConditionFindRet;
                 ret.Clear();
@@ -123,25 +150,25 @@ namespace GameBattle.LogicLayer
 
             IntVector2 minPos = IntVector2.MinVector(rectangleLeftBottomPos, rectangleLeftTopPos, rectangleRightBottomPos, rectangleRightTopPos);
             IntVector2 maxPos = IntVector2.MaxVector(rectangleLeftBottomPos, rectangleLeftTopPos, rectangleRightBottomPos, rectangleRightTopPos);
-            
+
             int searchIndexMinX = PosToLattlceIndex(minPos.x);
             int searchIndexMaxX = PosToLattlceIndex(maxPos.x);
             int searchIndexMinY = PosToLattlceIndex(minPos.y);
             int searchIndexMaxY = PosToLattlceIndex(maxPos.y);
 
             Matrix3x3 transMa3x3 = Matrix3x3.Create(angle, startPos);
-            for (int i = searchIndexMinX; i <= searchIndexMaxX; i ++)
+            for (int i = searchIndexMinX; i <= searchIndexMaxX; i++)
             {
                 for (int j = searchIndexMinY; j <= searchIndexMaxY; ++j)
                 {
                     List<UnitBase> lattleUnitList = mLattileUnitList[i, j];
                     if (null == lattleUnitList)
                         continue;
-                    for(int k = 0; k < lattleUnitList.Count; ++k)
+                    for (int k = 0; k < lattleUnitList.Count; ++k)
                     {
                         UnitBase unitBase = lattleUnitList[k];
                         IntVector2 posInSquare = transMa3x3 * unitBase.Position;
-                        if(MathUtils.IsPosInSquare(lineWidth, lineLength, posInSquare))
+                        if (MathUtils.IsPosInSquare(lineWidth, lineLength, posInSquare))
                         {
                             ret.Add(unitBase);
                         }
@@ -150,29 +177,7 @@ namespace GameBattle.LogicLayer
             }
             return ret;
         }
-
-        int PosToLattlceIndex(int pos)
-        {
-            return pos / mLattileSize;
-        }
-
-        bool IsValidIndex(int xIndex, int yIndex)
-        {
-            return xIndex >= 0 && xIndex < mRowCount && yIndex >= 0 && yIndex < mColumnCount;
-        }
-
-        List<UnitBase> GetLattleUnitList(int x, int y, bool create = false)
-        {
-            x = PosToLattlceIndex(x);
-            y = PosToLattlceIndex(y);
-            if (!IsValidIndex(x, y))
-                return null;
-            if(null == mLattileUnitList[x, y] && create)
-            {
-                mLattileUnitList[x, y] = new List<UnitBase>();
-            }
-            return mLattileUnitList[x, y];
-        }
+        #endregion
     }
 
 }

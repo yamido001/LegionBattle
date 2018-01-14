@@ -11,7 +11,15 @@ namespace GameBattle.LogicLayer.Effect
                 Logger.LogError("创建技能效果，没有找到目标单位:" + targetUnitId + "  技能效果ID: " + effectId);
                 return;
             }
-            BattleFiled.Instance.OnUnitDamaged(targetUnitId, effectId * 1000);
+            GDSKit.SkillEffect effectConfig = GDSKit.SkillEffect.GetInstance(effectId);
+            switch((SkillEffectType)effectConfig.type)
+            {
+                case SkillEffectType.Damage:
+                    BattleFiled.Instance.OnUnitDamaged(targetUnitId, effectConfig.param1);
+                    break;
+                default:
+                    throw new System.NotImplementedException("没有实现的效果类型 " + effectConfig.type);
+            }           
         }
     }
 }

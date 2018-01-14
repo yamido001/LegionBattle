@@ -9,10 +9,19 @@ namespace GameBattle.BattleView
 
 		Dictionary<int, BattleActorBase> mBattleActorDic = new Dictionary<int, BattleActorBase>();
 
+        public Transform ActorRootTf
+        {
+            get;
+            private set;
+        }
+
 		public void StartBattle(List<UnitConfigData> fighterDatas)
 		{
-			for (int i = 0; i < fighterDatas.Count; ++i) {
-				BattleActorBase actor = new BattleActorBase (fighterDatas[i].id);
+            ActorRootTf = new GameObject().transform;
+            ActorRootTf.name = "BattleActorRoot";
+
+            for (int i = 0; i < fighterDatas.Count; ++i) {
+				BattleActorBase actor = new BattleActorBase (fighterDatas[i].id, fighterDatas[i].life);
 				mBattleActorDic [actor.Id] = actor;
 			}
 		}
@@ -49,7 +58,16 @@ namespace GameBattle.BattleView
 			}
 		}
 
-		public void OnUnitEnterIdle(int unitId)
+        public void OnUnitDamage(int unitId, int damage, int curLife)
+        {
+            BattleActorBase actor = GetActorById(unitId);
+            if (null != actor)
+            {
+                actor.OnDamage(damage, curLife);
+            }
+        }
+
+        public void OnUnitEnterIdle(int unitId)
 		{
 			BattleActorBase actor = GetActorById (unitId);
 			if (null != actor) {

@@ -5,7 +5,7 @@ namespace GameBattle.LogicLayer.Move
     {
         UnitBase mUnit;
 
-        public UnitMoveComponent(UnitBase unit)
+        public void Init(UnitBase unit)
         {
             mUnit = unit;
             lattlcePos = new IntVector2(-1, -1);
