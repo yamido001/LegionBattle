@@ -11,7 +11,6 @@ namespace GameBattle.LogicLayer.Effect
                 Logger.LogError("创建技能效果，没有找到目标单位:" + targetUnitId + "  技能效果ID: " + effectId);
                 return;
             }
-            //TODO 技能效果以后再加
             BattleFiled.Instance.OnUnitDamaged(targetUnitId, effectId * 1000);
         }
     }

@@ -105,35 +105,31 @@ namespace GameBattle.LogicLayer
                 ret = filler;
             }
 
+            UnityEngine.Matrix4x4 m4 = UnityEngine.Matrix4x4.identity;
+            UnityEngine.Vector3 pos = UnityEngine.Vector3.zero;
+            UnityEngine.Vector3 hehaha = m4 * pos;
+
             //求出未旋转时的矩形的四个边的坐标
             IntVector2 rectangleLeftBottomPos = startPos - new IntVector2(lineWidth, 0);
-            //TODO intVector2需要支持+
-            IntVector2 rectangleRightBottomPos = startPos;
-            rectangleRightBottomPos.x += lineWidth;
-            IntVector2 rectangleLeftTopPos = rectangleLeftBottomPos;
-            IntVector2 rectangleRightTopPos = rectangleRightBottomPos;
-            rectangleLeftTopPos.y += lineWidth;
-            rectangleRightTopPos.y += lineWidth;
+            IntVector2 rectangleRightBottomPos = startPos + new IntVector2(lineWidth, 0);
+            IntVector2 rectangleLeftTopPos = rectangleLeftBottomPos + new IntVector2(0, lineLength);
+            IntVector2 rectangleRightTopPos = rectangleRightBottomPos + new IntVector2(0, lineLength);
 
             //对四个边进行旋转
-            rectangleLeftBottomPos = RotatePos(rectangleLeftBottomPos, angle);
-            rectangleLeftTopPos = RotatePos(rectangleLeftTopPos, angle);
-            rectangleRightBottomPos = RotatePos(rectangleRightBottomPos, angle);
-            rectangleRightTopPos = RotatePos(rectangleRightTopPos, angle);
+            rectangleLeftBottomPos = IntVector2.Rotate(rectangleLeftBottomPos, angle);
+            rectangleLeftTopPos = IntVector2.Rotate(rectangleLeftTopPos, angle);
+            rectangleRightBottomPos = IntVector2.Rotate(rectangleRightBottomPos, angle);
+            rectangleRightTopPos = IntVector2.Rotate(rectangleRightTopPos, angle);
 
-            int xMin = BattleUtils.MinValue(rectangleLeftTopPos.x, rectangleLeftBottomPos.x, rectangleRightTopPos.x, rectangleRightBottomPos.x);
-            int xMax = BattleUtils.MaxValue(rectangleLeftTopPos.x, rectangleLeftBottomPos.x, rectangleRightTopPos.x, rectangleRightBottomPos.x);
-            int yMin = BattleUtils.MinValue(rectangleLeftTopPos.y, rectangleLeftBottomPos.y, rectangleRightTopPos.y, rectangleRightBottomPos.y);
-            int yMax = BattleUtils.MaxValue(rectangleLeftTopPos.y, rectangleLeftBottomPos.y, rectangleRightTopPos.y, rectangleRightBottomPos.y);
+            IntVector2 minPos = IntVector2.MinVector(rectangleLeftBottomPos, rectangleLeftTopPos, rectangleRightBottomPos, rectangleRightTopPos);
+            IntVector2 maxPos = IntVector2.MaxVector(rectangleLeftBottomPos, rectangleLeftTopPos, rectangleRightBottomPos, rectangleRightTopPos);
+            
+            int searchIndexMinX = PosToLattlceIndex(minPos.x);
+            int searchIndexMaxX = PosToLattlceIndex(maxPos.x);
+            int searchIndexMinY = PosToLattlceIndex(minPos.y);
+            int searchIndexMaxY = PosToLattlceIndex(maxPos.y);
 
-            int searchIndexMinX = PosToLattlceIndex(xMin);
-            int searchIndexMaxX = PosToLattlceIndex(xMax);
-            int searchIndexMinY = PosToLattlceIndex(yMin);
-            int searchIndexMaxY = PosToLattlceIndex(yMax);
-
-            IntVector2 endPos = startPos;
-            endPos.x += CosFuncByTable.CosAngle(angle).MulIntegerValue(lineLength);
-            endPos.y += SinFuncByTable.SinAngle(angle).MulIntegerValue(lineLength);
+            Matrix3x3 transMa3x3 = Matrix3x3.Create(angle, startPos);
             for (int i = searchIndexMinX; i <= searchIndexMaxX; i ++)
             {
                 for (int j = searchIndexMinY; j <= searchIndexMaxY; ++j)
@@ -141,20 +137,17 @@ namespace GameBattle.LogicLayer
                     List<UnitBase> lattleUnitList = mLattileUnitList[i, j];
                     if (null == lattleUnitList)
                         continue;
-                    
+                    for(int k = 0; k < lattleUnitList.Count; ++k)
+                    {
+                        UnitBase unitBase = lattleUnitList[k];
+                        IntVector2 posInSquare = transMa3x3 * unitBase.Position;
+                        if(MathUtils.IsPosInSquare(lineWidth, lineLength, posInSquare))
+                        {
+                            ret.Add(unitBase);
+                        }
+                    }
                 }
             }
-
-            return ret;
-        }
-
-        IntVector2 RotatePos(IntVector2 pos, short angle)
-        {
-            IntVector2 ret = pos;
-            IntegerFloat cosFloat = CosFuncByTable.CosAngle(angle);
-            IntegerFloat sinFloat = SinFuncByTable.SinAngle(angle);
-            ret.x = cosFloat.MulIntegerValue(pos.x) - sinFloat.MulIntegerValue(pos.y);
-            ret.y = sinFloat.MulIntegerValue(pos.x) + cosFloat.MulIntegerValue(pos.y);
             return ret;
         }
 

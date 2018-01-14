@@ -32,10 +32,5 @@ namespace GameBattle
             x = x > w ? x : w;
             return x;
         }
-
-        public static int PointToLineSqrDistance(IntVector2 lineStart, IntVector2 lineEnd, IntVector2 pointPos)
-        {
-            
-        }
 	}
 }

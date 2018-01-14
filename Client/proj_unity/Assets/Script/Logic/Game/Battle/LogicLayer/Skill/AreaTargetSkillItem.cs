@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using LegionBattle.ServerClientCommon;
+using GameBattle.LogicLayer.Effect;
 
 namespace GameBattle.LogicLayer.Skill
 {
@@ -15,14 +17,25 @@ namespace GameBattle.LogicLayer.Skill
         {
             base.OnUse(targetUnitId, skillAngle, skillParam1, skillParam2);
             SkillAreaType areaType = (SkillAreaType)mSkillConfig.targetInfo.param1;
+            List<UnitBase> areaUnitList = null;
             switch (areaType)
             {
                 case SkillAreaType.Line:
+                    areaUnitList = BattleFiledLattile.Instance.GetUnitListInLine(mUnit.Position, skillAngle, mSkillConfig.targetInfo.param1, mSkillConfig.targetInfo.param2);
                     break;
                 case SkillAreaType.Circle:
+                    IntVector2 cricleCenterPos = IntVector2.MoveAngle(mUnit.Position, skillAngle, skillParam1 * mSkillConfig.skillDistance / 1000);
+                    areaUnitList = BattleFiledLattile.Instance.GetUnitListInCircle(cricleCenterPos, mSkillConfig.targetInfo.param1);
                     break;
                 default:
                     throw new System.NotImplementedException("未实现的技能区域类型 " + areaType);
+            }
+            for(int i = 0; i < areaUnitList.Count; ++i)
+            {
+                UnitBase targetUnit = areaUnitList[i];
+                if (targetUnit.Data.camp == mUnit.Data.camp)
+                    continue;
+                SkillEffectManager.Instance.CreateEffect(mUnit, targetUnit.ID, mSkillConfig.effectId);
             }
         }
         
