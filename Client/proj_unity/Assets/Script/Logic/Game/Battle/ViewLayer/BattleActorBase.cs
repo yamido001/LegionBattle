@@ -67,9 +67,9 @@ namespace GameBattle.BattleView{
 			PlayAnimation ("idle");
 		}
 
-        public void OnDamage(int damage, int curLife)
+        public void OnLifeChg(int curLife)
         {
-            mBillBoard.UpdateLife(damage);
+            mBillBoard.UpdateLife(curLife);
         }
 
 		public void PlayAnimation(string animation)

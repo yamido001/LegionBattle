@@ -23,7 +23,8 @@ namespace GameBattle.LogicLayer
 
 		public override void Entered (object param)
 		{
-			BattleInstructionBase instruction = param as BattleInstructionBase;
+            mUsed = false;
+            BattleInstructionBase instruction = param as BattleInstructionBase;
 			switch (instruction.InstructionType) {
 			case BattleInstructionType.AreaTargetSkill:
                     BattleAreaTargetSkill targetSkillIns = instruction as BattleAreaTargetSkill;

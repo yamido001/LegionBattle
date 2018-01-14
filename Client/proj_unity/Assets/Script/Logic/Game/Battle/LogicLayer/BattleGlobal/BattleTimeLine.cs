@@ -26,6 +26,15 @@ namespace GameBattle
 			BattleFiled.Instance.AddUnitEnterIdleListener (delegate(int unitId) {
 				BattleActorManager.Instance.OnUnitEnterIdle(unitId);
 			});
+            BattleFiled.Instance.AddSkillEffectListener(delegate (short skillEffectId, IntVector2 pos)
+            {
+                GDSKit.SkillEffect skillEffect = GDSKit.SkillEffect.GetInstance(skillEffectId);
+                EffectManager.Instance.CreateEffect(skillEffect.gameEffectId, BattleUtils.LogicPosToScenePos(pos));
+            });
+            BattleFiled.Instance.AddUnitAttrChgListener(delegate (int unitId, FighterAttributeType attrType, int value)
+            {
+                BattleActorManager.Instance.OnUnitAttrChg(unitId, attrType, value);
+            });
             BattleFiledLattile.Instance.InitLattile(1000);
 			BattleUnitManager.Instance.StartBattle (fighterDatas);
 			BattleActorManager.Instance.StartBattle (fighterDatas);

@@ -43,6 +43,15 @@ namespace GameBattle.BattleView
 			mBattleActorDic.Clear ();
 		}
 
+        void DestroyActor(int unitId)
+        {
+            BattleActorBase ret = null;
+            mBattleActorDic.TryGetValue(unitId, out ret);
+            if (null != ret)
+                ret.Destroy();
+            mBattleActorDic.Remove(unitId);
+        }
+
 		BattleActorBase GetActorById(int unitId)
 		{
 			BattleActorBase ret = null;
@@ -58,15 +67,6 @@ namespace GameBattle.BattleView
 			}
 		}
 
-        public void OnUnitDamage(int unitId, int damage, int curLife)
-        {
-            BattleActorBase actor = GetActorById(unitId);
-            if (null != actor)
-            {
-                actor.OnDamage(damage, curLife);
-            }
-        }
-
         public void OnUnitEnterIdle(int unitId)
 		{
 			BattleActorBase actor = GetActorById (unitId);
@@ -74,6 +74,26 @@ namespace GameBattle.BattleView
 				actor.OnEnterIdle ();
 			}
 		}
+
+        public void OnUnitAttrChg(int unitId, FighterAttributeType attrType, int value)
+        {
+            if(attrType == FighterAttributeType.Life)
+            {
+                if(value <= 0)
+                {
+                    DestroyActor(unitId);
+                }
+                else
+                {
+                    BattleActorBase actor = GetActorById(unitId);
+                    if (null == actor)
+                    {
+                        return;
+                    }
+                    actor.OnLifeChg(value);
+                }
+            }
+        }
 	}
 }
 

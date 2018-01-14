@@ -15,11 +15,11 @@ namespace GameBattle.LogicLayer.Effect
             switch((SkillEffectType)effectConfig.type)
             {
                 case SkillEffectType.Damage:
-                    BattleFiled.Instance.OnUnitDamaged(targetUnitId, effectConfig.param1);
+                    BattleFiled.Instance.OnUnitDamaged(effectConfig.id, targetUnitId, effectConfig.param1);
                     break;
                 default:
                     throw new System.NotImplementedException("没有实现的效果类型 " + effectConfig.type);
-            }           
+            }
         }
     }
 }

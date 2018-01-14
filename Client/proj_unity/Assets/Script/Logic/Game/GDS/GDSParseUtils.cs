@@ -10,6 +10,7 @@ public class GDSParseUtils{
 	public static char SelfDefineVariableSeparatorChar = '#';
 	public static char DataSeparatorChar = ',';
 	public static char ObjectSeparator = '\n';
+    public static char ObjectSeparator1 = '\r';
 	public static int DataBeginLineIndex = 3;
 
 	public static int GetCharIndex(string content, char ch, int count)
@@ -72,8 +73,15 @@ public class GDSParseUtils{
 	public static string ParseStrData(string content, ref int curIndex)
 	{
 		int beginIndex = curIndex;
+        int lenghtOffset = 0;
 		while (content.Length > curIndex++ + 1) {
 			char nextCh = content [curIndex];
+            if(nextCh == GDSParseUtils.ObjectSeparator1)
+            {
+                //在windows上发现，换行是/r/n,先把/r过滤掉
+                lenghtOffset = -1;
+                continue;
+            }
 			if (nextCh == GDSParseUtils.ArraySeparatorChar ||
 				nextCh == GDSParseUtils.SelfDefineVariableSeparatorChar ||
 				nextCh == GDSParseUtils.SelfDefineEndChar ||
@@ -82,7 +90,7 @@ public class GDSParseUtils{
 				break;
 			}
 		}
-		return content.Substring (beginIndex, curIndex - beginIndex);
+		return content.Substring (beginIndex, curIndex - beginIndex + lenghtOffset);
 	}
 
 	public static void ParseArray(System.Action hdlParse, string content, ref int curIndex)

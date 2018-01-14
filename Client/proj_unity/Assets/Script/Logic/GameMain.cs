@@ -157,7 +157,10 @@ public class GameMain : MonoBehaviour {
 		TimeMgr.Init ();
 
 		SocketMgr = new SocketManager ();
-	}
+
+        EffectManager.Instance.Init();
+
+    }
 
 	public void FileDepInit(System.Action hdlOnFinish)
 	{
@@ -260,7 +263,9 @@ public class GameMain : MonoBehaviour {
 		Instance = null;
 		GameObject.Destroy (gameObject);
 		SceneMgr.EnterScene ("Lancher", null);
-	}
+        EffectManager.Instance.ClearAllEffect();
+
+    }
 
 	void OnDestroy()
 	{

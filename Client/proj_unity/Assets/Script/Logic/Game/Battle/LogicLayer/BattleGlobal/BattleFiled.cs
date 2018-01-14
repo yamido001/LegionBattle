@@ -36,10 +36,22 @@ namespace GameBattle.LogicLayer
 			if (null != mOnEnterIdleListener)
 				mOnEnterIdleListener.Invoke (unitId);
 		}
+
+        System.Action<short, IntVector2> mEffectHdlListener;
+        public void AddSkillEffectListener(System.Action<short, IntVector2> listener)
+        {
+            mEffectHdlListener = listener;
+        }
+
+        System.Action<int, FighterAttributeType, int> mAttrChgListener;
+        public void AddUnitAttrChgListener(System.Action<int, FighterAttributeType, int> listener)
+        {
+            mAttrChgListener = listener;
+        }
 		#endregion
 
 		#region 技能效果
-        public void OnUnitDamaged(int unitId, int damage)
+        public void OnUnitDamaged(short effectId, int unitId, int damage)
         {
             UnitBase targetUnit = BattleUnitManager.Instance.GetUnitByUnitId(unitId);
             if (null == targetUnit || targetUnit.IsDead)
@@ -54,6 +66,8 @@ namespace GameBattle.LogicLayer
             {
                 targetUnit.SetAttribute(FighterAttributeType.Life, preLife);
             }
+            mAttrChgListener.Invoke(unitId, FighterAttributeType.Life, preLife);
+            mEffectHdlListener.Invoke(effectId, targetUnit.Position);
         }
 		#endregion
 	}

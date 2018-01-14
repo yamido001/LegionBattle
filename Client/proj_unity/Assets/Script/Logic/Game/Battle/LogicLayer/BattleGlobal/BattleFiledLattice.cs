@@ -34,15 +34,20 @@ namespace GameBattle.LogicLayer
 
         public void UpadteUnitPos(UnitBase unit)
         {
+            RemoveUnit(unit);
+            List<UnitBase> newLattleUnitList = GetLattleUnitList(unit.Position.x, unit.Position.y, true);
+            if(null != newLattleUnitList)
+                newLattleUnitList.Add(unit);
+        }
+
+        public void RemoveUnit(UnitBase unit)
+        {
             List<UnitBase> preLattleUnitList = GetLattleUnitList(unit.moveComp.lattlcePos.x, unit.moveComp.lattlcePos.y);
-            if(null != preLattleUnitList)
+            if (null != preLattleUnitList)
             {
                 preLattleUnitList.Remove(unit);
             }
-            List<UnitBase> newLattleUnitList = GetLattleUnitList(unit.Position.x, unit.Position.y, true);
-            newLattleUnitList.Add(unit);
         }
-
         
 
         int PosToLattlceIndex(int pos)
@@ -78,7 +83,7 @@ namespace GameBattle.LogicLayer
         /// <param name="y">The y coordinate.</param>
         /// <param name="circleRadius">Circle radius.</param>
         /// <param name="filler">Filler.</param>
-        public List<UnitBase> GetUnitListInCircle(IntVector2 centerPos, short circleRadius, List<UnitBase> filler = null)
+        public List<UnitBase> GetUnitListInCircle(IntVector2 centerPos, int circleRadius, List<UnitBase> filler = null)
         {
             List<UnitBase> ret = null;
             if (null == filler)

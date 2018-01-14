@@ -25,7 +25,7 @@ namespace GameBattle.LogicLayer.Skill
                     break;
                 case SkillAreaType.Circle:
                     IntVector2 cricleCenterPos = IntVector2.MoveAngle(mUnit.Position, skillAngle, skillParam1 * mSkillConfig.distance / skillParam2);
-                    areaUnitList = BattleFiledLattile.Instance.GetUnitListInCircle(cricleCenterPos, mSkillConfig.targetInfo.param1);
+                    areaUnitList = BattleFiledLattile.Instance.GetUnitListInCircle(cricleCenterPos, mSkillConfig.targetInfo.param2);
                     break;
                 default:
                     throw new System.NotImplementedException("未实现的技能区域类型 " + areaType);

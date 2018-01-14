@@ -2,21 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 namespace GDSKit
 {
-	public class SkillEffect{
+	public class Effect{
 		#region 成员自定义类型
 		#endregion
 
 		#region 成员变量
 		public short id;
 		public short type;
-		public int param1;
-		public int param2;
-		public short gameEffectId;
+		public string prefabName;
 		#endregion
 
 
-		protected static Dictionary<int, SkillEffect> gdsDic = new Dictionary<int, SkillEffect>();
-		protected static List<SkillEffect> gdsList;
+		protected static Dictionary<int, Effect> gdsDic = new Dictionary<int, Effect>();
+		protected static List<Effect> gdsList;
 
 		public static void Parse(string content)
 		{
@@ -32,34 +30,30 @@ namespace GDSKit
 				return;
 			}
 			GDSParseUtils.ParseLine (delegate() {
-				SkillEffect data = new SkillEffect ();
+				Effect data = new Effect ();
 				data.id = GDSParseUtils.ParseShort (content, ref curIndex);
 				GDSParseUtils.MoveNextVariable (content, ref curIndex);
 				data.type = GDSParseUtils.ParseShort (content, ref curIndex);
 				GDSParseUtils.MoveNextVariable (content, ref curIndex);
-				data.param1 = GDSParseUtils.ParseInt (content, ref curIndex);
-				GDSParseUtils.MoveNextVariable (content, ref curIndex);
-				data.param2 = GDSParseUtils.ParseInt (content, ref curIndex);
-				GDSParseUtils.MoveNextVariable (content, ref curIndex);
-				data.gameEffectId = GDSParseUtils.ParseShort (content, ref curIndex);
+				data.prefabName = GDSParseUtils.ParseString (content, ref curIndex);
 				gdsDic.Add (data.id, data);
 			}, content, ref curIndex);
 			OutPut ();
 		}
 
-		public static SkillEffect GetInstance(int id)
+		public static Effect GetInstance(int id)
 		{
-			SkillEffect ret = null;
+			Effect ret = null;
 			if (!gdsDic.TryGetValue (id, out ret)) {
-				Logger.LogError ("SkillEffect 未找到,id:" + id);
+				Logger.LogError ("Effect 未找到,id:" + id);
 			}
 			return ret;
 		}
 
-		public static List<SkillEffect> GetAllList()
+		public static List<Effect> GetAllList()
 		{
 			if (null == gdsList) {
-				gdsList = new List<SkillEffect> ();
+				gdsList = new List<Effect> ();
 				var gdsEnumerator = gdsDic.GetEnumerator ();
 				while (gdsEnumerator.MoveNext ()) {
 					gdsList.Add (gdsEnumerator.Current.Value);

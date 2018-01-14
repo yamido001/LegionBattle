@@ -81,16 +81,18 @@ namespace GameBattle
 
 			public void OnUnitDead(int unitId)
 			{
-				UnitBase targetFighter = GetUnitByUnitId (unitId);
-				if (null == targetFighter) {
+				UnitBase targetUnit = GetUnitByUnitId (unitId);
+				if (null == targetUnit) {
 					return;
 				}
-				if (targetFighter.Data.IsAttack)
-					mAttackFighterList.Remove (targetFighter);
+                BattleFiledLattile.Instance.RemoveUnit(targetUnit);
+				if (targetUnit.Data.IsAttack)
+					mAttackFighterList.Remove (targetUnit);
 				else
-					mDefenderFighterList.Remove (targetFighter);
-				targetFighter.OnDead ();
-			}
+					mDefenderFighterList.Remove (targetUnit);
+				targetUnit.OnDead ();
+                mFighterDic.Remove(unitId);
+            }
 		}
 	}
 }
