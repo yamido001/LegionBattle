@@ -9,6 +9,7 @@ namespace GDSKit
 		#region 成员变量
 		public short id;
 		public short type;
+		public short param1;
 		public string prefabName;
 		#endregion
 
@@ -34,6 +35,8 @@ namespace GDSKit
 				data.id = GDSParseUtils.ParseShort (content, ref curIndex);
 				GDSParseUtils.MoveNextVariable (content, ref curIndex);
 				data.type = GDSParseUtils.ParseShort (content, ref curIndex);
+				GDSParseUtils.MoveNextVariable (content, ref curIndex);
+				data.param1 = GDSParseUtils.ParseShort (content, ref curIndex);
 				GDSParseUtils.MoveNextVariable (content, ref curIndex);
 				data.prefabName = GDSParseUtils.ParseString (content, ref curIndex);
 				gdsDic.Add (data.id, data);

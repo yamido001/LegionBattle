@@ -20,9 +20,18 @@ public class EffectManager : Singleton<EffectManager> {
 
     public int CreateEffect(short effectId, Vector3 pos)
     {
-        Effect newEffect = new Effect(effectId, effectTfRoot, pos);
+        Effect newEffect = new Effect(effectId, effectTfRoot, pos, DestroyEffect);
         mEffectDic[newEffect.iD] = newEffect;
         return newEffect.iD;
+    }
+
+    public void DestroyEffect(int effectId)
+    {
+        Effect effect = null;
+        if (!mEffectDic.TryGetValue(effectId, out effect))
+            return;
+        effect.Destroy();
+        mEffectDic.Remove(effectId);
     }
 
     public void ClearAllEffect()

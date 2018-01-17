@@ -8,8 +8,9 @@ public class Effect{
 
     GDSKit.Effect mConfig;
     Transform mEffectTf;
+    int mTimerId = -1;
 
-    public Effect(short effectGdsId, Transform effectRoot, Vector3 pos)
+    public Effect(short effectGdsId, Transform effectRoot, Vector3 pos, System.Action<int> hdlOnFinish)
     {
         iD = ++Count;
         mConfig = GDSKit.Effect.GetInstance(effectGdsId);
@@ -23,6 +24,14 @@ public class Effect{
         {
 
         });
+        if(mConfig.type == (int)EffectType.AutoDestroy)
+        {
+            mTimerId = TimerManager.Instance.DelayCall((ulong)mConfig.param1, delegate ()
+            {
+                mTimerId = -1;
+                hdlOnFinish.Invoke(iD);
+            });
+        }
     }
 
     public int iD
@@ -38,5 +47,7 @@ public class Effect{
         {
             GameObject.Destroy(mEffectTf.gameObject);
         }
+        if (-1 != mTimerId)
+            TimerManager.Instance.DestroyTimer(mTimerId);
     }
 }
