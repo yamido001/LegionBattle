@@ -31,7 +31,7 @@ namespace GameBattle.LogicLayer
         public void UseAreaSkill(short skillId, Vector2 opeValue)
         {
             short skillAngle = Vector2ToAngle(opeValue);
-            IntegerFloat disPercent = IntegerFloat.FloatToIntegerFloat(opeValue.magnitude / 2f);
+            IntegerFloat disPercent = IntegerFloat.FloatToIntegerFloat(opeValue.magnitude);
             GameMain.Instance.ProxyMgr.Battle.SendAreaUseSkillOperate(skillId, skillAngle, (short)disPercent.x, (short)disPercent.y);
         }
 

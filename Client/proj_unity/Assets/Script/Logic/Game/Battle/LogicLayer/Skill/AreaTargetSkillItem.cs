@@ -21,7 +21,7 @@ namespace GameBattle.LogicLayer.Skill
             switch (areaType)
             {
                 case SkillAreaType.Line:
-                    areaUnitList = BattleFiledLattile.Instance.GetUnitListInLine(mUnit.Position, skillAngle, mSkillConfig.targetInfo.param1, mSkillConfig.targetInfo.param2);
+                    areaUnitList = BattleFiledLattile.Instance.GetUnitListInLine(mUnit.Position, skillAngle, mSkillConfig.targetInfo.param2, mSkillConfig.targetInfo.param3);
                     break;
                 case SkillAreaType.Circle:
                     IntVector2 cricleCenterPos = IntVector2.MoveAngle(mUnit.Position, skillAngle, skillParam1 * mSkillConfig.distance / skillParam2);

@@ -54,8 +54,14 @@ public class JostickController{
 	{
 		if(touchPresent)
 		{
-			// convert the value between 1 0 to -1 +1
-			movementVector = new Vector2(((1 - value.x) - 0.5f) * 2f, ((1 - value.y) - 0.5f) * 2f);
+            Vector2 centerPos = new Vector2(0.5f, 0.5f);
+            Vector2 offset = centerPos - value;
+            if(offset.magnitude > 0.5f)
+            {
+                offset = offset.normalized * 0.5f;
+                mScroolRect.normalizedPosition = centerPos - offset;
+            }
+			movementVector = offset * 2f;
             if(null != mHdlOnChange)
 			    mHdlOnChange.Invoke ();
 		}
@@ -73,6 +79,7 @@ public class JostickController{
 		touchPresent = false;
         if (null != mHdlOnEnd)
             mHdlOnEnd.Invoke();
-        movementVector = joystickArea.anchoredPosition = Vector2.zero;
+        mScroolRect.normalizedPosition = new Vector2(0.5f, 0.5f);
+        movementVector = Vector2.zero;
 	}
 }

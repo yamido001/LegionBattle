@@ -1,6 +1,6 @@
 id,consumeTime,cd,distance,targetInfo{type|param1|param2|param3},effectId
 short,short,short,int,SkillTargetInfo{short|short|short|short},short
 ID,技能消耗时间(帧)	技能cd(帧)	施法距离	技能目标类型,1:无目标；2：Unit单位;3:范围	技能效果ID
-1,60,0,3000,{2#1#0#0},1
+1,60,0,8000,{2#1#1000#2000},1
 2,90,120,5000,{3#2#3000#0},2
-3,90,120,4000,{1#1#0#0},3
+3,90,120,4000,{1#1#1000#2000},3
