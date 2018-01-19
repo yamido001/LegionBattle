@@ -122,7 +122,7 @@ public class SkillViewJostickOpe : SkillViewOpe
     bool IsShowSkillEffect()
     {
         bool isShow = false;
-        if (null != mJostickControl && mJostickControl.touchPresent);
+        if (null != mJostickControl && mJostickControl.touchPresent)
             isShow = true;
         return isShow;
     }

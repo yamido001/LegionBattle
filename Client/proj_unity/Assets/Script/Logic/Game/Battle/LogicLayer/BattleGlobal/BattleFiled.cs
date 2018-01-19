@@ -51,6 +51,11 @@ namespace GameBattle.LogicLayer
 		#endregion
 
 		#region 技能效果
+        public void OnCreateEffect(short effectId, IntVector2 pos)
+        {
+            mEffectHdlListener.Invoke(effectId, pos);
+        }
+
         public void OnUnitDamaged(short effectId, int unitId, int damage)
         {
             UnitBase targetUnit = BattleUnitManager.Instance.GetUnitByUnitId(unitId);
@@ -67,7 +72,6 @@ namespace GameBattle.LogicLayer
                 targetUnit.SetAttribute(FighterAttributeType.Life, preLife);
             }
             mAttrChgListener.Invoke(unitId, FighterAttributeType.Life, preLife);
-            mEffectHdlListener.Invoke(effectId, targetUnit.Position);
         }
 		#endregion
 	}
