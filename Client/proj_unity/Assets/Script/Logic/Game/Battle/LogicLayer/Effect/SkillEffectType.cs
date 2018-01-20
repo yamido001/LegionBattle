@@ -2,6 +2,13 @@
 {
     public enum SkillEffectType : byte
     {
-        Damage = 1,
+        ChgAttr = 1,
+        Buff,
+    }
+
+    public enum SkillEffectAreaType
+    {
+        Line = 1,
+        Circle,
     }
 }

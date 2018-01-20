@@ -4,6 +4,7 @@ namespace GDSKit
 
 		protected void LoadAll()
 		{
+			BattleBuff.Parse (GetFileContent ("BattleBuff"));
 			BattleTest.Parse (GetFileContent ("BattleTest"));
 			Effect.Parse (GetFileContent ("Effect"));
 			GameScene.Parse (GetFileContent ("GameScene"));
@@ -13,6 +14,7 @@ namespace GDSKit
 
 		protected void ClearAll()
 		{
+			BattleBuff.Clear ();
 			BattleTest.Clear ();
 			Effect.Clear ();
 			GameScene.Clear ();

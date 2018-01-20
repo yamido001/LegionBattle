@@ -48,6 +48,12 @@ namespace GameBattle.LogicLayer
         {
             mAttrChgListener = listener;
         }
+
+        System.Action<int, short, bool> mUnitBuffChgListener;
+        public void AddUnitBuffChgListener(System.Action<int, short, bool> listener)
+        {
+            mUnitBuffChgListener = listener;
+        }
 		#endregion
 
 		#region 技能效果
@@ -56,22 +62,30 @@ namespace GameBattle.LogicLayer
             mEffectHdlListener.Invoke(effectId, pos);
         }
 
-        public void OnUnitDamaged(short effectId, int unitId, int damage)
+        public void ChangeUnitAttr(UnitBase targetUnit, FighterAttributeType attrType, int chgValue)
         {
-            UnitBase targetUnit = BattleUnitManager.Instance.GetUnitByUnitId(unitId);
-            if (null == targetUnit || targetUnit.IsDead)
-                return;
-            int preLife = targetUnit.GetAttribute(FighterAttributeType.Life);
-            preLife -= damage;
-            if(preLife <= 0)
+            int preValue = targetUnit.GetAttribute(attrType);
+            preValue += chgValue;
+            if(attrType == FighterAttributeType.Life && preValue <= 0)
             {
-                BattleUnitManager.Instance.OnUnitDead(unitId);
+                BattleUnitManager.Instance.OnUnitDead(targetUnit.ID);
             }
             else
             {
-                targetUnit.SetAttribute(FighterAttributeType.Life, preLife);
+                targetUnit.SetAttribute(attrType, preValue);
             }
-            mAttrChgListener.Invoke(unitId, FighterAttributeType.Life, preLife);
+            mAttrChgListener.Invoke(targetUnit.ID, attrType, preValue);
+        }
+
+        public void AddBuffer(UnitBase targetUnit, short buffId)
+        {
+            targetUnit.buffComp.AddBuff(buffId);
+            mUnitBuffChgListener.Invoke(targetUnit.ID, buffId, true);
+        }
+
+        public void OnBuffExpire(int unitId, short buffId)
+        {
+            mUnitBuffChgListener.Invoke(unitId, buffId, false);
         }
 		#endregion
 	}

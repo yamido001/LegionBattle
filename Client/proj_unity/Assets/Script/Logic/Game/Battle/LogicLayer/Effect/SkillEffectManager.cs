@@ -1,25 +1,50 @@
-﻿
+﻿using LegionBattle.ServerClientCommon;
+using System.Collections.Generic;
+
 namespace GameBattle.LogicLayer.Effect
 {
     public class SkillEffectManager : Singleton<SkillEffectManager>
     {
-        public void CreateEffect(UnitBase caster, int targetUnitId, short effectId)
+        Dictionary<int, SkillEffectBase> mEffectDic = new Dictionary<int, SkillEffectBase>();
+ 
+        public void DestroyEffect(int effectId)
         {
-            UnitBase targetUnit = BattleUnitManager.Instance.GetUnitByUnitId(targetUnitId);
-            if(null == targetUnit)
+            SkillEffectBase effectBase = null;
+            if(mEffectDic.TryGetValue(effectId, out effectBase))
             {
-                Logger.LogError("创建技能效果，没有找到目标单位:" + targetUnitId + "  技能效果ID: " + effectId);
-                return;
+                effectBase.Destroy();
             }
+        }
+
+        public int CreateTargetEffect(int targetUnitId, short effectId)
+        {
+            return CreateEffect(IntVector2.Zero, effectId, targetUnitId, 0, 0, 0);
+        }
+
+        public int CreateAreaEffect(IntVector2 effectPos, short effectId , short effectAngler, short param1, short param2)
+        {
+            return CreateEffect(effectPos, effectId, 0, effectAngler, param1, param2);
+        }
+
+        int CreateEffect(IntVector2 effectPos, short effectId, int targetUnitId, short effectAngler, short param1, short param2)
+        {
             GDSKit.SkillEffect effectConfig = GDSKit.SkillEffect.GetInstance(effectId);
-            switch((SkillEffectType)effectConfig.type)
+
+            SkillEffectBase createEffect = null;
+
+            switch ((SkillEffectType)effectConfig.type)
             {
-                case SkillEffectType.Damage:
-                    BattleFiled.Instance.OnUnitDamaged(effectConfig.id, targetUnitId, effectConfig.param1);
+                case SkillEffectType.ChgAttr:
+                    createEffect = new SkillAttrChgEffect();
                     break;
                 default:
-                    throw new System.NotImplementedException("没有实现的效果类型 " + effectConfig.type);
+                    throw new System.NotImplementedException("未实现的技能效果类型 " + effectConfig.type);
             }
+            mEffectDic[createEffect.iD] = createEffect;
+            createEffect.SetInfo(effectConfig, effectPos, targetUnitId, effectAngler, param1, param2);
+            createEffect.BeginWork();
+            BattleFiled.Instance.OnCreateEffect(effectId, effectPos);
+            return createEffect.iD;
         }
     }
 }

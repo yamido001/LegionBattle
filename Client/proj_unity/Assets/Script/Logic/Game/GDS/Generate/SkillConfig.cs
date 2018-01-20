@@ -32,7 +32,8 @@ namespace GDSKit
 
 		#region 成员变量
 		public short id;
-		public short consumeTime;
+		public short prepareTime;
+		public short continousTime;
 		public short cd;
 		public int distance;
 		public SkillTargetInfo targetInfo;
@@ -60,7 +61,9 @@ namespace GDSKit
 				SkillConfig data = new SkillConfig ();
 				data.id = GDSParseUtils.ParseShort (content, ref curIndex);
 				GDSParseUtils.MoveNextVariable (content, ref curIndex);
-				data.consumeTime = GDSParseUtils.ParseShort (content, ref curIndex);
+				data.prepareTime = GDSParseUtils.ParseShort (content, ref curIndex);
+				GDSParseUtils.MoveNextVariable (content, ref curIndex);
+				data.continousTime = GDSParseUtils.ParseShort (content, ref curIndex);
 				GDSParseUtils.MoveNextVariable (content, ref curIndex);
 				data.cd = GDSParseUtils.ParseShort (content, ref curIndex);
 				GDSParseUtils.MoveNextVariable (content, ref curIndex);

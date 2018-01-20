@@ -29,6 +29,12 @@ namespace GDSTools
 			case "short":
 				ret = "GDSParseUtils.ParseShort (content, ref curIndex)";
 				break;
+            case "bool":
+                ret = "GDSParseUtils.ParseBool (content, ref curIndex)";
+                break;
+            case "byte":
+                ret = "GDSParseUtils.ParseByte (content, ref curIndex)";
+                break;
 			default:
 				throw new System.NotImplementedException ("需要添加解析类型(" + type + ")的对应解析代码");
 			}

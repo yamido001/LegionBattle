@@ -1,6 +1,7 @@
 ﻿using GameBattle.LogicLayer.Move;
 using LegionBattle.ServerClientCommon;
 using GameBattle.LogicLayer.Skill;
+using GameBattle.LogicLayer.Buff;
 
 namespace GameBattle{
 
@@ -20,6 +21,12 @@ namespace GameBattle{
             }
 
             public UnitMoveComponent moveComp
+            {
+                get;
+                private set;
+            }
+
+            public UnitBuffComponent buffComp
             {
                 get;
                 private set;
@@ -69,6 +76,8 @@ namespace GameBattle{
 
                 moveComp = new UnitMoveComponent();
                 moveComp.Init(this);
+
+                buffComp = new UnitBuffComponent(this);
 			}
 
 			public void SetBattleInstruction(BattleInstructionBase instruction)
@@ -99,6 +108,7 @@ namespace GameBattle{
 				}
 				mAI.Execute ();
                 skillComp.Update();
+                buffComp.Update();
             }
 
 			public void Destroy()
@@ -106,6 +116,7 @@ namespace GameBattle{
 				mAI.Destroy();
 				mAI = null;
                 skillComp.Destroy();
+                buffComp.Destroy();
 			}
 
 			protected bool IsSameCamp(UnitConfigData fighterData)

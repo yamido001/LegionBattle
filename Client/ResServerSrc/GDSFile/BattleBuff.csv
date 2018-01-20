@@ -1,0 +1,5 @@
+id,type,time,effectType,effectTypeParam,needClear,param1,param2
+short,byte,int,byte,short,bool,short,short
+ID,作用类型(1:改变属性;2:设置标记),持续时间,生效类型(1:1次;2:间隔),生效参数,参数1,参数2,参数3
+1,1,60,2,10,false,0,100
+1,2,90,1,1,true,1,0

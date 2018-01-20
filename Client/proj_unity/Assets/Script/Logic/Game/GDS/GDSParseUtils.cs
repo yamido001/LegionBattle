@@ -70,6 +70,18 @@ public class GDSParseUtils{
 		return short.Parse(data);
 	}
 
+    public static bool ParseBool(string content, ref int curIndex)
+    {
+        string data = ParseStrData(content, ref curIndex);
+        return bool.Parse(data);
+    }
+
+    public static byte ParseByte(string content, ref int curIndex)
+    {
+        string data = ParseStrData(content, ref curIndex);
+        return byte.Parse(data);
+    }
+
 	public static string ParseStrData(string content, ref int curIndex)
 	{
 		int beginIndex = curIndex;

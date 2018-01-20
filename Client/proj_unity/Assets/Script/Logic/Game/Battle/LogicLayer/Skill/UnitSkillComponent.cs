@@ -79,7 +79,7 @@
             {
                 if (mSkills[i].skillId != skillId)
                     continue;
-                mSkills[i].TryUseSkill(targetUnitId, skillAngle, skillParam1, skillParam2);
+                mSkills[i].UseSkill(targetUnitId, skillAngle, skillParam1, skillParam2);
                 break;
             }
         }
