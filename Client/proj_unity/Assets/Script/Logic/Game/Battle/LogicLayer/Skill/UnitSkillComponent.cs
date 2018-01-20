@@ -5,7 +5,6 @@
         UnitBase mUnit;
         SkillItem[] mSkills;
         System.Action<short> mFinishHdl;
-        short mCurCastingSkillIndex = -1;
 
         public UnitSkillComponent(UnitBase unitBase)
         {

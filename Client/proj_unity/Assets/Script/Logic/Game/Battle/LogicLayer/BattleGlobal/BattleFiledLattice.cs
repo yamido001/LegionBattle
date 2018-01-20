@@ -137,10 +137,6 @@ namespace GameBattle.LogicLayer
                 ret = filler;
             }
 
-            UnityEngine.Matrix4x4 m4 = UnityEngine.Matrix4x4.identity;
-            UnityEngine.Vector3 pos = UnityEngine.Vector3.zero;
-            UnityEngine.Vector3 hehaha = m4 * pos;
-
             //求出未旋转时的矩形的四个边的坐标
             IntVector2 rectangleLeftBottomPos = startPos - new IntVector2(lineWidth, 0);
             IntVector2 rectangleRightBottomPos = startPos + new IntVector2(lineWidth, 0);

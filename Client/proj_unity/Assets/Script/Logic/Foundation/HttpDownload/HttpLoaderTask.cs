@@ -64,7 +64,7 @@ public class HttpLoaderTask : MonoBehaviour {
 	IEnumerator DownLoad()
 	{
 		mRequest = UnityWebRequest.Get(taskInfo.url);
-		yield return mRequest.Send ();
+		yield return mRequest.SendWebRequest ();
 
 		IsFinish = true;
 		if (mRequest.isNetworkError) {

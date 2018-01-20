@@ -7,7 +7,6 @@ using UnityEngine.EventSystems;
 public class JostickController{
 
 	ScrollRect mScroolRect;
-	RectTransform joystickArea;
 	System.Action mHdlOnChange;
     System.Action mHdlOnBegin;
     System.Action mHdlOnEnd;
@@ -29,7 +28,6 @@ public class JostickController{
         mHdlOnBegin = hdlOnBegin;
         mHdlOnEnd = hdlOnEnd;
 		mScroolRect = scroolTf.GetComponent<ScrollRect> ();
-		joystickArea = scroolTf.Find ("Viewport/Content").GetComponent<RectTransform> ();
 		EventTrigger eventTrigger = mScroolRect.GetComponent<EventTrigger> ();
 
 		mScroolRect.onValueChanged.AddListener (OnValueChanged);
