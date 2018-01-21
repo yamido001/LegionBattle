@@ -28,9 +28,18 @@ public class SkillView : UIViewBase {
                 case SkillType.UnitTargetSkill:
                     break;
                 case SkillType.AreaTargetSkill:
-                    SkillViewJostickOpe jostickOpe = new SkillViewJostickOpe();
-                    jostickOpe.Init(skillConfig.id, tf);
-                    mSkillOpes[i] = jostickOpe;
+                    if(skillConfig.distance <= 0)
+                    {
+                        SkillViewClickOpe clickOpe = new SkillViewClickOpe();
+                        clickOpe.Init(skillConfig, tf);
+                        mSkillOpes[i] = clickOpe;
+                    }
+                    else
+                    {
+                        SkillViewJostickOpe jostickOpe = new SkillViewJostickOpe();
+                        jostickOpe.Init(skillConfig, tf);
+                        mSkillOpes[i] = jostickOpe;
+                    }
                     break;
                 default:
                     throw new System.NotImplementedException("技能界面未实现的技能类型 " + skillConfig.targetInfo.type);

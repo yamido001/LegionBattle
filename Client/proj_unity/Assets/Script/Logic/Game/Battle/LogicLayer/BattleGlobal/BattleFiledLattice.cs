@@ -55,6 +55,22 @@ namespace GameBattle.LogicLayer
             return pos / mLattileSize;
         }
 
+        int PosToSafeXLattlceIndex(int pos)
+        {
+            int index = PosToLattlceIndex(pos);
+            index = Math.Max(0, index);
+            index = Math.Min(0, mRowCount - 1);
+            return index;
+        }
+
+        int PosToSafeYLattlceIndex(int pos)
+        {
+            int index = PosToLattlceIndex(pos);
+            index = Math.Max(0, index);
+            index = Math.Min(0, mColumnCount - 1);
+            return index;
+        }
+
         bool IsValidIndex(int xIndex, int yIndex)
         {
             return xIndex >= 0 && xIndex < mRowCount && yIndex >= 0 && yIndex < mColumnCount;
@@ -83,7 +99,7 @@ namespace GameBattle.LogicLayer
         /// <param name="y">The y coordinate.</param>
         /// <param name="circleRadius">Circle radius.</param>
         /// <param name="filler">Filler.</param>
-        public List<UnitBase> GetUnitListInCircle(IntVector2 centerPos, int circleRadius, List<UnitBase> filler = null)
+        public List<UnitBase> GetUnitListInCircle(IntVector2 centerPos, int circleRadius, CampType effectCamp, List<UnitBase> filler = null)
         {
             List<UnitBase> ret = null;
             if (null == filler)
@@ -115,6 +131,8 @@ namespace GameBattle.LogicLayer
                         continue;
                     for (int k = 0; k < lattleUnitList.Count; ++k)
                     {
+                        if (lattleUnitList[k].Data.camp != effectCamp)
+                            continue;
                         if ((lattleUnitList[k].Position - centerPos).SqrMagnitude > circleRadius)
                             continue;
                         ret.Add(lattleUnitList[k]);
@@ -124,7 +142,7 @@ namespace GameBattle.LogicLayer
             return ret;
         }
 
-        public List<UnitBase> GetUnitListInLine(IntVector2 startPos, short angle, short lineWidth, short lineLength, List<UnitBase> filler = null)
+        public List<UnitBase> GetUnitListInLine(IntVector2 startPos, short angle, short lineWidth, short lineLength, CampType effectCamp, List<UnitBase> filler = null)
         {
             List<UnitBase> ret = null;
             if (null == filler)
@@ -152,10 +170,10 @@ namespace GameBattle.LogicLayer
             IntVector2 minPos = IntVector2.MinVector(rectangleLeftBottomPos, rectangleLeftTopPos, rectangleRightBottomPos, rectangleRightTopPos);
             IntVector2 maxPos = IntVector2.MaxVector(rectangleLeftBottomPos, rectangleLeftTopPos, rectangleRightBottomPos, rectangleRightTopPos);
 
-            int searchIndexMinX = PosToLattlceIndex(minPos.x);
-            int searchIndexMaxX = PosToLattlceIndex(maxPos.x);
-            int searchIndexMinY = PosToLattlceIndex(minPos.y);
-            int searchIndexMaxY = PosToLattlceIndex(maxPos.y);
+            int searchIndexMinX = PosToSafeXLattlceIndex(minPos.x);
+            int searchIndexMaxX = PosToSafeXLattlceIndex(maxPos.x);
+            int searchIndexMinY = PosToSafeYLattlceIndex(minPos.y);
+            int searchIndexMaxY = PosToSafeYLattlceIndex(maxPos.y);
 
             Matrix3x3 transMa3x3 = Matrix3x3.Create(angle, startPos);
             for (int i = searchIndexMinX; i <= searchIndexMaxX; i++)
@@ -168,6 +186,8 @@ namespace GameBattle.LogicLayer
                     for (int k = 0; k < lattleUnitList.Count; ++k)
                     {
                         UnitBase unitBase = lattleUnitList[k];
+                        if (unitBase.Data.camp != effectCamp)
+                            continue;
                         IntVector2 posInSquare = transMa3x3 * unitBase.Position;
                         if (MathUtils.IsPosInSquare(lineWidth, lineLength, posInSquare))
                         {

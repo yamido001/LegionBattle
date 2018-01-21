@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SceneCameraManager : MonoBehaviour {
+public class SceneCameraManager : MonoBehaviour{
 
 	public Vector3 PlayerPosOffset;
 
@@ -35,10 +35,11 @@ public class SceneCameraManager : MonoBehaviour {
 		mSceneCamera.transform.rotation = quaternion;
 	}
 
-	public void MoveWithPlayer()
+	public void MoveWithPlayer(Vector3 unitPos)
 	{
-		
-	}
+        MoveToPos(unitPos + new Vector3(0f, 7.2f, -4.75f));
+        ForceTo(unitPos);
+    }
 
 	void LateUpdate()
 	{

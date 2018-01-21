@@ -4,6 +4,7 @@ using GameBattle;
 using GameBattle.LogicLayer;
 using GameBattle.BattleView;
 using LegionBattle.ServerClientCommon;
+using GameBattle.LogicLayer.Effect;
 
 namespace GameBattle
 {
@@ -22,7 +23,15 @@ namespace GameBattle
 			CurFrameCount = 0;
 			BattleFiled.Instance.AddUnitMoveListener (delegate(int unitId, IntVector2 fromPos, IntVector2 toPos) {
 				BattleActorManager.Instance.OnUnitMove(unitId, fromPos, toPos);
+                if(unitId == GameMain.Instance.ProxyMgr.Player.PlayerId)
+                {
+                    SceneCameraManager.Instance.MoveWithPlayer(BattleUtils.LogicPosToScenePos(toPos));
+                }
 			});
+            BattleFiled.Instance.AddUseSkillListener(delegate (int unitId, short skillId)
+            {
+                BattleActorManager.Instance.OnUnitUseSkill(unitId, skillId);
+            });
 			BattleFiled.Instance.AddUnitEnterIdleListener (delegate(int unitId) {
 				BattleActorManager.Instance.OnUnitEnterIdle(unitId);
 			});
@@ -56,7 +65,7 @@ namespace GameBattle
 		{
 			BattleUnitManager.Instance.DestroyBattle ();
 			BattleActorManager.Instance.DestroyBattle ();
-			IsInBattle = false;
+            IsInBattle = false;
 		}
 		#endregion
 
@@ -81,6 +90,7 @@ namespace GameBattle
 
 			BattleUnitManager.Instance.Update ();
 			BattleActorManager.Instance.Update ();
-		}
+            SkillEffectManager.Instance.Update();
+        }
 	}
 }

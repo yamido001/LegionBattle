@@ -8,13 +8,13 @@ using UnityEngine.UI;
 /// </summary>
 public class SkillViewSelectOpe : SkillViewOpe
 {
-    short mSkillId;
+    GDSKit.SkillConfig mSkillConfig;
     Button mBtn;
     GameObject mObj;
 
-    public void Init(short skillId, Transform rootTf)
+    public void Init(GDSKit.SkillConfig skillConfig, Transform rootTf)
     {
-        mSkillId = skillId;
+        mSkillConfig = skillConfig;
         GameMain.Instance.ResMgr.LoadResourceAsync(this, "selectSkillOpe", typeof(GameObject), delegate (UnityEngine.Object prefab)
         {
             mObj = GameObject.Instantiate<GameObject>(prefab as GameObject);

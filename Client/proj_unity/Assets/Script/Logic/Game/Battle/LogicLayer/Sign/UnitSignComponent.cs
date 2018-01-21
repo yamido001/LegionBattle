@@ -41,7 +41,7 @@ namespace GameBattle.LogicLayer.Sign
 
         public bool CanMove()
         {
-            return mSignDic.ContainsKey(BattleSign.)
+            return true;
         }
     }
 }

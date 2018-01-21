@@ -11,6 +11,8 @@ namespace GameBattle.LogicLayer.Effect
         protected short mEffectAngler;
         protected short mEffectParam1;
         protected short mEffectParam2;
+        protected CampType mEffectCamp;
+        int mCurTime;
         
         public abstract SkillEffectType effectType 
         {
@@ -37,7 +39,8 @@ namespace GameBattle.LogicLayer.Effect
         }
 
 #region 生命周期
-        public void SetInfo(GDSKit.SkillEffect effectGds, IntVector2 effectPos, int targetUnitId, short effectAngler, short param1, short param2)
+        public void SetInfo(GDSKit.SkillEffect effectGds, IntVector2 effectPos, int targetUnitId
+            , short effectAngler, short param1, short param2, CampType casterCampType)
         {
             mEffectConfig = effectGds;
             mEffectPos = effectPos;
@@ -45,18 +48,31 @@ namespace GameBattle.LogicLayer.Effect
             mEffectParam1 = param1;
             mEffectParam2 = param2;
             mTargetUnitId = targetUnitId;
+            mEffectCamp = mEffectConfig.isEffectSelfCamp ? casterCampType : BattleUtils.GetAnotherCamp(casterCampType);
         }
 
         public void BeginWork()
         {
             DoExecute();
+            if(mEffectConfig.continuousTimes <= 0)
+            {
+                isFinish = true;
+            }
         }
 
         public void Update()
         {
             if (isFinish)
                 return;
-            DoExecute();
+            ++mCurTime;
+            if(mCurTime % mEffectConfig.intervalTime == 0)
+            {
+                DoExecute();
+            }
+            if(mCurTime > mEffectConfig.continuousTimes)
+            {
+                isFinish = true;
+            }
         }
 
         public void Destroy()
@@ -88,10 +104,10 @@ namespace GameBattle.LogicLayer.Effect
                 switch ((SkillEffectAreaType)mEffectConfig.areaType)
                 {
                     case SkillEffectAreaType.Circle:
-                        BattleFiledLattile.Instance.GetUnitListInCircle(mEffectPos, mEffectParam1, staticUnitList);
+                        BattleFiledLattile.Instance.GetUnitListInCircle(mEffectPos, mEffectParam1, mEffectCamp, staticUnitList);
                         break;
                     case SkillEffectAreaType.Line:
-                        BattleFiledLattile.Instance.GetUnitListInLine(mEffectPos, mEffectAngler, mEffectParam1, mEffectParam2, staticUnitList);
+                        BattleFiledLattile.Instance.GetUnitListInLine(mEffectPos, mEffectAngler, mEffectParam1, mEffectParam2, mEffectCamp, staticUnitList);
                         break;
                     default:
                         break;

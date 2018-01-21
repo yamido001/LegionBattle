@@ -25,6 +25,18 @@ namespace GameBattle.LogicLayer
 				mOnMoveListener.Invoke (unitId, fromPos, toPos);
 		}
 
+        System.Action<IntVector2> mOnAngleListener;
+        public void AddUnitAngleListener(System.Action<IntVector2> listener)
+        {
+            mOnAngleListener = listener;
+        }
+
+        public void OnUnitAngleChange(IntVector2 angle)
+        {
+            if (null != mOnAngleListener)
+                mOnAngleListener.Invoke(angle);
+        }
+
 		System.Action<int> mOnEnterIdleListener;
 		public void AddUnitEnterIdleListener(System.Action<int> listener)
 		{
@@ -36,6 +48,18 @@ namespace GameBattle.LogicLayer
 			if (null != mOnEnterIdleListener)
 				mOnEnterIdleListener.Invoke (unitId);
 		}
+
+        System.Action<int, short> mOnUseSkillListener;
+        public void AddUseSkillListener(System.Action<int, short> listener)
+        {
+            mOnUseSkillListener = listener;
+        }
+
+        public void OnUnitUseSkill(int unitId, short skillId)
+        {
+            if (null != mOnUseSkillListener)
+                mOnUseSkillListener.Invoke(unitId, skillId);
+        }
 
         System.Action<short, IntVector2> mEffectHdlListener;
         public void AddSkillEffectListener(System.Action<short, IntVector2> listener)
@@ -64,6 +88,7 @@ namespace GameBattle.LogicLayer
 
         public void ChangeUnitAttr(UnitBase targetUnit, FighterAttributeType attrType, int chgValue)
         {
+            Debug.Log("技能效果生效 目標：" + targetUnit.ID + " 傷害:" + attrType);
             int preValue = targetUnit.GetAttribute(attrType);
             preValue += chgValue;
             if(attrType == FighterAttributeType.Life && preValue <= 0)

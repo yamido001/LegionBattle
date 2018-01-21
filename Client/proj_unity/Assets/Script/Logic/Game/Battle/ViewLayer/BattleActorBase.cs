@@ -24,7 +24,7 @@ namespace GameBattle.BattleView{
             mRootTf.name = id.ToString();
             mRootTf.SetParent(BattleActorManager.Instance.ActorRootTf);
             mRootTf.Reset();
-            GameMain.Instance.ResMgr.LoadResourceAsync (this, "jiqiangbing", typeof(GameObject), delegate(Object obj) {
+            GameMain.Instance.ResMgr.LoadResourceAsync (this, "fab_jaina", typeof(GameObject), delegate(Object obj) {
 				mObj = GameObject.Instantiate<GameObject>(obj as GameObject);
 				mObj.name = id.ToString();
 				mAnimator = mObj.GetComponent<Animator>();
@@ -54,6 +54,14 @@ namespace GameBattle.BattleView{
 				PlayAnimation ("run");
 			}
 		}
+
+        public void OnUseSkill(short skillId)
+        {
+            if (null != mObj)
+            {
+                PlayAnimation("attack1");
+            }
+        }
 
         void RefreshPos(IntVector2 fromPos, IntVector2 toPos)
         {

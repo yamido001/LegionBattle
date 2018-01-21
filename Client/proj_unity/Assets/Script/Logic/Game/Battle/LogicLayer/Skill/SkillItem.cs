@@ -83,6 +83,7 @@ namespace GameBattle.LogicLayer.Skill
             mSkillUseFrame = 0;
             isCasting = true;
             isInCd = true;
+            BattleFiled.Instance.OnUnitUseSkill(mUnit.ID, mSkillConfig.id);
             if(mSkillConfig.prepareTime > 0)
             {
                 isPreparation = true;

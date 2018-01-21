@@ -1,6 +1,0 @@
-id,type,param1,param2,gameEffectId
-short,short,int,int,short
-ID,类型(1:伤害)	参数1	参数2
-1,1,1000,0
-2,1,2000,0
-3,1,3000,0

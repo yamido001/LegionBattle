@@ -1,4 +1,5 @@
 ﻿using GameBattle.LogicLayer.Effect;
+using LegionBattle.ServerClientCommon;
 
 namespace GameBattle.LogicLayer.Skill
 {
@@ -16,10 +17,10 @@ namespace GameBattle.LogicLayer.Skill
             switch (areaType)
             {
                 case SkillAreaType.Line:
-                    effectId = SkillEffectManager.Instance.CreateAreaEffect(mUnit.Position, mSkillConfig.effectId, skillAngle, mSkillConfig.targetInfo.param2, mSkillConfig.targetInfo.param3);
+                    effectId = SkillEffectManager.Instance.CreateAreaEffect(mUnit.Data.camp, mUnit.Position, mSkillConfig.effectId, skillAngle, mSkillConfig.targetInfo.param2, mSkillConfig.targetInfo.param3);
                     break;
                 case SkillAreaType.Circle:
-                    effectId = SkillEffectManager.Instance.CreateAreaEffect(mUnit.Position, mSkillConfig.effectId, skillAngle, (short)(skillParam1 * mSkillConfig.distance / skillParam2), 0);
+                    effectId = SkillEffectManager.Instance.CreateAreaEffect(mUnit.Data.camp, IntVector2.MoveAngle(mUnit.Position, skillAngle, (short)(skillParam1 * mSkillConfig.distance / skillParam2)), mSkillConfig.effectId, skillAngle, mSkillConfig.targetInfo.param2, 0);
                     break;
                 default:
                     throw new System.NotImplementedException("未实现的技能区域类型 " + areaType);

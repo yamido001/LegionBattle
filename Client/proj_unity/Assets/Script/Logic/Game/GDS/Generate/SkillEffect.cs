@@ -11,7 +11,9 @@ namespace GDSKit
 		public short type;
 		public bool isAoe;
 		public short areaType;
-		public bool isContinuous;
+		public int continuousTimes;
+		public int intervalTime;
+		public bool isEffectSelfCamp;
 		public int param1;
 		public int param2;
 		public short gameEffectId;
@@ -44,7 +46,11 @@ namespace GDSKit
 				GDSParseUtils.MoveNextVariable (content, ref curIndex);
 				data.areaType = GDSParseUtils.ParseShort (content, ref curIndex);
 				GDSParseUtils.MoveNextVariable (content, ref curIndex);
-				data.isContinuous = GDSParseUtils.ParseBool (content, ref curIndex);
+				data.continuousTimes = GDSParseUtils.ParseInt (content, ref curIndex);
+				GDSParseUtils.MoveNextVariable (content, ref curIndex);
+				data.intervalTime = GDSParseUtils.ParseInt (content, ref curIndex);
+				GDSParseUtils.MoveNextVariable (content, ref curIndex);
+				data.isEffectSelfCamp = GDSParseUtils.ParseBool (content, ref curIndex);
 				GDSParseUtils.MoveNextVariable (content, ref curIndex);
 				data.param1 = GDSParseUtils.ParseInt (content, ref curIndex);
 				GDSParseUtils.MoveNextVariable (content, ref curIndex);

@@ -14,7 +14,7 @@ namespace GameBattle.LogicLayer.Skill
 
         protected override int OnUse(int targetUnitId, short skillAngle, short skillParam1, short skillParam2)
         {
-            return SkillEffectManager.Instance.CreateTargetEffect(mUnit.ID, mSkillConfig.effectId);
+            return SkillEffectManager.Instance.CreateTargetEffect(mUnit.Data.camp, mUnit.ID, mSkillConfig.effectId);
         }
     }
 }

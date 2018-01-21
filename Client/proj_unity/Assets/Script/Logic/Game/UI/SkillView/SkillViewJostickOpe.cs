@@ -8,17 +8,15 @@ using GameBattle;
 /// </summary>
 public class SkillViewJostickOpe : SkillViewOpe
 {
-    short mSkillId;
     JostickController mJostickControl;
     GameObject mObj;
     GameObject mObjEffectCircle;
     GameObject mObjEffectRing;
     GDSKit.SkillConfig mSkillConfig;
 
-    public void Init(short skillId, Transform rootTf)
+    public void Init(GDSKit.SkillConfig skillConfig, Transform rootTf)
     {
-        mSkillId = skillId;
-        mSkillConfig = GDSKit.SkillConfig.GetInstance(mSkillId);
+        mSkillConfig = skillConfig;
         GameMain.Instance.ResMgr.LoadResourceAsync(this, "jostickSkillOpe", typeof(GameObject), delegate (UnityEngine.Object prefab)
             {
                 mObj =GameObject.Instantiate<GameObject>(prefab as GameObject);
@@ -33,8 +31,9 @@ public class SkillViewJostickOpe : SkillViewOpe
                 }, delegate()
                     {
                         UpdateAreaEffectState();
+                        UpdateAreaEffect();
                         UpdateCastDisEffectState();
-                        OperatorManager.Instance.UseAreaSkill(mSkillId, mJostickControl.movementVector);
+                        OperatorManager.Instance.UseAreaSkill(mSkillConfig.id, mJostickControl.movementVector);
                     }
                 );
             }, delegate (string errorCode)
@@ -82,6 +81,7 @@ public class SkillViewJostickOpe : SkillViewOpe
         Vector3 unitPos = BattleUtils.LogicPosToScenePos(unitBase.Position);
         Vector2 opeVector = mJostickControl.movementVector;
         float disPercent = opeVector.magnitude;
+        opeVector.Normalize();
         Vector3 effectCenterPos = unitPos + new Vector3(opeVector.x, 0f, opeVector.y) * disPercent * mSkillConfig.distance / 1000f;
         effectCenterPos.y += 0.01f;
         mObjEffectCircle.transform.position = effectCenterPos;

@@ -67,6 +67,15 @@ namespace GameBattle.BattleView
 			}
 		}
 
+        public void OnUnitUseSkill(int unitId, short skillId)
+        {
+            BattleActorBase actor = GetActorById(unitId);
+            if (null != actor)
+            {
+                actor.OnUseSkill(skillId);
+            }
+        }
+
         public void OnUnitEnterIdle(int unitId)
 		{
 			BattleActorBase actor = GetActorById (unitId);

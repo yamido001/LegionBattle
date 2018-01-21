@@ -17,6 +17,7 @@ namespace GameBattle.LogicLayer
 
 		public override void Entered (object param)
 		{
+            mUnitBase.skillComp.BreakSkill();
 			BattleMove moveInstruction = param as BattleMove;
 			mMoveAngle = moveInstruction.MoveAngle;
 			Logger.LogInfo ("设置移动指令  " + mMoveAngle);

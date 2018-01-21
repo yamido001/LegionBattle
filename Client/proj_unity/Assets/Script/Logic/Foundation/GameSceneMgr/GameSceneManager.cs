@@ -83,7 +83,7 @@ public class GameSceneManager{
 		});
 
         List<int> selfSkillList = null;
-        int selfCamp = 0;
+        byte selfCamp = 0;
 
         int[] battleSceneUnits = obj as int[];
 		List<UnitConfigData> fighters = new List<UnitConfigData>(battleSceneUnits.Length);
@@ -95,7 +95,7 @@ public class GameSceneManager{
             if (unitBattleConfig.id == GameMain.Instance.ProxyMgr.Player.PlayerId)
             {
                 selfSkillList = gdsInfo.skillList;
-                selfCamp = unitBattleConfig.camp;
+                selfCamp = (byte)unitBattleConfig.camp;
             }
 			fighters.Add (unitBattleConfig);
 		}
@@ -123,7 +123,7 @@ public class GameSceneManager{
         UnitConfigData unitBattleConfig = new UnitConfigData();
         unitBattleConfig.borthPos.x = gdsInfo.borthPos.x;
         unitBattleConfig.borthPos.y = gdsInfo.borthPos.y;
-        unitBattleConfig.camp = gdsInfo.camp;
+        unitBattleConfig.camp = (CampType)gdsInfo.camp;
         unitBattleConfig.life = gdsInfo.life;
         unitBattleConfig.speed = gdsInfo.speed;
         unitBattleConfig.attack = gdsInfo.attack;

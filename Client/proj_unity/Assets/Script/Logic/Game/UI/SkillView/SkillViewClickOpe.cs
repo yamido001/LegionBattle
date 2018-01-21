@@ -8,13 +8,13 @@ using UnityEngine.UI;
 /// </summary>
 public class SkillViewClickOpe : SkillViewOpe
 {
-    short mSkillId;
+    GDSKit.SkillConfig mSkillConfig;
     Button mBtn;
     GameObject mObj;
 
-    public void Init(short skillId, Transform rootTf)
+    public void Init(GDSKit.SkillConfig skillConfig, Transform rootTf)
     {
-        mSkillId = skillId;
+        mSkillConfig = skillConfig;
         GameMain.Instance.ResMgr.LoadResourceAsync(this, "clickSkillOpe", typeof(GameObject), delegate (UnityEngine.Object prefab)
             {
                 mObj =GameObject.Instantiate<GameObject>(prefab as GameObject);
@@ -22,7 +22,10 @@ public class SkillViewClickOpe : SkillViewOpe
                 mObj.transform.Reset();
                 mBtn = mObj.GetComponent<Button>();
                 EventTriggerListener.Get(mBtn.gameObject).onClick = delegate(GameObject obj) {
-                    OperatorManager.Instance.UseNoTargetSkill(mSkillId);
+                    if (mSkillConfig.targetInfo.type == (short)SkillType.NoTargetSkill)
+                        OperatorManager.Instance.UseNoTargetSkill(mSkillConfig.id);
+                    else
+                        OperatorManager.Instance.UseAreaSkill(mSkillConfig.id, Vector2.zero);
                 };
             }, delegate (string errorCode)
             {

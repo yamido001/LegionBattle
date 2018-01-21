@@ -32,5 +32,10 @@ namespace GameBattle
             x = x > w ? x : w;
             return x;
         }
+
+        public static CampType GetAnotherCamp(CampType campType)
+        {
+            return campType == CampType.Justice ? CampType.Evil : CampType.Justice;
+        }
 	}
 }

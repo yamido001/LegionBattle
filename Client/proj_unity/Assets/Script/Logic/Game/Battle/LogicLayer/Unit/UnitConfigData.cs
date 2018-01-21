@@ -7,7 +7,7 @@ namespace GameBattle{
 
 	public class UnitConfigData{
 		public int 		id;
-		public int		camp;
+		public CampType	camp;
 		public int 		life;
 		public int 		speed;
 		public int 		attack;
@@ -18,7 +18,8 @@ namespace GameBattle{
 		public bool IsAttack
 		{
 			get{
-				return camp == 1;
+                //TODO
+                return true;
 			}
 		}
 	}
@@ -40,6 +41,12 @@ namespace GameBattle{
 		public int 		attackRange;
 		public Vector2 	pos;
 	}
+
+    public enum CampType : byte
+    {
+        Justice = 1,
+        Evil,
+    }
 }
 
 

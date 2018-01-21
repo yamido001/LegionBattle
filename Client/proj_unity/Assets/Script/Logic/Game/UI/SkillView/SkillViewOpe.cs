@@ -3,6 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public interface SkillViewOpe{
-    void Init(short skillId, Transform rootTf);
+    void Init(GDSKit.SkillConfig skillConfig, Transform rootTf);
     void Destroy();
 }

@@ -1,6 +1,0 @@
-id,type,isAoe,areaType,isContinuous,param1,param2,gameEffectId
-short,short,bool,short,bool,int,int,short
-ID,作用类型,目标类型,是否持续施法,参数1,参数2,游戏特效id
-1,1,true,1,false,1000,0,1
-2,1,true,2,false,2000,0,2
-3,1,true,1,false,3000,0,3

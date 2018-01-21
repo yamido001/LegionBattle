@@ -66,21 +66,24 @@
 
         public void UseSkill(short skillId, int targetUnitId, short skillAngle, short skillParam1, short skillParam2)
         {
-            if(CurCasintSkillId != BattleConfig.invalidSkillId)
-            {
-                for (int i = 0; i < mSkills.Length; ++i){
-                    if(mSkills[i].isCasting)
-                    {
-                        mSkills[i].BreakSkill();
-                    }
-                }
-            }
+            BreakSkill();
             for (int i = 0; i < mSkills.Length; ++i)
             {
                 if (mSkills[i].skillId != skillId)
                     continue;
                 mSkills[i].UseSkill(targetUnitId, skillAngle, skillParam1, skillParam2);
                 break;
+            }
+        }
+
+        public void BreakSkill()
+        {
+            for (int i = 0; i < mSkills.Length; ++i)
+            {
+                if (mSkills[i].isCasting)
+                {
+                    mSkills[i].BreakSkill();
+                }
             }
         }
 

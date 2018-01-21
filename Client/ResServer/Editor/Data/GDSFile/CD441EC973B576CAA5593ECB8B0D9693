@@ -1,0 +1,6 @@
+id,type,param1,prefabName
+short,short,short,string
+ID,类型(1:伤害)	参数1 预制体名字
+1,1,1000,ef_ef_dimian_yuan
+2,1,1000,ef_ef_dimian_yuan
+3,1,4000,ef_ef_dimian_yuan
