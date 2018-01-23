@@ -23,6 +23,35 @@ public class GenerateTrigonometric{
 		});
 	}
 
+    [MenuItem("工具/三角函数表/生成atan函数表")]
+    static void OutPutArcTanTable(){
+        GenerateArcTable(delegate (float floatValue)
+        {
+            return Mathf.Atan(floatValue);
+        });
+    }
+
+    static void GenerateArcTable(GetValueDelegate getValueHdl)
+    {
+        StringBuilder logSb = new StringBuilder();
+        logSb.Append("\t\tprotected static short[] valueTable = new short[] {");
+        for (int i = 0; i <= 1000; ++i)
+        {
+            if (i % 30 == 0)
+                logSb.Append("\n\t\t\t");
+            float floatValue = getValueHdl.Invoke(i / 1000f);
+            int intValue = (int)(floatValue * Mathf.Rad2Deg);
+            logSb.Append(intValue);
+            if (i != 1000)
+            {
+                logSb.Append(",\t\t");
+            }
+        }
+        logSb.Append("};\n");
+        Debug.LogError(logSb.ToString());
+    }
+
+
 	static void GenerateValueTable(GetValueDelegate getValueHdl)
 	{
 		StringBuilder logSb = new StringBuilder ();
