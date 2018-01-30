@@ -15,15 +15,6 @@ namespace LBMath
 
 		public IntVector2(int x, int y)
 		{
-            if(y == 0)
-            {
-                x = 0;
-                y = 1;
-            }
-            else if(y < 0)
-            {
-                y = -y;
-            }
 			this.x = x;
 			this.y = y;
 		}

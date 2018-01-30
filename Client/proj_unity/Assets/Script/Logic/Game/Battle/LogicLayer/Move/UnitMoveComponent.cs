@@ -30,6 +30,7 @@ namespace GameBattle.LogicLayer.Move
             IntVector2 fromPos = mUnit.Position;
             mUnit.Position = stopPos;
             OnPosChanged(fromPos);
+            //Logger.LogError("移动 " + fromPos.ToString() + " " + mUnit.Position);
             BattleLogManager.Instance.Log("DoInBattle", BattleTimeLine.Instance.CurFrameCount + " " + mUnit.ID + " Move " + moveAngle);
         }
 
