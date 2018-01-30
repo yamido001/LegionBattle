@@ -1,7 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using LegionBattle.ServerClientCommon;
+﻿using UnityEngine;
+using LBMath;
 
 namespace GameBattle.LogicLayer
 {
@@ -88,6 +86,8 @@ namespace GameBattle.LogicLayer
 
         public void ChangeUnitAttr(UnitBase targetUnit, FighterAttributeType attrType, int chgValue)
         {
+            if (targetUnit.IsDead)
+                return;
             Debug.Log("技能效果生效 目標：" + targetUnit.ID + " 傷害:" + attrType);
             int preValue = targetUnit.GetAttribute(attrType);
             preValue += chgValue;

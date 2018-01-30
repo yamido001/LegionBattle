@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using LegionBattle.ServerClientCommon;
+using LBCSCommon;
 
 namespace GameBattle.LogicLayer
 {
@@ -11,8 +11,7 @@ namespace GameBattle.LogicLayer
         short mSkillId;
         int mSkillTargetUnitId;
         short mSkillAngle;
-        short mSkillParam1;
-        short mSkillParam2;
+        int mSkillParam1;
         bool mUsed = false;
 
 		public UnitAIInstructionAttack(UnitBase unitBase, UnitAIComponent unitAIComp)
@@ -31,7 +30,6 @@ namespace GameBattle.LogicLayer
                     mSkillId = targetSkillIns.SkillId;
                     mSkillAngle = targetSkillIns.SkillAngle;
                     mSkillParam1 = targetSkillIns.SkillParam1;
-                    mSkillParam2 = targetSkillIns.SkillParam2;
 				break;
 			case BattleInstructionType.NoTargetSkill:
                     BattleNoTargetSkill noTargetSkillIns = instruction as BattleNoTargetSkill;
@@ -52,7 +50,7 @@ namespace GameBattle.LogicLayer
         {
             if (mUsed)
                 return;
-            mUnitBase.skillComp.UseSkill(mSkillId, mSkillTargetUnitId, mSkillAngle, mSkillParam1, mSkillParam2);
+            mUnitBase.skillComp.UseSkill(mSkillId, mSkillTargetUnitId, mSkillAngle, mSkillParam1);
             mUsed = true;
         }
 	}

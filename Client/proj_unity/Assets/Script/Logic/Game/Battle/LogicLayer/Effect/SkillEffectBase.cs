@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using LegionBattle.ServerClientCommon;
+using LBMath;
 
 namespace GameBattle.LogicLayer.Effect
 {

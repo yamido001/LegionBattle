@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using LegionBattle.ServerClientCommon;
+using LBCSCommon;
 using UnityEngine.EventSystems;
 
 public class MoveJostickView : UIViewBase {

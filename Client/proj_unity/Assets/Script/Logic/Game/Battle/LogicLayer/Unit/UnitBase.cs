@@ -1,5 +1,6 @@
 ﻿using GameBattle.LogicLayer.Move;
-using LegionBattle.ServerClientCommon;
+using LBCSCommon;
+using LBMath;
 using GameBattle.LogicLayer.Skill;
 using GameBattle.LogicLayer.Buff;
 

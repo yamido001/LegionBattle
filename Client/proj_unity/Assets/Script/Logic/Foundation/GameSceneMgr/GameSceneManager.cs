@@ -90,7 +90,7 @@ public class GameSceneManager{
 		for (int i = 0; i < battleSceneUnits.Length; ++i) {
 			
 			BattleTest gdsInfo = BattleTest.GetInstance (battleSceneUnits[i]);
-            UnitConfigData unitBattleConfig = GdsToBattleUnitConfig(gdsInfo);
+            UnitConfigData unitBattleConfig = GdsToBattleUnitConfig(gdsInfo, false);
             unitBattleConfig.id = battleSceneUnits[i];
             if (unitBattleConfig.id == GameMain.Instance.ProxyMgr.Player.PlayerId)
             {
@@ -102,23 +102,23 @@ public class GameSceneManager{
 
         //添加测试的单位
         List<BattleTest> allBattleTest = BattleTest.GetAllList();
-        for(int i = 0; i < allBattleTest.Count; ++i)
+        for (int i = 0; i < allBattleTest.Count; ++i)
         {
             BattleTest gdsInfo = allBattleTest[i];
             if (gdsInfo.camp == selfCamp)
                 continue;
-            UnitConfigData unitBattleConfig = GdsToBattleUnitConfig(gdsInfo);
+            UnitConfigData unitBattleConfig = GdsToBattleUnitConfig(gdsInfo, true);
             unitBattleConfig.id = gdsInfo.id;
             fighters.Add(unitBattleConfig);
         }
-        //
 
-		BattleTimeLine.Instance.StartBattle(fighters);
+
+        BattleTimeLine.Instance.StartBattle(fighters);
 
         GameMain.Instance.UIMgr.OpenView(UIViewId.Skill, selfSkillList);
 	}
 
-    UnitConfigData GdsToBattleUnitConfig(BattleTest gdsInfo)
+    UnitConfigData GdsToBattleUnitConfig(BattleTest gdsInfo, bool isRandomMove)
     {
         UnitConfigData unitBattleConfig = new UnitConfigData();
         unitBattleConfig.borthPos.x = gdsInfo.borthPos.x;
@@ -129,6 +129,7 @@ public class GameSceneManager{
         unitBattleConfig.attack = gdsInfo.attack;
         unitBattleConfig.attackRange = gdsInfo.attackRange;
         unitBattleConfig.skillList = gdsInfo.skillList.ToArray();
+        unitBattleConfig.isRandomMove = isRandomMove;
         return unitBattleConfig;
     }
 	#endregion

@@ -12,8 +12,7 @@ namespace GameBattle.LogicLayer.Skill
 
         int mTargetUnitId;
         short mSkillAngle;
-        short mSkillParam1;
-        short mSkillParam2;
+        int mSkillParam1;
 
         public short skillId
         {
@@ -68,16 +67,16 @@ namespace GameBattle.LogicLayer.Skill
             {
                 isCasting = false;
                 mHdlOnFinish.Invoke(skillId);
+                mUnit.EnterIdle();
             }
         }
 
-        public void UseSkill(int targetUnitId, short skillAngle, short skillParam1, short skillParam2)
+        public void UseSkill(int targetUnitId, short skillAngle, int skillParam1)
         {
-            if (!CanUseSkill(targetUnitId, skillAngle, skillParam1, skillParam2))
+            if (!CanUseSkill(targetUnitId, skillAngle, skillParam1))
                 return;
             mSkillAngle = skillAngle;
             mSkillParam1 = skillParam1;
-            mSkillParam2 = skillParam2;
             mTargetUnitId = targetUnitId;
 
             mSkillUseFrame = 0;
@@ -100,6 +99,7 @@ namespace GameBattle.LogicLayer.Skill
             isCasting = false;
             if (mSkillConfig.continousTime > 0)
             {
+                mUnit.EnterIdle();
                 SkillEffectManager.Instance.DestroyEffect(mSkillEffectId);
             }
         }
@@ -111,15 +111,15 @@ namespace GameBattle.LogicLayer.Skill
 
         void OnSkill()
         {
-            if (!CanUseSkill(mTargetUnitId, mSkillAngle, mSkillParam1, mSkillParam2))
+            if (!CanUseSkill(mTargetUnitId, mSkillAngle, mSkillParam1))
                 return;
-            mSkillEffectId = OnUse(mTargetUnitId, mSkillAngle, mSkillParam1, mSkillParam2);
+            mSkillEffectId = OnUse(mTargetUnitId, mSkillAngle, mSkillParam1);
         }
 
         #region 需要子类继承的函数
-        protected abstract bool CanUseSkill(int targetUnitId, short skillAngle, short skillParam1, short skillParam2);
+        protected abstract bool CanUseSkill(int targetUnitId, short skillAngle, int skillParam1);
 
-        protected abstract int OnUse(int targetUnitId, short skillAngle, short skillParam1, short skillParam2);
+        protected abstract int OnUse(int targetUnitId, short skillAngle, int skillParam1);
         #endregion
 
         protected bool CheckSkillDistance(int targetUnitId)

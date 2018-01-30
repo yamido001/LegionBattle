@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using LBMath;
 
 namespace GameBattle.LogicLayer.Scene
 {
@@ -8,31 +6,14 @@ namespace GameBattle.LogicLayer.Scene
     {
         public BattleSceneManager()
         {
-            SceneWidth = 200 * 1000;
-            SceneHeight = 200 * 1000;
+            SceneSize = new IntVector2(50 * 1000, 50 * 1000);
         }
-        
-        
-        /// <summary>
-        /// 场景的宽，对应x轴坐标
-        /// </summary>
-        /// <value>The width of the scene.</value>
-        public int SceneWidth
+
+        public IntVector2 SceneSize
         {
             get;
             private set;
         }
-
-        /// <summary>
-        /// 场景的高，对应y轴坐标
-        /// </summary>
-        /// <value>The height of the scene.</value>
-        public int SceneHeight
-        {
-            get;
-            private set;
-        }
-
     } 
 }
 

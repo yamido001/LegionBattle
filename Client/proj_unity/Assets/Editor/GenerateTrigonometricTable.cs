@@ -1,9 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using System.Text;
 using UnityEditor;
-using LegionBattle.ServerClientCommon;
+using LBMath;
 
 public class GenerateTrigonometric{
 
@@ -60,7 +58,7 @@ public class GenerateTrigonometric{
 			if (i % 5 == 0)
 				logSb.Append ("\n\t\t\t");
 			float floatValue = getValueHdl(i * Mathf.Deg2Rad);
-			IntegerFloat integerFloat = IntegerFloat.FloatToIntegerFloat(floatValue);
+			IntegerFloatXY integerFloat = IntegerFloatXY.FloatToIntegerFloatXY(floatValue);
 			logSb.Append ("new IntegerFloat(" + integerFloat.x + ", " + integerFloat.y + ")");
 			if (i != 360 - 1) {
 				logSb.Append (",\t\t");

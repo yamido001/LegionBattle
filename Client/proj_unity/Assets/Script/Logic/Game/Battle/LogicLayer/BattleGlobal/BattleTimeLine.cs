@@ -1,9 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using GameBattle;
+﻿using System.Collections.Generic;
+using LBMath;
 using GameBattle.LogicLayer;
 using GameBattle.BattleView;
-using LegionBattle.ServerClientCommon;
+using LBCSCommon;
 using GameBattle.LogicLayer.Effect;
 
 namespace GameBattle

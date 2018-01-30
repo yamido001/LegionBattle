@@ -3,4 +3,4 @@ short,short,bool,short,int,int,bool,int,int,short
 ID,作用类型,是否是aoe,目标类型,持续时间,作用间隔时间,是否同阵营生效,参数1,参数2,游戏特效id
 1,1,true,1,0,0,false,0,-430,1
 2,1,true,2,0,0,false,0,-440,2
-3,1,true,2,60,15,false,0,-450,3
+3,1,true,2,120,15,false,0,-450,3

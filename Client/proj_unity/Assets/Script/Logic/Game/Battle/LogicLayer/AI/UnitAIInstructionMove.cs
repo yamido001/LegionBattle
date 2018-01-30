@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using LegionBattle.ServerClientCommon;
+using LBCSCommon;
 namespace GameBattle.LogicLayer
 {
 	public class UnitAIInstructionMove : PreCreateStateBase {

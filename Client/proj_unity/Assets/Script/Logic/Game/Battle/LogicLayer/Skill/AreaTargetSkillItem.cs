@@ -1,16 +1,16 @@
 ﻿using GameBattle.LogicLayer.Effect;
-using LegionBattle.ServerClientCommon;
+using LBMath;
 
 namespace GameBattle.LogicLayer.Skill
 {
     public class AreaTargetSkillItem : SkillItem
     {
-        protected override bool CanUseSkill(int targetUnitId, short skillAngle, short skillParam1, short skillParam2)
+        protected override bool CanUseSkill(int targetUnitId, short skillAngle, int skillParam1)
         {
             return true;
         }
 
-        protected override int OnUse(int targetUnitId, short skillAngle, short skillParam1, short skillParam2)
+        protected override int OnUse(int targetUnitId, short skillAngle, int skillParam1)
         {
             int effectId;
             SkillAreaType areaType = (SkillAreaType)mSkillConfig.targetInfo.param1;
@@ -20,7 +20,7 @@ namespace GameBattle.LogicLayer.Skill
                     effectId = SkillEffectManager.Instance.CreateAreaEffect(mUnit.Data.camp, mUnit.Position, mSkillConfig.effectId, skillAngle, mSkillConfig.targetInfo.param2, mSkillConfig.targetInfo.param3);
                     break;
                 case SkillAreaType.Circle:
-                    effectId = SkillEffectManager.Instance.CreateAreaEffect(mUnit.Data.camp, IntVector2.MoveAngle(mUnit.Position, skillAngle, (short)(skillParam1 * mSkillConfig.distance / skillParam2)), mSkillConfig.effectId, skillAngle, mSkillConfig.targetInfo.param2, 0);
+                    effectId = SkillEffectManager.Instance.CreateAreaEffect(mUnit.Data.camp, IntVector2.MoveAngle(mUnit.Position, skillAngle, (short)(new IntegerFloat(skillParam1) * mSkillConfig.distance).ToInt()), mSkillConfig.effectId, skillAngle, mSkillConfig.targetInfo.param2, 0);
                     break;
                 default:
                     throw new System.NotImplementedException("未实现的技能区域类型 " + areaType);

@@ -38,6 +38,7 @@ namespace GDSKit
 		public int distance;
 		public SkillTargetInfo targetInfo;
 		public short effectId;
+		public string animName;
 		#endregion
 
 
@@ -72,6 +73,8 @@ namespace GDSKit
 				data.targetInfo = SkillTargetInfo.Parse (content, ref curIndex);
 				GDSParseUtils.MoveNextVariable (content, ref curIndex);
 				data.effectId = GDSParseUtils.ParseShort (content, ref curIndex);
+				GDSParseUtils.MoveNextVariable (content, ref curIndex);
+				data.animName = GDSParseUtils.ParseString (content, ref curIndex);
 				gdsDic.Add (data.id, data);
 			}, content, ref curIndex);
 			OutPut ();

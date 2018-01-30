@@ -64,14 +64,14 @@
             }
         }
 
-        public void UseSkill(short skillId, int targetUnitId, short skillAngle, short skillParam1, short skillParam2)
+        public void UseSkill(short skillId, int targetUnitId, short skillAngle, int skillParam1)
         {
             BreakSkill();
             for (int i = 0; i < mSkills.Length; ++i)
             {
                 if (mSkills[i].skillId != skillId)
                     continue;
-                mSkills[i].UseSkill(targetUnitId, skillAngle, skillParam1, skillParam2);
+                mSkills[i].UseSkill(targetUnitId, skillAngle, skillParam1);
                 break;
             }
         }

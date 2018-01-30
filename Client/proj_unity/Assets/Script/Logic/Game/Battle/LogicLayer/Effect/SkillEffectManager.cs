@@ -1,4 +1,4 @@
-﻿using LegionBattle.ServerClientCommon;
+﻿using LBMath;
 using System.Collections.Generic;
 
 namespace GameBattle.LogicLayer.Effect

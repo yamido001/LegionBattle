@@ -1,7 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using LegionBattle.ServerClientCommon;
+﻿using UnityEngine;
+using LBMath;
 
 namespace GameBattle{
 
@@ -14,6 +12,7 @@ namespace GameBattle{
 		public int 		attackRange;
 		public int[] 	skillList;
 		public IntVector2 	borthPos;
+        public bool     isRandomMove;
 
 		public bool IsAttack
 		{

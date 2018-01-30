@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using LegionBattle.ServerClientCommon;
+using LBCSCommon;
 
 public class SocketManager{
 

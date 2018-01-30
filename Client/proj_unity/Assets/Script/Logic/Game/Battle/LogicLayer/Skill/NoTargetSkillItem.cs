@@ -7,12 +7,12 @@ namespace GameBattle.LogicLayer.Skill
 {
     public class NoTargetSkillItem : SkillItem
     {
-        protected override bool CanUseSkill(int targetUnitId, short skillAngle, short skillParam1, short skillParam2)
+        protected override bool CanUseSkill(int targetUnitId, short skillAngle, int skillParam1)
         {
             return true;
         }
 
-        protected override int OnUse(int targetUnitId, short skillAngle, short skillParam1, short skillParam2)
+        protected override int OnUse(int targetUnitId, short skillAngle, int skillParam1)
         {
             return SkillEffectManager.Instance.CreateTargetEffect(mUnit.Data.camp, mUnit.ID, mSkillConfig.effectId);
         }

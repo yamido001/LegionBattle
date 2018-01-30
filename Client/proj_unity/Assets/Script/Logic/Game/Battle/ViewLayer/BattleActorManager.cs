@@ -1,13 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using LegionBattle.ServerClientCommon;
+using LBMath;
 
 namespace GameBattle.BattleView
 {
 	public class BattleActorManager : Singleton<BattleActorManager>{
 
 		Dictionary<int, BattleActorBase> mBattleActorDic = new Dictionary<int, BattleActorBase>();
+        List<int> mToRemoveList = new List<int>();
 
         public Transform ActorRootTf
         {
@@ -30,8 +31,18 @@ namespace GameBattle.BattleView
 		{
 			var enumerator = mBattleActorDic.GetEnumerator ();
 			while (enumerator.MoveNext ()) {
-				enumerator.Current.Value.Update ();
+                BattleActorBase actor = enumerator.Current.Value;
+                actor.Update ();
+                if(actor.IsInDead && actor.IsFinishDeadAnim)
+                {
+                    actor.Destroy();
+                    mToRemoveList.Add(actor.Id);
+                }
 			}
+            for(int i = 0; i < mToRemoveList.Count; ++i)
+            {
+                mBattleActorDic.Remove(mToRemoveList[i]);
+            }
 		}
 
 		public void DestroyBattle()
@@ -43,13 +54,12 @@ namespace GameBattle.BattleView
 			mBattleActorDic.Clear ();
 		}
 
-        void DestroyActor(int unitId)
+        void OnActorDead(int unitId)
         {
             BattleActorBase ret = null;
             mBattleActorDic.TryGetValue(unitId, out ret);
             if (null != ret)
-                ret.Destroy();
-            mBattleActorDic.Remove(unitId);
+                ret.OnUnitDead();
         }
 
 		BattleActorBase GetActorById(int unitId)
@@ -90,7 +100,7 @@ namespace GameBattle.BattleView
             {
                 if(value <= 0)
                 {
-                    DestroyActor(unitId);
+                    OnActorDead(unitId);
                 }
                 else
                 {

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using LegionBattle.ServerClientCommon;
+using LBCSCommon;
 
 public class RoomViewAccountListItem{
 

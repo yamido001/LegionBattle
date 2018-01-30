@@ -76,4 +76,21 @@ public class Utils{
 		}
 		return ret;
 	}
+
+    public class PerformanceCal : IDisposable
+    {
+        string mName;
+        int mStartTickCount;
+
+        public PerformanceCal(string name)
+        {
+            mName = name;
+            mStartTickCount = System.Environment.TickCount;
+        }
+
+        public void Dispose()
+        {
+            Debug.LogError(mName + " " + (System.Environment.TickCount - mStartTickCount));
+        }
+    }
 }

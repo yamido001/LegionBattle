@@ -1,6 +1,0 @@
-id,prepareTime,continousTime,cd,distance,targetInfo{type|param1|param2|param3},effectId
-short,short,short,short,int,SkillTargetInfo{short|short|short|short},short
-Id,前摇帧数,持续时间,回复时间,施法距离,目标类型和参数,技能效果ID
-1,18,60,360,8000,{2#1#1000#2000},1
-2,18,120,360,15000,{3#2#3000#0},2
-3,18,120,360,0,{3#2#0#0},3

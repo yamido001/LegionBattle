@@ -1,7 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using LegionBattle.ServerClientCommon;
+﻿using UnityEngine;
+using LBMath;
 
 namespace GameBattle.BattleView{
 	public class BattleActorBase
@@ -16,6 +14,18 @@ namespace GameBattle.BattleView{
 			get;
 			private set;
 		}
+
+        public bool IsInDead
+        {
+            get;
+            private set;
+        }
+
+        public bool IsFinishDeadAnim
+        {
+            get;
+            private set;
+        }
 
 		public BattleActorBase(int id, int life, IntVector2 initPos)
 		{
@@ -41,10 +51,14 @@ namespace GameBattle.BattleView{
 			if (null != mAnimator) {
 				AnimatorStateInfo stateInfo = mAnimator.GetCurrentAnimatorStateInfo (0);
 				if (!stateInfo.loop && stateInfo.normalizedTime >= 1f) {
-					PlayAnimation ("idle");
+                    if (IsInDead)
+                        IsFinishDeadAnim = true;
+                    else
+					    PlayAnimation ("idle");
 				}
 			}
-            mBillBoard.Update();
+            if (!IsInDead)
+                mBillBoard.Update();
 		}
 
 		public void OnMove(IntVector2 fromPos, IntVector2 toPos)
@@ -57,9 +71,10 @@ namespace GameBattle.BattleView{
 
         public void OnUseSkill(short skillId)
         {
+            GDSKit.SkillConfig skillConfig = GDSKit.SkillConfig.GetInstance(skillId);
             if (null != mObj)
             {
-                PlayAnimation("attack1");
+                PlayAnimation(skillConfig.animName);
             }
         }
 
@@ -90,6 +105,15 @@ namespace GameBattle.BattleView{
 			}
 		}
 
+        public void OnUnitDead()
+        {
+            IsInDead = true;
+            IsFinishDeadAnim = false;
+            mBillBoard.Destroy();
+            mBillBoard = null;
+            PlayAnimation("dead");
+        }
+
 		public void Destroy()
 		{
 			if (null != mObj) {
@@ -97,7 +121,11 @@ namespace GameBattle.BattleView{
 				mObj = null;
 				mAnimator = null;
 			}
-            mBillBoard.Destroy();
+            if(null != mBillBoard)
+            {
+                mBillBoard.Destroy();
+                mBillBoard = null;
+            }   
         }
 	}
 }

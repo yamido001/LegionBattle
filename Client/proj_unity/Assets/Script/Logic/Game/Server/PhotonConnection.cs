@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using ExitGames.Client.Photon;
-using LegionBattle.ServerClientCommon;
+using LBCSCommon;
 
 public class PhotonConnection : IPhotonPeerListener {
 

@@ -4,12 +4,12 @@ namespace GameBattle.LogicLayer.Skill
 {
     public class UnitTargetSkillItem : SkillItem
     {
-        protected override bool CanUseSkill(int targetUnitId, short skillAngle, short skillParam1, short skillParam2)
+        protected override bool CanUseSkill(int targetUnitId, short skillAngle, int skillParam1)
         {
             return CheckSkillDistance(targetUnitId);
         }
 
-        protected override int OnUse(int targetUnitId, short skillAngle, short skillParam1, short skillParam2)
+        protected override int OnUse(int targetUnitId, short skillAngle, int skillParam1)
         {
             return SkillEffectManager.Instance.CreateTargetEffect(mUnit.Data.camp, targetUnitId, mSkillConfig.effectId);
         }

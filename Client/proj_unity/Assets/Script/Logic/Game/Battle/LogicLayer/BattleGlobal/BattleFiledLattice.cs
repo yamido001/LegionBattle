@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using GameBattle.LogicLayer.Scene;
 using System;
-using LegionBattle.ServerClientCommon;
+using LBMath;
 
 namespace GameBattle.LogicLayer
 {
@@ -20,12 +20,12 @@ namespace GameBattle.LogicLayer
         public void InitLattile(short size)
         {
             mLattileSize = size;
-            mRowCount = BattleSceneManager.Instance.SceneWidth / size;
-            if (BattleSceneManager.Instance.SceneWidth % size != 0)
+            mRowCount = BattleSceneManager.Instance.SceneSize.x / size;
+            if (BattleSceneManager.Instance.SceneSize.x % size != 0)
                 ++mRowCount;
 
-            mColumnCount = BattleSceneManager.Instance.SceneHeight / size;
-            if (BattleSceneManager.Instance.SceneHeight % size != 0)
+            mColumnCount = BattleSceneManager.Instance.SceneSize.y / size;
+            if (BattleSceneManager.Instance.SceneSize.y % size != 0)
                 ++mColumnCount;
 
             mLattileUnitList = new List<UnitBase>[mRowCount, mColumnCount];
@@ -36,7 +36,8 @@ namespace GameBattle.LogicLayer
         {
             RemoveUnit(unit);
             List<UnitBase> newLattleUnitList = GetLattleUnitList(unit.Position.x, unit.Position.y, true);
-            if(null != newLattleUnitList)
+            unit.moveComp.lattlcePos = unit.Position;
+            if (null != newLattleUnitList)
                 newLattleUnitList.Add(unit);
         }
 

@@ -1,9 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using GameBattle.LogicLayer;
+using LBMath;
 using System;
-using LegionBattle.ServerClientCommon;
 
 namespace GameBattle.LogicLayer
 {
@@ -31,8 +30,8 @@ namespace GameBattle.LogicLayer
         public void UseAreaSkill(short skillId, Vector2 opeValue)
         {
             short skillAngle = Vector2ToAngle(opeValue);
-            IntegerFloat disPercent = IntegerFloat.FloatToIntegerFloat(opeValue.magnitude);
-            GameMain.Instance.ProxyMgr.Battle.SendAreaUseSkillOperate(skillId, skillAngle, (short)disPercent.x, (short)disPercent.y);
+            IntegerFloat disPercent = new IntegerFloat(opeValue.magnitude);
+            GameMain.Instance.ProxyMgr.Battle.SendAreaUseSkillOperate(skillId, skillAngle, (int)disPercent.ToInt64WithPrecision());
         }
 
         public void UseNoTargetSkill(short skillId)

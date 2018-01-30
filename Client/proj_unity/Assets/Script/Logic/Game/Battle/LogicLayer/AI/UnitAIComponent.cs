@@ -1,7 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using LegionBattle.ServerClientCommon;
+﻿using LBCSCommon;
+using LBMath;
 
 namespace GameBattle{
 
@@ -28,7 +26,12 @@ namespace GameBattle{
 				RegisterState ((int)UnitAIStateType.InstructionMove, new UnitAIInstructionMove (mSelf, this));
 				RegisterState ((int)UnitAIStateType.InstructionSkill, new UnitAIInstructionAttack (mSelf, this));
 				RegisterState ((int)UnitAIStateType.Idle, new UnitAIIdle (mSelf, this));
-			}
+                RegisterState ((int)UnitAIStateType.RandomMove, new UnitAIRandomMove(mSelf, this));
+                if (mSelf.Data.isRandomMove)
+                {
+                    Enter((int)UnitAIStateType.RandomMove, null);
+                }
+            }
 
 			protected override void OnDestroy ()
 			{
