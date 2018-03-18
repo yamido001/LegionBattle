@@ -1,4 +1,6 @@
-/Server/*
+/Server/*/bin/*
+/*/bin/*
+/Server/*/obj/*
 /Tools/*
 /Client/proj_unity/Library/
 /Client/proj_unity/Temp/
